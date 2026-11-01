@@ -43,7 +43,7 @@ V.home = () => {
   return `
   <section class="hero"><div class="wrap">
     <div class="stack" style="gap:20px">
-      <p class="eyebrow" style="color:var(--signal)">E-governance · DPI · AI · Cybersecurity · All countries</p>
+      <p class="eyebrow" style="color:var(--accent)">E-governance · DPI · AI · Cybersecurity · All countries</p>
       <h1>Know what changed in digital government. <em>Checked</em> before you read it.</h1>
       <p class="lede">Digivern tracks news, laws and research from official and expert sources, turns them into short analysis, and checks every claim against its source.</p>
       <form class="searchbar js-search" role="search"><label class="sr" for="hero-q">Search Digivern</label><input id="hero-q" type="search" placeholder="Search news, laws, countries, reports…"><button class="btn btn-signal" type="submit">Search</button></form>
@@ -54,7 +54,7 @@ V.home = () => {
     <div class="signal-panel" aria-label="Latest signal">
       <div class="row" style="justify-content:space-between"><span class="eyebrow" style="color:var(--mast-muted)">Latest signal</span><span class="mono" style="color:var(--mast-muted)">UPDATED ${UPDATED.toUpperCase()}</span></div>
       ${SORTED.slice(0,5).map(n => `<a class="sp-row" href="#story-${n.id}"><span class="code">${T[n.theme].code}</span><span class="stack" style="gap:4px"><h3>${esc(n.title)}</h3><span class="mono" style="color:var(--mast-muted)">${esc(n.date)} · ${verifyText(n)}</span></span></a>`).join('')}
-      <a href="#news" class="btn btn-ghost-dark" style="margin-top:10px">Open the News Desk</a>
+      <a href="#news" class="btn" style="margin-top:10px">Open the News Desk</a>
     </div>
   </div></section>
 
@@ -97,14 +97,14 @@ V.home = () => {
   </div></section>
 
   <section class="band" style="padding-top:0"><div class="wrap">
-    <div class="card" style="background:var(--mast);color:var(--mast-ink);border-color:var(--mast);padding:36px;flex-direction:row;flex-wrap:wrap;gap:32px;align-items:center">
+    <div class="card" style="background:var(--accent-soft);color:var(--ink);border-color:transparent;padding:36px;flex-direction:row;flex-wrap:wrap;gap:32px;align-items:center">
       <div class="stack" style="flex:1 1 380px;min-width:0;gap:10px">
-        <span class="eyebrow" style="color:var(--signal)">Consulting Desk</span>
+        <span class="eyebrow" style="color:var(--accent)">Consulting Desk</span>
         <h2 style="color:var(--mast-ink)">Concept notes, ToRs and policy briefs in 3–10 working days.</h2>
         <p style="color:var(--mast-muted)">Built from Digivern's verified library. A senior expert reviews and signs off every deliverable.</p>
       </div>
       <div class="stack" style="flex:1 1 320px;min-width:0">
-        <div class="row" style="gap:8px">${['Concept notes','Terms of Reference','Policy briefs','Readiness assessments','Feasibility notes','Proposal sections'].map(s=>`<span class="badge" style="background:#24332D;color:var(--mast-ink)">${s}</span>`).join('')}</div>
+        <div class="row" style="gap:8px">${['Concept notes','Terms of Reference','Policy briefs','Readiness assessments','Feasibility notes','Proposal sections'].map(s=>`<span class="badge" style="background:var(--surface);color:var(--ink);border:1px solid var(--line)">${s}</span>`).join('')}</div>
         <a href="#consulting" class="btn btn-signal" style="align-self:flex-start">Request a deliverable</a>
       </div>
     </div>
@@ -247,7 +247,7 @@ V.country = id => {
       <div class="card"><h3>Sources</h3><ol style="margin:0;padding-left:20px" class="stack">${p.sources.map(s=>`<li>${ext(s[1],esc(s[0]))}</li>`).join('')}</ol><p class="footnote">Entries marked "To verify" are not yet confirmed against an official source.</p></div>
     </div>
     <aside class="stack">
-      <div class="card" style="background:var(--mast);color:var(--mast-ink);border-color:var(--mast)"><span class="eyebrow" style="color:var(--signal)">Key facts</span>
+      <div class="card" style="background:var(--accent-soft);border-color:transparent"><span class="eyebrow" style="color:var(--accent)">Key facts</span>
         ${[['Lead digital agency',p.agency],['Strategy or programme',p.strategy],['UN E-Government Development Index',p.egdi]].map(f=>`<div><div class="mono" style="color:var(--mast-muted)">${f[0].toUpperCase()}</div><div style="font-weight:600">${esc(f[1])}</div></div>`).join('')}</div>
       <div class="card"><h3>Spot something out of date?</h3><p class="muted">Send a correction with a source. Editors review every suggestion.</p><a class="btn" href="#contact" style="align-self:flex-start">Suggest a correction</a></div>
     </aside>
