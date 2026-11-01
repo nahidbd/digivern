@@ -10,7 +10,7 @@
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Digivern</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap">
 <style>
 /* Layout: sticky civic masthead + hash-routed views; content in a 1200px column, an "evidence line" in mono under every item */
 :root{
@@ -19,9 +19,10 @@
   --official-bg:#DDE6FF; --official-fg:#1C3A8F; --expert-bg:#EEE2F8; --expert-fg:#5A2689; --media-bg:#FCE9CF; --media-fg:#7A3D00;
   --ok:#1D6B47; --warn:#8A4A00; --mast:#FFFFFF; --mast-ink:#13201B; --mast-muted:#4D5B55; --mast-line:#D3DAD4;
   --hero:#EAF0FB; --hero-line:#C9D5F0; --tint:#F7F9F6; --signal-text:#8A5A00;
-  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body:"Public Sans", "Helvetica Neue", Arial, sans-serif;
-  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Synapse Consulting brand font: Cambria, with Caladea (a metric-compatible web font) for devices without Cambria */
+  --f-display:Cambria, Caladea, Georgia, "Times New Roman", serif;
+  --f-body:Cambria, Caladea, Georgia, "Times New Roman", serif;
+  --f-mono:Cambria, Caladea, Georgia, "Times New Roman", serif;
   --r:10px;
 }
 
@@ -55,7 +56,7 @@ p{margin:0}
 .brand b i{font-style:normal;color:var(--accent)}
 .brand span{font-family:var(--f-mono);font-size:.72rem;color:var(--mast-muted);letter-spacing:.06em}
 .brand .beta{align-self:center;font:600 .66rem var(--f-mono);letter-spacing:.1em;color:var(--signal-ink);background:var(--signal);padding:2px 7px;border-radius:4px}
-.synapse-tag{font-family:Cambria,"Cambria Math",Georgia,"Times New Roman",serif;font-weight:700;font-size:1.05rem;letter-spacing:.01em}
+.synapse-tag{font-family:var(--f-body);font-weight:700;font-size:1.05rem;letter-spacing:.01em}
 .util .beta-note{color:var(--signal-text);font-weight:700}
 .nav{display:flex;flex-wrap:wrap;gap:2px}
 .nav a{color:var(--mast-ink);text-decoration:none;padding:10px 10px;font-weight:600;font-size:.93rem;border-radius:6px}
