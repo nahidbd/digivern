@@ -243,6 +243,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
       <a href="#reports">Analysis</a>
       <a href="#countries">Countries</a>
       <a href="#tracker">Policy Tracker</a>
+      <a href="#voices">Voices</a>
       <a href="#ask">Ask Digivern</a>
       <a href="#consulting">Consulting</a>
       <a href="#learn">Learn</a>
@@ -263,11 +264,23 @@ footer .brand b{font-size:2rem;color:var(--accent)}
     </div>
     <div class="cols">
       <div class="col"><b>Read</b><a href="#news">News Desk</a><a href="#reports">Analysis &amp; Reports</a><a href="#countries">Country profiles</a><a href="#tracker">Policy &amp; Law Tracker</a><a href="#learn">Learning Hub</a></div>
-      <div class="col"><b>Use</b><a href="#ask">Ask Digivern</a><a href="#consulting">Consulting Desk</a><a href="#premium">Premium plans</a><a href="#subscribe">Subscribe</a></div>
+      <div class="col"><b>Use</b><a href="#contribute">Write for Digivern</a><a href="#voices">Voices</a><a href="#ask">Ask Digivern</a><a href="#consulting">Consulting Desk</a><a href="#premium">Premium plans</a><a href="#subscribe">Subscribe</a></div>
       <div class="col"><b>Trust</b><a href="#about">Methodology</a><a href="#sources">Our sources</a><a href="#ai-policy">AI use policy</a><a href="#corrections">Corrections log</a><a href="#contact">Contact</a></div>
     </div>
   </div>
 </footer>
+
+<!-- Netlify Forms: static copy of the writeup form so Netlify registers it at deploy. The visible form is drawn by app.js with the same field names. -->
+<form name="writeup" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="hidden" name="form-name" value="writeup">
+  <input type="hidden" name="subject" value="New writeup for Digivern (%{submissionId})">
+  <input name="bot-field">
+  <input name="name" type="text"><input name="email" type="email"><input name="role" type="text"><input name="organisation" type="text"><input name="country" type="text">
+  <textarea name="bio"></textarea><input name="link" type="text">
+  <input name="title" type="text"><select name="theme"><option>x</option></select><textarea name="summary"></textarea>
+  <input name="writeup_file" type="file"><input name="photo" type="file">
+  <input name="consent_original" type="checkbox"><input name="consent_publish" type="checkbox">
+</form>
 
 <script src="data.js"></script>
 <script src="app.js"></script>

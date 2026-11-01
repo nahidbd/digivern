@@ -1,6 +1,7 @@
 (function(){
 const $ = s => document.querySelector(s);
 const {UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
+const WRITEUPS = window.DV.WRITEUPS || [];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- state ---------- */
@@ -93,6 +94,11 @@ V.home = () => {
       ${THEMES.map(t => `<a class="chip" href="#news" data-act="gotheme" data-v="${t.id}" style="text-decoration:none">${esc(t.label)}</a>`).join('')}
     </div>
   </div>
+
+  <section class="band" style="padding-bottom:0"><div class="wrap">
+    <div class="head-row"><div class="stack" style="gap:6px"><h2>Voices</h2><p class="muted">Writeups by practitioners, reviewed by the editor.</p></div><a href="#voices" style="font-weight:700">All Voices \u2192</a></div>
+    ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.slice(0,3).map(writeupCard).join('')}</div>` : `<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:26px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Write for Digivern</h3><p class="muted">Share your analysis or field experience on e-governance, DPI, AI or cybersecurity. Accepted pieces are published with your profile.</p></div><a class="btn" href="#contribute">Submit your writeup</a></div>`}
+  </div></section>
 
   <section class="band band-alt" style="margin-top:44px"><div class="wrap">
     <div class="head-row"><div class="stack" style="gap:6px"><h2>Analysis &amp; Reports</h2><p class="muted">The Weekly Global Brief and explainers are free. Deep-dives, regional reports and the annual outlook are Premium.</p></div><a href="#reports" style="font-weight:700">All reports →</a></div>
@@ -423,12 +429,100 @@ V.contact = () => pagehead('Contact','Contact the editors','Report a problem, pr
     <aside class="card"><h3>Editorial address</h3><p class="mono" style="user-select:all">[editors@digivern.domain]</p><p class="muted">Corrections are confirmed and logged within 24 hours.</p></aside>
   </div></section>`;
 
+function authorLine(w){ return [w.author.role, w.author.org, w.author.country].filter(Boolean).map(esc).join(' \u00b7 '); }
+function writeupCard(w){
+  return `<a class="card" href="#writeup-${w.id}"><p class="kicker" style="font-size:.76rem">${esc(T[w.theme] ? T[w.theme].label : 'Voices')}</p><h3>${esc(w.title)}</h3><p class="muted" style="font-size:1rem">${esc(w.summary)}</p><p style="font-size:.95rem"><b>${esc(w.author.name)}</b><br><span class="muted">${authorLine(w)}</span></p></a>`;
+}
+V.voices = () => pagehead('Voices','Voices','Writeups by practitioners, researchers and officials working on digital government. Every piece is reviewed by the editor before it is published.',`<a class="btn" href="#contribute">Write for Digivern</a>`) + `
+  <section class="band"><div class="wrap stack" style="gap:20px">
+    ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.map(writeupCard).join('')}</div>` :
+    `<div class="empty stack" style="gap:10px"><h3 style="color:var(--ink)">The first Voices pieces are on their way</h3><p>Do you work on e-governance, DPI, AI or cybersecurity? Share your experience with readers in every region.</p><a class="btn" href="#contribute" style="align-self:flex-start">Submit your writeup</a></div>`}
+  </div></section>`;
+
+V.writeup = id => {
+  const w = WRITEUPS.find(x => x.id === id);
+  if (!w) return V.voices();
+  return `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#voices">Voices</a></p>
+    <p class="kicker">Voices \u00b7 ${esc(T[w.theme] ? T[w.theme].label : '')}</p>
+    <h1 style="max-width:26ch">${esc(w.title)}</h1>
+    <p class="muted" style="font-size:1.1rem">By <b style="color:var(--ink)">${esc(w.author.name)}</b> \u00b7 ${esc(w.date)}</p></div></div>
+  <section class="band"><div class="wrap layout-side">
+    <article class="main stack prose" style="gap:18px;font-size:1.1rem">
+      <p style="font-size:1.25rem;color:#2D3A4D">${esc(w.summary)}</p>
+      ${w.body.map(p => p.startsWith('## ') ? `<h2 style="font-size:1.5rem;margin-top:8px">${esc(p.slice(3))}</h2>` : `<p>${esc(p)}</p>`).join('')}
+      <p class="footnote" style="border-top:1px solid var(--line);padding-top:14px">Views expressed are the author\u2019s own. Published after review by the Digivern editor.</p>
+    </article>
+    <aside class="stack">
+      <div class="card" style="background:var(--tint);border-color:transparent">
+        <span class="eyebrow">About the writer</span>
+        ${w.author.photo ? `<img src="${esc(w.author.photo)}" alt="${esc(w.author.name)}" style="width:96px;height:96px;border-radius:50%;object-fit:cover">` : ''}
+        <h3>${esc(w.author.name)}</h3>
+        <p class="muted">${authorLine(w)}</p>
+        <p>${esc(w.author.bio)}</p>
+        ${w.author.link ? `<a href="${esc(w.author.link)}" target="_blank" rel="noopener" style="font-weight:700">Profile \u2192</a>` : ''}
+      </div>
+      <a class="card" href="#contribute" style="background:var(--accent-soft);border-color:transparent"><h3>Write for Digivern</h3><p>Share your own experience with readers worldwide.</p></a>
+    </aside>
+  </div></section>`;
+};
+
+V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share your analysis, field experience or policy view on e-governance, DPI, AI, cybersecurity or digital development. The editor reviews every submission; if it is accepted, it is published in Voices with your name and profile.') + `
+  <section class="band"><div class="wrap layout-side">
+    <div class="main stack" style="gap:20px">
+      <form class="card js-writeup" id="writeup-form" style="padding:28px;gap:22px" novalidate enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="writeup">
+        <input type="hidden" name="subject" value="New writeup for Digivern (%{submissionId})">
+        <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+
+        <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:14px">
+          <legend style="font-size:1.4rem;font-weight:700;margin-bottom:10px">1. About you</legend>
+          <div class="grid g2">
+            <div class="field"><label for="w-name">Full name *</label><input id="w-name" name="name" type="text" required autocomplete="name"></div>
+            <div class="field"><label for="w-email">Email * <span style="text-transform:none;letter-spacing:0;font-weight:400">(not published)</span></label><input id="w-email" name="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="w-role">Job title or role *</label><input id="w-role" name="role" type="text" required placeholder="e.g. Policy Adviser"></div>
+            <div class="field"><label for="w-org">Organisation</label><input id="w-org" name="organisation" type="text" placeholder="Leave blank if independent"></div>
+            <div class="field"><label for="w-country">Country *</label><input id="w-country" name="country" type="text" required autocomplete="country-name"></div>
+            <div class="field"><label for="w-link">LinkedIn or website</label><input id="w-link" name="link" type="text" placeholder="https://"></div>
+          </div>
+          <div class="field"><label for="w-bio">Short bio * <span style="text-transform:none;letter-spacing:0;font-weight:400">(up to 80 words, shown with your piece)</span></label><textarea id="w-bio" name="bio" required></textarea></div>
+          <div class="field"><label for="w-photo">Photo <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional, JPG or PNG, square works best)</span></label><input id="w-photo" name="photo" type="file" accept="image/jpeg,image/png"></div>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:14px">
+          <legend style="font-size:1.4rem;font-weight:700;margin-bottom:10px">2. Your writeup</legend>
+          <div class="field"><label for="w-title">Title *</label><input id="w-title" name="title" type="text" required></div>
+          <div class="field"><label for="w-theme">Theme *</label><select id="w-theme" name="theme" required>${THEMES.map(t=>`<option value="${t.id}">${esc(t.label)}</option>`).join('')}</select></div>
+          <div class="field"><label for="w-summary">Summary * <span style="text-transform:none;letter-spacing:0;font-weight:400">(2\u20133 sentences)</span></label><textarea id="w-summary" name="summary" required></textarea></div>
+          <div class="field"><label for="w-file">Attach your writeup * <span style="text-transform:none;letter-spacing:0;font-weight:400">(Word, PDF or text file, under 6 MB)</span></label><input id="w-file" name="writeup_file" type="file" required accept=".doc,.docx,.pdf,.odt,.txt,.rtf"></div>
+        </fieldset>
+
+        <div class="stack" style="gap:8px">
+          <label class="check"><input type="checkbox" id="w-c1" name="consent_original" value="yes" required>This is my original work, and I have the right to publish it.</label>
+          <label class="check"><input type="checkbox" id="w-c2" name="consent_publish" value="yes" required>Digivern may edit it for length and style and publish it with my name, role, organisation, country, bio and photo. My email stays private.</label>
+        </div>
+        <p id="w-err" class="notice" hidden></p>
+        <button class="btn" type="submit" id="w-send" style="align-self:flex-start">Submit for review</button>
+      </form>
+      <div id="w-done" class="card" hidden style="background:var(--accent-soft);border-color:transparent;padding:28px">
+        <h2>Thank you. Your writeup has been received.</h2>
+        <p>The editor will review it, usually within 10 working days, and contact you by email. If it is accepted, it will appear in <a href="#voices">Voices</a> with your profile.</p>
+      </div>
+    </div>
+    <aside class="stack">
+      <div class="card"><span class="eyebrow">What we publish</span>
+        <ul class="stack" style="margin:0;padding-left:18px;gap:8px"><li>Analysis, field lessons and policy views on the eight Digivern themes</li><li>800\u20132,000 words, written for practitioners</li><li>Original work, not published elsewhere</li><li>Claims backed by sources, with links where possible</li></ul></div>
+      <div class="card"><span class="eyebrow">How review works</span>
+        <ol class="stack" style="margin:0;padding-left:18px;gap:8px"><li>You submit the form.</li><li>The editor reads your piece and may suggest edits.</li><li>If accepted, it is published in Voices with your profile.</li></ol>
+        <p class="footnote">We do not publish advertising, product promotion or party-political campaigning.</p></div>
+    </aside>
+  </div></section>`;
+
 /* ---------- router ---------- */
-const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn'};
+const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices'};
 function render(){
   const h = (location.hash || '#home').slice(1);
   let name = h, param = '';
-  const m = h.match(/^(story|report|country)-(.+)$/);
+  const m = h.match(/^(story|report|country|writeup)-(.+)$/);
   if (m) { name = m[1]; param = m[2]; }
   if (!V[name]) name = 'home';
   $('#view').innerHTML = V[name](param);
@@ -479,6 +573,17 @@ document.addEventListener('submit', e => {
   else if (f.classList.contains('js-consult')) {
     const ok = ['c-name','c-org','c-brief'].every(id => $('#'+id).value.trim()) && $('#c-email').value && $('#c-email').checkValidity();
     $('#c-err').hidden = ok; if (!ok) return; f.hidden = true; $('#c-done').hidden = false; $('#c-done').scrollIntoView({block:'nearest'});
+  }
+  else if (f.classList.contains('js-writeup')) {
+    const err = $('#w-err'); err.hidden = true;
+    const missing = [...f.querySelectorAll('[required]')].filter(el => el.type === 'checkbox' ? !el.checked : el.type === 'file' ? !el.files.length : !el.value.trim() || (el.type === 'email' && !el.checkValidity()));
+    if (missing.length) { err.textContent = 'Please complete the fields marked * and tick both boxes.'; err.hidden = false; missing[0].focus(); return; }
+    const big = [...f.querySelectorAll('input[type=file]')].reduce((a, el) => a + (el.files[0] ? el.files[0].size : 0), 0);
+    if (big > 7.5 * 1024 * 1024) { err.textContent = 'Your files are too large. Please keep the writeup and photo together under 7.5 MB.'; err.hidden = false; return; }
+    const btn = $('#w-send'); btn.disabled = true; btn.textContent = 'Sending\u2026';
+    fetch('/', { method: 'POST', body: new FormData(f) })
+      .then(r => { if (!r.ok) throw new Error(r.status); f.hidden = true; $('#w-done').hidden = false; $('#w-done').scrollIntoView({block:'nearest'}); })
+      .catch(() => { err.textContent = 'We could not send your writeup. Please check your connection and try again.'; err.hidden = false; btn.disabled = false; btn.textContent = 'Submit for review'; });
   }
   else if (f.classList.contains('js-contact')) { toast('The contact form opens soon. Please use the editorial address for now.'); }
   else if (f.classList.contains('js-ready')) {
