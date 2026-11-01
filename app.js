@@ -571,8 +571,10 @@ document.addEventListener('submit', e => {
     const big = [...f.querySelectorAll('input[type=file]')].reduce((a, el) => a + (el.files[0] ? el.files[0].size : 0), 0);
     if (big > 7.5 * 1024 * 1024) { err.textContent = 'Your files are too large. Please keep the writeup and photo together under 7.5 MB.'; err.hidden = false; return; }
     const btn = $('#w-send'); btn.disabled = true; btn.textContent = 'Sending\u2026';
-    fetch('/', { method: 'POST', body: new FormData(f) })
-      .then(r => { if (!r.ok) throw new Error(r.status); f.hidden = true; $('#w-done').hidden = false; $('#w-done').scrollIntoView({block:'nearest'}); })
+    /* Submissions are stored by Netlify Forms (free) on the original Netlify address, wherever the site itself is hosted. */
+    const onNetlify = /netlify\.app$/.test(location.hostname);
+    fetch(onNetlify ? '/' : 'https://digivern.netlify.app/', onNetlify ? { method: 'POST', body: new FormData(f) } : { method: 'POST', body: new FormData(f), mode: 'no-cors' })
+      .then(r => { if (r.type !== 'opaque' && !r.ok) throw new Error(r.status); f.hidden = true; $('#w-done').hidden = false; $('#w-done').scrollIntoView({block:'nearest'}); })
       .catch(() => { err.textContent = 'We could not send your writeup. Please check your connection and try again.'; err.hidden = false; btn.disabled = false; btn.textContent = 'Submit for review'; });
   }
   else if (f.classList.contains('js-contact')) { toast('The contact form opens soon. Please use the editorial address for now.'); }

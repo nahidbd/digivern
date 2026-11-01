@@ -3,7 +3,7 @@
 Global intelligence on e-governance, digital public infrastructure (DPI), AI and cybersecurity.
 A knowledge venture of Synapse Consulting.
 
-Live site: https://digivern.netlify.app
+Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https://digivern.netlify.app is no longer updated; it is kept only because Netlify Forms stores writeup submissions there.
 
 ## Files
 
@@ -13,11 +13,13 @@ Live site: https://digivern.netlify.app
 | `app.js` | How pages are drawn (routing, filters, forms) |
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
 | `_headers` | Security headers |
-| `netlify.toml` | Netlify settings (no build step) |
+| `netlify.toml` | Legacy Netlify settings (not used by Cloudflare) |
 
 ## Publishing
 
-The repository is linked to Netlify. Every push to `main` publishes the site automatically within about a minute.
+The repository is linked to Cloudflare Pages (project `digivern`, no build step). Every push to `main` publishes the site automatically within about a minute.
+
+Writeup submissions from the Write for Digivern form are sent to Netlify Forms on digivern.netlify.app (free, unlimited) and reviewed there.
 
 ## Daily update
 
