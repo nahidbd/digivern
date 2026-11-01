@@ -198,11 +198,6 @@ const NEWSORDER = ['n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5
 const BRIEF = {top:['n1','n3','n4','n2','n8'], also:['n9','n10','n12','n13']};
 /* Voices: approved contributor writeups, newest first. Only added when the Editor-in-Chief approves a submission.
    Shape: {id:'w1', title, theme, date:'D Mon YYYY', summary, body:[paragraphs; '## ' starts a subheading], author:{name, role, org, country, bio, link, photo}} */
-const WRITEUPS = [
-  {id:'w-test', title:'TEST: Checking the Digivern Voices publishing workflow', theme:'dpi', date:'1 Nov 2026',
-   summary:'This is a test submission. It checks that a writeup sent through the Write for Digivern form reaches the editor and can be published in Voices with the writer profile.',
-   body:['This short text is a test file for the Digivern Voices workflow.','## Why this test exists','It confirms that the form accepts an attached file, that the submission is stored, and that the editor can approve it for publication.','## Next steps','Once the workflow is confirmed, this test piece will be removed from the site.'],
-   author:{name:'Digivern Test Writer', role:'Test contributor', org:'Digivern editorial test', country:'Bangladesh', bio:'This is a test profile used to check the Digivern Voices submission and publishing workflow. It is not a real person.', link:'', photo:''}}
-];
+const WRITEUPS = [];
 window.DV = {WRITEUPS, BRIEF, UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER};
 })();
