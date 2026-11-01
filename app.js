@@ -105,17 +105,7 @@ V.home = () => {
     <div class="grid g4">${REPORTS.slice(0,4).map(reportCard).join('')}</div>
   </div></section>
 
-  <section class="band"><div class="wrap">
-    <div class="card" style="background:var(--accent-soft);border-color:transparent;padding:32px;flex-direction:row;flex-wrap:wrap;gap:28px;align-items:center">
-      <div class="stack" style="flex:1 1 380px;min-width:0;gap:8px">
-        <p class="kicker">Consulting Desk</p>
-        <h2>Concept notes, ToRs and policy briefs in 3–10 working days.</h2>
-        <p class="muted">Built from Digivern's verified library. A senior expert reviews and signs off every deliverable.</p>
-      </div>
-      <a href="#consulting" class="btn">Request a deliverable</a>
-    </div>
-  </div></section>
-  ${newsletterBlock()}`;
+`;
 };
 function tool(href,title,desc,code){ return `<a class="card" href="${href}"><span class="mono" style="color:var(--accent);font-weight:600">${code}</span><h3>${title}</h3><p class="muted">${desc}</p></a>`; }
 function reportCard(r){
