@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Digivern: global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. Source-linked and checked against its sources.">
+<meta property="og:title" content="Digivern">
+<meta property="og:description" content="Global intelligence on digital governance.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2313201B'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='16' text-anchor='middle' fill='%23F2C230'%3Ec%3C/text%3E%3C/svg%3E">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Digivern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky civic masthead + hash-routed views; content in a 1200px column, an "evidence line" in mono under every item */
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --sunken:#E9EDE8; --ink:#13201B; --muted:#4D5B55; --line:#D3DAD4;
+  --accent:#2B3BB8; --accent-ink:#FFFFFF; --accent-soft:#E3E6FB; --signal:#F2C230; --signal-ink:#2A2100;
+  --official-bg:#DDE6FF; --official-fg:#1C3A8F; --expert-bg:#EEE2F8; --expert-fg:#5A2689; --media-bg:#FCE9CF; --media-fg:#7A3D00;
+  --ok:#1D6B47; --warn:#8A4A00; --mast:#13201B; --mast-ink:#F1F4F1; --mast-muted:#A9B8B1;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1412; --surface:#151D1A; --sunken:#1B2521; --ink:#E7EDEA; --muted:#A2B0AA; --line:#2A3631;
+  --accent:#97A2FF; --accent-ink:#0E1412; --accent-soft:#232A55; --signal:#F2C230; --signal-ink:#2A2100;
+  --official-bg:#1F2D55; --official-fg:#BFD0FF; --expert-bg:#35224A; --expert-fg:#E2C9FA; --media-bg:#45300F; --media-fg:#FFD8A3;
+  --ok:#7FD4A8; --warn:#FFC37A; --mast:#0A0F0D; --mast-ink:#F1F4F1; --mast-muted:#9FB0A8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#151D1A; --sunken:#1B2521; --ink:#E7EDEA; --muted:#A2B0AA; --line:#2A3631;
+  --accent:#97A2FF; --accent-ink:#0E1412; --accent-soft:#232A55; --signal:#F2C230; --signal-ink:#2A2100;
+  --official-bg:#1F2D55; --official-fg:#BFD0FF; --expert-bg:#35224A; --expert-fg:#E2C9FA; --media-bg:#45300F; --media-fg:#FFD8A3;
+  --ok:#7FD4A8; --warn:#FFC37A; --mast:#0A0F0D; --mast-ink:#F1F4F1; --mast-muted:#9FB0A8; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--mast)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-0.015em;line-height:1.12}
+h1{font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:800}
+h2{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prose{max-width:68ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.02em}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* masthead */
+.util{background:var(--mast);color:var(--mast-muted);font-size:.85rem}
+.util .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;padding-block:7px}
+.util a{color:var(--mast-muted)}
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--mast);color:var(--mast-ink);border-bottom:3px solid var(--signal)}
+.mast .wrap{display:flex;align-items:center;gap:16px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;color:var(--mast-ink);text-decoration:none;margin-right:auto}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.7rem;letter-spacing:-0.03em}
+.brand b i{font-style:normal;color:var(--signal)}
+.brand span{font-family:var(--f-mono);font-size:.72rem;color:var(--mast-muted);letter-spacing:.06em}
+.nav{display:flex;flex-wrap:wrap;gap:2px}
+.nav a{color:var(--mast-ink);text-decoration:none;padding:10px 10px;font-weight:600;font-size:.93rem;border-radius:6px}
+.nav a:hover{background:rgba(255,255,255,.08)}
+.nav a[aria-current="page"]{color:var(--signal)}
+.mast-actions{display:flex;gap:8px;align-items:center}
+.menu-btn{display:none}
+@media (max-width:980px){
+  .menu-btn{display:inline-flex}
+  .nav{order:5;width:100%;flex-direction:column}
+  .nav[data-open="false"]{display:none}
+  .mast-actions .btn-ghost-dark{display:none}
+}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;border:1px solid transparent;font:600 .95rem var(--f-body);text-decoration:none;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn:hover{filter:brightness(1.08)}
+.btn-signal{background:var(--signal);color:var(--signal-ink)}
+.btn-line{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-line:hover{background:var(--sunken)}
+.btn-ghost-dark{background:transparent;color:var(--mast-ink);border-color:#3A4842}
+.chip{display:inline-flex;align-items:center;min-height:38px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 .88rem var(--f-body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font:600 .72rem var(--f-mono);letter-spacing:.04em;padding:3px 8px;border-radius:4px;text-transform:uppercase;white-space:nowrap}
+.b-official{background:var(--official-bg);color:var(--official-fg)}
+.b-expert{background:var(--expert-bg);color:var(--expert-fg)}
+.b-media{background:var(--media-bg);color:var(--media-fg)}
+.b-plain{background:var(--sunken);color:var(--muted)}
+.b-premium{background:var(--signal);color:var(--signal-ink)}
+.evidence{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;letter-spacing:.02em}
+.dots{letter-spacing:2px;color:var(--ok)}
+.dots .off{color:var(--line)}
+
+/* sections */
+section.band{padding-block:48px}
+.band-alt{background:var(--surface);border-block:1px solid var(--line)}
+.head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:22px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+a.card{text-decoration:none;color:var(--ink)}
+a.card:hover{border-color:var(--accent)}
+.card h3 a{color:inherit;text-decoration:none}
+.card h3 a:hover{color:var(--accent)}
+
+/* page header */
+.pagehead{background:var(--surface);border-bottom:1px solid var(--line)}
+.pagehead .wrap{padding-block:34px 28px;display:flex;flex-direction:column;gap:12px}
+.crumb{font-size:.88rem;color:var(--muted)}
+
+/* hero */
+.hero{background:var(--mast);color:var(--mast-ink)}
+.hero .wrap{padding-block:48px 56px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:900px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+.hero h1{color:var(--mast-ink);font-size:clamp(2.3rem,5.2vw,4rem)}
+.hero h1 em{font-style:normal;background:var(--signal);color:var(--signal-ink);padding:0 .12em;border-radius:4px}
+.hero .lede{font-size:1.15rem;color:var(--mast-muted);max-width:56ch}
+.searchbar{display:flex;flex-wrap:wrap;gap:8px;max-width:620px}
+.searchbar input{flex:1 1 260px;min-width:0;height:52px;border-radius:8px;border:1px solid #3A4842;background:#FFFFFF;color:#13201B;padding:0 16px;font:400 1rem var(--f-body)}
+.signal-panel{background:#1B2A24;border:1px solid #2E3D37;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:2px}
+.signal-panel .sp-row{display:flex;gap:12px;padding:12px 0;border-top:1px solid #2E3D37;text-decoration:none;color:var(--mast-ink)}
+.signal-panel .sp-row:first-of-type{border-top:0}
+.signal-panel .sp-row:hover h3{text-decoration:underline}
+.signal-panel .code{font-family:var(--f-mono);font-size:.72rem;color:var(--signal);min-width:52px;padding-top:3px}
+.signal-panel h3{font-size:1rem;font-family:var(--f-body);font-weight:600;letter-spacing:0;line-height:1.35}
+
+/* themes strip */
+.themes{background:var(--surface);border-bottom:1px solid var(--line)}
+.themes .wrap{display:flex;gap:8px;flex-wrap:wrap;padding-block:12px;align-items:center}
+
+/* news list */
+.newsitem{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.newsitem:first-child{border-top:0}
+.newsitem .code{font-family:var(--f-mono);font-size:.74rem;color:var(--accent);font-weight:600;padding-top:4px}
+.newsitem h3 a{color:var(--ink);text-decoration:none}
+.newsitem h3 a:hover{color:var(--accent);text-decoration:underline}
+.layout-side{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.layout-side > aside{flex:1 1 260px;min-width:0}
+.layout-side > .main{flex:999 1 560px;min-width:0}
+.filterbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.field .lab{font:600 .78rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+select,input[type=text],input[type=email],input[type=search],textarea{min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:0 12px;font:400 .95rem var(--f-body);width:100%}
+textarea{padding:12px;min-height:120px;resize:vertical}
+.check{display:flex;gap:10px;align-items:center;min-height:32px;font-size:.95rem}
+.check input{width:18px;height:18px;accent-color:var(--accent)}
+.toggle{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:600 .92rem var(--f-body);cursor:pointer;text-align:left}
+.toggle[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.toggle .sw{font-family:var(--f-mono);font-size:.72rem}
+
+/* boxes */
+.why{background:var(--accent-soft);border-radius:8px;padding:14px 16px}
+.how{border:1px dashed var(--muted);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:8px}
+.lock{background:var(--sunken);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.empty{border:1px dashed var(--line);border-radius:var(--r);padding:28px;color:var(--muted);background:var(--surface)}
+
+/* table */
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.95rem}
+th,td{text-align:left;padding:13px 16px;border-top:1px solid var(--line);vertical-align:top}
+thead th{border-top:0;background:var(--sunken);font:600 .74rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums}
+
+/* pipeline */
+.pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:0;counter-reset:step;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.pipeline li{list-style:none;padding:18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.pipeline li:last-child{border-right:0;background:var(--ink);color:var(--bg)}
+.pipeline li:last-child .muted{color:var(--bg);opacity:.8}
+.pipeline .st{font-family:var(--f-mono);font-size:.74rem;color:var(--accent);font-weight:600}
+.pipeline li:last-child .st{color:var(--signal)}
+.pipeline-wrap{padding:0;margin:0}
+
+/* chat */
+.bubble-q{align-self:flex-end;max-width:85%;background:var(--ink);color:var(--bg);border-radius:14px 14px 4px 14px;padding:12px 16px}
+.bubble-a{display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.cite{font:600 .78rem var(--f-mono);vertical-align:super;text-decoration:none}
+
+/* plans */
+.plan{position:relative}
+.plan.featured{border:2px solid var(--accent)}
+.price{font-family:var(--f-display);font-size:2rem;font-weight:800}
+.plan ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+
+/* footer */
+footer{background:var(--mast);color:var(--mast-muted);margin-top:24px}
+footer .wrap{padding-block:44px;display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between}
+footer a{color:var(--mast-muted);text-decoration:none}
+footer a:hover{color:var(--mast-ink);text-decoration:underline}
+footer .cols{display:flex;flex-wrap:wrap;gap:40px}
+footer .col{display:flex;flex-direction:column;gap:8px;font-size:.93rem}
+footer .col b{color:var(--mast-ink)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:8px;font-weight:600;z-index:40;max-width:calc(100% - 32px)}
+.toc a{display:block;padding:6px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.toc a:hover{color:var(--accent)}
+.footnote{font-size:.88rem;color:var(--muted)}
+.notice{background:var(--signal);color:var(--signal-ink);border-radius:8px;padding:12px 16px;font-weight:600}
+@media (prefers-reduced-motion:no-preference){main{animation:fade .25s ease}}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="util">
+  <div class="wrap">
+    <span>Every item is source-linked and checked against its sources. Corrections are logged within 24 hours.</span>
+    <span class="row" style="gap:16px">
+      <a href="#about">How Digivern works</a><a href="#sources">Our sources</a><a href="#corrections">Corrections</a>
+      <label class="row" style="gap:6px">Language
+        <select id="lang" style="min-height:30px;width:auto;background:var(--mast);color:var(--mast-ink);border-color:#3A4842;font-size:.85rem">
+          <option>English</option><option>Français</option><option>Español</option><option>العربية</option>
+        </select>
+      </label>
+    </span>
+  </div>
+</div>
+<header class="mast">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Digivern home"><b>Digi<i>vern</i></b><span>INTELLIGENCE ON DIGITAL GOVERNANCE</span></a>
+    <div class="mast-actions">
+      <a class="btn btn-ghost-dark" href="#premium">Premium</a>
+      <a class="btn btn-signal" href="#subscribe">Subscribe</a>
+      <button class="btn btn-ghost-dark menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    </div>
+    <nav class="nav" id="nav" aria-label="Main" data-open="false">
+      <a href="#news">News</a>
+      <a href="#reports">Analysis</a>
+      <a href="#countries">Countries</a>
+      <a href="#tracker">Policy Tracker</a>
+      <a href="#ask">Ask Digivern</a>
+      <a href="#consulting">Consulting</a>
+      <a href="#learn">Learn</a>
+    </nav>
+  </div>
+</header>
+
+<main id="view" tabindex="-1"></main>
+
+<footer>
+  <div class="wrap">
+    <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:10px;max-width:420px">
+      <span class="brand" style="margin:0"><b style="color:var(--mast-ink)">Digi<i>vern</i></b></span>
+      <p>Global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. A knowledge venture of Synapse Consulting.</p>
+      <p class="mono">Think. Connect. Transform.</p>
+    </div>
+    <div class="cols">
+      <div class="col"><b>Read</b><a href="#news">News Desk</a><a href="#reports">Analysis &amp; Reports</a><a href="#countries">Country profiles</a><a href="#tracker">Policy &amp; Law Tracker</a><a href="#learn">Learning Hub</a></div>
+      <div class="col"><b>Use</b><a href="#ask">Ask Digivern</a><a href="#consulting">Consulting Desk</a><a href="#premium">Premium plans</a></div>
+      <div class="col"><b>Trust</b><a href="#about">Methodology</a><a href="#sources">Our sources</a><a href="#ai-policy">AI use policy</a><a href="#corrections">Corrections log</a><a href="#contact">Contact</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
