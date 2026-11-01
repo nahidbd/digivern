@@ -63,6 +63,8 @@ p{margin:0}
 .brand b{font-family:var(--f-display);font-weight:800;font-size:1.7rem;letter-spacing:-0.03em}
 .brand b i{font-style:normal;color:var(--signal)}
 .brand span{font-family:var(--f-mono);font-size:.72rem;color:var(--mast-muted);letter-spacing:.06em}
+.brand .beta{align-self:center;font:600 .66rem var(--f-mono);letter-spacing:.1em;color:var(--signal-ink);background:var(--signal);padding:2px 7px;border-radius:4px}
+.util .beta-note{color:var(--signal);font-weight:600}
 .nav{display:flex;flex-wrap:wrap;gap:2px}
 .nav a{color:var(--mast-ink);text-decoration:none;padding:10px 10px;font-weight:600;font-size:.93rem;border-radius:6px}
 .nav a:hover{background:rgba(255,255,255,.08)}
@@ -210,7 +212,7 @@ footer .col b{color:var(--mast-ink)}
 <body>
 <div class="util">
   <div class="wrap">
-    <span>Every item is source-linked and checked against its sources. Corrections are logged within 24 hours.</span>
+    <span><span class="beta-note">Beta version.</span> We are still building Digivern. Every item is source-linked and checked against its sources. <a href="#contact">Send feedback</a></span>
     <span class="row" style="gap:16px">
       <a href="#about">How Digivern works</a><a href="#sources">Our sources</a><a href="#corrections">Corrections</a>
       <label class="row" style="gap:6px">Language
@@ -223,7 +225,7 @@ footer .col b{color:var(--mast-ink)}
 </div>
 <header class="mast">
   <div class="wrap">
-    <a class="brand" href="#home" aria-label="Digivern home"><b>Digi<i>vern</i></b><span>INTELLIGENCE ON DIGITAL GOVERNANCE</span></a>
+    <a class="brand" href="#home" aria-label="Digivern home"><b>Digi<i>vern</i></b><span class="beta">BETA</span><span>INTELLIGENCE ON DIGITAL GOVERNANCE</span></a>
     <div class="mast-actions">
       <a class="btn btn-ghost-dark" href="#premium">Premium</a>
       <a class="btn btn-signal" href="#subscribe">Subscribe</a>
@@ -249,6 +251,7 @@ footer .col b{color:var(--mast-ink)}
       <span class="brand" style="margin:0"><b style="color:var(--mast-ink)">Digi<i>vern</i></b></span>
       <p>Global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. A knowledge venture of Synapse Consulting.</p>
       <p class="mono">Think. Connect. Transform.</p>
+      <p style="font-size:.9rem">Digivern is in beta. Content, features and design may change.</p>
     </div>
     <div class="cols">
       <div class="col"><b>Read</b><a href="#news">News Desk</a><a href="#reports">Analysis &amp; Reports</a><a href="#countries">Country profiles</a><a href="#tracker">Policy &amp; Law Tracker</a><a href="#learn">Learning Hub</a></div>
