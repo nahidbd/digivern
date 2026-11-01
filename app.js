@@ -39,80 +39,75 @@ const V = {};
 
 V.home = () => {
   const lead = SORTED[0];
-  const latest = SORTED.filter(n => n !== lead && (st.theme === 'all' || n.theme === st.theme)).slice(0, 6);
+  const briefItems = BRIEF.top.map(id => NEWS.find(n => n.id === id)).filter(n => n && n !== lead);
+  const briefIds = new Set(briefItems.map(n => n.id));
+  let seconds = SORTED.filter(n => n !== lead && !briefIds.has(n.id));
+  if (seconds.length < 4) seconds = seconds.concat(SORTED.filter(n => n !== lead && briefIds.has(n.id)));
+  seconds = seconds.slice(0, 4);
+  const laws = LAWS.slice().sort((a,b) => (parseInt(b.year)||0) - (parseInt(a.year)||0)).slice(0, 4);
+  const spotItem = SORTED.find(n => n.country && PROFILES[n.country]);
+  const spotId = spotItem ? spotItem.country : 'rwanda';
+  const spotC = COUNTRIES.find(c => c.id === spotId);
+  const spotP = PROFILES[spotId];
+  const kick = n => `${esc(T[n.theme].label)} · ${esc(n.region)}`;
+  const statusColor = s => s.startsWith('In force') || s.startsWith('Adopted') ? 'var(--accent)' : 'var(--red)';
   return `
-  <section class="hero"><div class="wrap">
-    <div class="stack" style="gap:20px">
-      <p class="eyebrow" style="color:var(--accent)">E-governance · DPI · AI · Cybersecurity · All countries</p>
-      <h1>Know what changed in digital government. <em>Checked</em> before you read it.</h1>
-      <p class="lede">Digivern tracks news, laws and research from official and expert sources, turns them into short analysis, and checks every claim against its source.</p>
-      <form class="searchbar js-search" role="search"><label class="sr" for="hero-q">Search Digivern</label><input id="hero-q" type="search" placeholder="Search news, laws, countries, reports…"><button class="btn btn-signal" type="submit">Search</button></form>
-      <div class="row" style="gap:8px;font-size:.9rem;color:var(--mast-muted)">Try:
-        <a href="#tracker" style="color:var(--mast-ink)">AI laws</a>·<a href="#country-rwanda" style="color:var(--mast-ink)">Rwanda digital ID</a>·<a href="#report-r1" style="color:var(--mast-ink)">this week’s brief</a>·<a href="#learn" style="color:var(--mast-ink)">what is DPI?</a>
-      </div>
-    </div>
-    <div class="signal-panel" aria-label="Latest signal">
-      <div class="row" style="justify-content:space-between"><span class="eyebrow" style="color:var(--mast-muted)">Latest signal</span><span class="mono" style="color:var(--mast-muted)">UPDATED ${UPDATED.toUpperCase()}</span></div>
-      ${SORTED.slice(0,5).map(n => `<a class="sp-row" href="#story-${n.id}"><span class="code">${T[n.theme].code}</span><span class="stack" style="gap:4px"><h3>${esc(n.title)}</h3><span class="mono" style="color:var(--mast-muted)">${esc(n.date)} · ${verifyText(n)}</span></span></a>`).join('')}
-      <a href="#news" class="btn" style="margin-top:10px">Open the News Desk</a>
-    </div>
-  </div></section>
-
-  <div class="themes"><div class="wrap" role="toolbar" aria-label="Filter by theme">
-    <span class="eyebrow" style="margin-right:4px">Themes</span>
-    <button class="chip" data-act="theme" data-v="all" aria-pressed="${st.theme==='all'}">All</button>
-    ${THEMES.map(t => `<button class="chip" data-act="theme" data-v="${t.id}" aria-pressed="${st.theme===t.id}">${esc(t.label)}</button>`).join('')}
-  </div></div>
-
-  <section class="band"><div class="wrap">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:32px;align-items:start">
-      <article class="card" style="padding:28px;gap:14px">
-        <div class="row" style="gap:6px"><span class="badge b-premium">Lead story</span>${trustBadge(lead)}<span class="badge b-plain">${esc(lead.type)}</span></div>
-        <h2><a href="#story-${lead.id}" style="color:inherit;text-decoration:none">${esc(lead.title)}</a></h2>
-        <p>${esc(lead.summary)}</p>
-        <div class="why"><b>Why it matters.</b> ${esc(lead.why)}</div>
+  <div class="wrap front">
+    <div class="front-top">
+      <article class="lead">
+        <p class="kicker">Lead · ${kick(lead)}</p>
+        <h1><a href="#story-${lead.id}">${esc(lead.title)}</a></h1>
+        <p class="standfirst">${esc(lead.summary)}</p>
+        <p class="whyline">Why it matters: ${esc(lead.why)}</p>
         ${evidence(lead)}
-        <a href="#story-${lead.id}" class="btn btn-line" style="align-self:flex-start">Read the full item</a>
+        <a href="#story-${lead.id}" style="font-weight:700">Read the full item →</a>
       </article>
-      <div>
-        <div class="head-row" style="margin-bottom:6px"><h2>Latest <span class="muted" style="font-size:1rem;font-family:var(--f-body);font-weight:500">· ${st.theme==='all'?'all themes':esc(T[st.theme].label)}</span></h2><a href="#news">All news →</a></div>
-        ${latest.length ? latest.map(newsRow).join('') : `<p class="empty">No items in this theme yet. Coverage of this theme starts with the next weekly cycle.</p>`}
-      </div>
+      <aside class="brief" aria-label="The Weekly Brief">
+        <h2>The Weekly Brief</h2>
+        <p class="muted" style="font-size:.95rem">${esc(REPORTS.find(r=>r.id==='r1').title.replace('Weekly Global Brief: ',''))} · the developments that mattered</p>
+        <ol>${briefItems.slice(0,5).map(n => `<li><a href="#story-${n.id}">${esc(n.title)}</a></li>`).join('')}</ol>
+        <a href="#report-r1" style="font-weight:700">Read the full brief →</a>
+      </aside>
     </div>
-  </div></section>
 
-  <section class="band band-alt"><div class="wrap">
-    <div class="head-row"><div class="stack" style="gap:6px"><h2>Analysis &amp; Reports</h2><p class="muted">The Weekly Global Brief and explainers are free. Deep-dives, regional reports and the annual outlook are Premium.</p></div><a href="#reports">All reports →</a></div>
+    <div class="seconds">
+      ${seconds.map(n => `<article><p class="kicker" style="font-size:.76rem">${kick(n)}</p><h3><a href="#story-${n.id}">${esc(n.title)}</a></h3><p class="muted" style="font-size:1rem">${esc(n.why)}</p><p class="evidence">${esc(n.date).toUpperCase()} · ${verifyText(n)}</p></article>`).join('')}
+    </div>
+
+    <div class="boxes">
+      <section class="snap" aria-label="Policy and Law Tracker">
+        <h2 style="color:var(--accent)">Policy &amp; Law Tracker</h2>
+        <div>${laws.map(l => `<div class="line"><span><b>${esc(l.where)}</b> · ${esc(l.name)}</span><span style="color:${statusColor(l.status)};font-weight:700;white-space:nowrap">${esc(l.status.split(' · ')[0])}</span></div>`).join('')}</div>
+        <a href="#tracker" style="font-weight:700">All ${LAWS.length} instruments →</a>
+      </section>
+      <section class="spot" aria-label="Country spotlight">
+        <p class="kicker">Country spotlight</p>
+        <h2 style="font-size:2rem">${esc(spotC.name)}</h2>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">${spotP.rows.slice(0,3).map(r => `<li><b>${esc(r[0])}:</b> ${esc(r[1])}</li>`).join('')}</ul>
+        <a href="#country-${spotId}" style="font-weight:700">Open the profile →</a>
+      </section>
+    </div>
+
+    <div class="themes-row" role="navigation" aria-label="Browse by theme">
+      <span class="eyebrow" style="margin-right:6px">Browse by theme</span>
+      ${THEMES.map(t => `<a class="chip" href="#news" data-act="gotheme" data-v="${t.id}" style="text-decoration:none">${esc(t.label)}</a>`).join('')}
+    </div>
+  </div>
+
+  <section class="band band-alt" style="margin-top:44px"><div class="wrap">
+    <div class="head-row"><div class="stack" style="gap:6px"><h2>Analysis &amp; Reports</h2><p class="muted">The Weekly Global Brief and explainers are free. Deep-dives, regional reports and the annual outlook are Premium.</p></div><a href="#reports" style="font-weight:700">All reports →</a></div>
     <div class="grid g4">${REPORTS.slice(0,4).map(reportCard).join('')}</div>
   </div></section>
 
   <section class="band"><div class="wrap">
-    <div class="head-row"><h2>Trackers &amp; tools</h2></div>
-    <div class="grid g4">
-      ${tool('#tracker','Policy & Law Tracker',LAWS.length+' AI, data protection, cyber and DPI instruments, each linked to its source.','LAWS')}
-      ${tool('#countries','Country profiles',Object.keys(PROFILES).length+' profiles live: ID, payments, data exchange, laws, institutions.','COUNTRIES')}
-      ${tool('#ask','Ask Digivern','Ask in your language. Answers come only from the verified library, with citations.','ASK')}
-      ${tool('#readiness','Readiness self-assessment','Score an agency or programme on DPI, AI or cyber readiness and get recommendations.','SCORE')}
-    </div>
-  </div></section>
-
-  <section class="band" style="padding-top:0"><div class="wrap">
-    <div class="card" style="background:var(--accent-soft);color:var(--ink);border-color:transparent;padding:36px;flex-direction:row;flex-wrap:wrap;gap:32px;align-items:center">
-      <div class="stack" style="flex:1 1 380px;min-width:0;gap:10px">
-        <span class="eyebrow" style="color:var(--accent)">Consulting Desk</span>
-        <h2 style="color:var(--mast-ink)">Concept notes, ToRs and policy briefs in 3–10 working days.</h2>
-        <p style="color:var(--mast-muted)">Built from Digivern's verified library. A senior expert reviews and signs off every deliverable.</p>
+    <div class="card" style="background:var(--accent-soft);border-color:transparent;padding:32px;flex-direction:row;flex-wrap:wrap;gap:28px;align-items:center">
+      <div class="stack" style="flex:1 1 380px;min-width:0;gap:8px">
+        <p class="kicker">Consulting Desk</p>
+        <h2>Concept notes, ToRs and policy briefs in 3–10 working days.</h2>
+        <p class="muted">Built from Digivern's verified library. A senior expert reviews and signs off every deliverable.</p>
       </div>
-      <div class="stack" style="flex:1 1 320px;min-width:0">
-        <div class="row" style="gap:8px">${['Concept notes','Terms of Reference','Policy briefs','Readiness assessments','Feasibility notes','Proposal sections'].map(s=>`<span class="badge" style="background:var(--surface);color:var(--ink);border:1px solid var(--line)">${s}</span>`).join('')}</div>
-        <a href="#consulting" class="btn btn-signal" style="align-self:flex-start">Request a deliverable</a>
-      </div>
+      <a href="#consulting" class="btn">Request a deliverable</a>
     </div>
-  </div></section>
-
-  <section class="band" style="padding-top:0"><div class="wrap">
-    <div class="head-row"><div class="stack" style="gap:6px"><h2>How every item is made</h2><p class="muted">Every item is collected, drafted and checked against its sources before it goes live.</p></div><a href="#about">Read the methodology →</a></div>
-    ${pipeline()}
   </div></section>
   ${newsletterBlock()}`;
 };
@@ -494,5 +489,6 @@ document.addEventListener('submit', e => {
 });
 $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.dataset.open !== 'true'; n.dataset.open = String(open); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
 
+try { $('#today').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Dhaka'}); } catch(e) { $('#today').textContent = UPDATED; }
 render();
 })();
