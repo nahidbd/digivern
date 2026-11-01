@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digivern has moved</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://digivern.pages.dev/">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&display=swap">
+<style>
+body{margin:0;background:#FFFFFF;color:#16202E;font-family:Cambria,Caladea,Georgia,"Times New Roman",serif;line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding:72px 16px;text-align:center}
+.brand{font-size:44px;font-weight:700;letter-spacing:-.02em;margin:0}
+.brand span{color:#1E3A6E}.brand i{color:#8B1A1A;font-style:normal}
+.rule{border:0;border-top:3px double #1E3A6E;margin:20px 0 28px}
+h1{font-size:26px;margin:0 0 12px}
+p{font-size:18px;margin:0 0 20px}
+a.go{display:inline-block;background:#1E3A6E;color:#FFFFFF;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700}
+a.go:hover{background:#8B1A1A}
+small{display:block;margin-top:28px;color:#5A6578;font-size:15px}
+small a{color:#1E3A6E}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="brand"><span>Digi</span><i>vern</i></p>
+<hr class="rule">
+<h1>Digivern has moved</h1>
+<p>Our new address is <b>digivern.pages.dev</b>. Please update your bookmarks.</p>
+<a class="go" id="go" href="https://digivern.pages.dev/">Go to digivern.pages.dev</a>
+<small>Taking you there in <span id="s">5</span> seconds. A knowledge venture of <a href="https://synapseconsulting.services" target="_blank" rel="noopener">Synapse Consulting</a>.</small>
+</div>
+<form name="writeup" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="hidden" name="form-name" value="writeup">
+  <input type="hidden" name="subject" value="New writeup for Digivern (%{submissionId})">
+  <input name="bot-field">
+  <input name="name" type="text"><input name="email" type="email"><input name="role" type="text"><input name="organisation" type="text"><input name="country" type="text">
+  <textarea name="bio"></textarea><input name="link" type="text">
+  <input name="title" type="text"><select name="theme"><option>x</option></select><textarea name="summary"></textarea>
+  <input name="writeup_file" type="file"><input name="photo" type="file">
+  <input name="consent_original" type="checkbox"><input name="consent_publish" type="checkbox">
+</form>
+<script>
+var u='https://digivern.pages.dev/'+(location.hash||'');
+document.getElementById('go').href=u;
+var n=5,t=setInterval(function(){n--;document.getElementById('s').textContent=n;if(n<=0){clearInterval(t);location.replace(u);}},1000);
+</script>
+</body>
+</html>
