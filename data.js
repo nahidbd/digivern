@@ -194,5 +194,7 @@ const ANSWERS = {
 };
 
 const NEWSORDER = ['n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5','n11','n14'];
-window.DV = {UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER};
+/* Weekly Global Brief (report r1): top = five lead item ids, also = other item ids. Refresh every Monday. */
+const BRIEF = {top:['n1','n3','n4','n2','n8'], also:['n9','n10','n12','n13']};
+window.DV = {BRIEF, UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER};
 })();

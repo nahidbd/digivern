@@ -1,6 +1,6 @@
 (function(){
 const $ = s => document.querySelector(s);
-const {UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER} = window.DV;
+const {UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- state ---------- */
@@ -182,11 +182,11 @@ V.reports = () => pagehead('Analysis &amp; Reports','Analysis &amp; Reports','Th
   </div></section>`;
 
 function briefBody(){
-  const pick = ['n1','n3','n4','n2','n8'].map(id => NEWS.find(n=>n.id===id));
+  const pick = BRIEF.top.map(id => NEWS.find(n=>n.id===id)).filter(Boolean);
   return `<h2>The five developments that mattered</h2>
     <ol class="stack" style="margin:0;padding-left:22px;gap:14px">${pick.map((n,i)=>`<li><b><a href="#story-${n.id}">${esc(n.title)}</a></b><br><span class="muted">${esc(n.why)}</span><a class="cite" href="#story-${n.id}">${i+1}</a></li>`).join('')}</ol>
     <h2>Also this week</h2>
-    <ul class="stack" style="margin:0;padding-left:20px;gap:8px">${['n9','n10','n12','n13'].map(id=>{const n=NEWS.find(x=>x.id===id);return `<li><a href="#story-${n.id}">${esc(n.title)}</a></li>`;}).join('')}</ul>
+    <ul class="stack" style="margin:0;padding-left:20px;gap:8px">${BRIEF.also.map(id=>NEWS.find(x=>x.id===id)).filter(Boolean).map(n=>`<li><a href="#story-${n.id}">${esc(n.title)}</a></li>`).join('')}</ul>
     <p class="footnote">${pick.map((n,i)=>`${i+1}. ${esc(n.links[0][1])}, ${esc(n.date)}`).join(' · ')}</p>`;
 }
 function dpiBody(){
