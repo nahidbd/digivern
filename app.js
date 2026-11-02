@@ -105,7 +105,8 @@ V.home = () => {
   </div></section>
 
   <section class="band band-alt" style="margin-top:44px"><div class="wrap">
-    <div class="head-row"><div class="stack" style="gap:6px"><h2>Analysis &amp; Reports</h2><p class="muted">The Weekly Global Brief and explainers are free. Deep-dives, regional reports and the annual outlook are Premium.</p></div><a href="#reports" style="font-weight:700">All reports →</a></div>
+    <div class="head-row"><div class="stack" style="gap:6px"><h2>Analysis &amp; Reports</h2><p class="muted">In-depth analysis with charts, impact and comparison with the rest of the world, plus the free Weekly Global Brief.</p></div><a href="#reports" style="font-weight:700">All analysis →</a></div>
+    ${ANALYSES.length?`<div class="grid g2" style="margin-bottom:20px">${ANALYSES.slice(0,2).map(analysisCard).join('')}</div>`:''}
     <div class="grid g4">${REPORTS.slice(0,4).map(reportCard).join('')}</div>
   </div></section>
 
@@ -172,8 +173,78 @@ V.story = id => {
   </div></section>`;
 };
 
-V.reports = () => pagehead('Analysis &amp; Reports','Analysis &amp; Reports','The Weekly Global Brief, explainers, monthly deep-dives, quarterly regional reports and the annual State of Digital Governance outlook. Every figure is footnoted.') + `
+
+/* ---------- in-depth analysis ---------- */
+const ANALYSES = window.DV_ANALYSES || [];
+const fmtNum = (v,f) => f==='pct' ? (v===0?'0% (free)':v.toFixed(2).replace(/0$/,'')+'%') : f==='dec' ? (Math.round(v*100)/100).toLocaleString('en-GB') : Math.round(v).toLocaleString('en-GB');
+function citeText(s, aid){ return esc(s).replace(/\[(\d+)\]/g, (m,n)=>`<a class="cite" href="#analysis-${aid}" data-act="src" data-v="${aid}-${n}" title="Source ${n}">${n}</a>`).replace(/<\/a><a class="cite"/g,'</a><span class="cite">,</span><a class="cite"'); }
+function chartBlock(ch, aid){
+  const max = Math.max(...ch.rows.flatMap(r => ch.type==='group' ? r[1] : [r[1]]), 0.0001);
+  const bar = (v, hl) => `<div class="bt"><div class="bf${hl?' hl':''}" style="width:${Math.max(100*v/max, v?1.5:0.6).toFixed(1)}%"></div></div><span class="bv">${fmtNum(v,ch.fmt)}</span>`;
+  const rows = ch.type==='group'
+    ? ch.rows.map(r => `<div class="brow grp"><span class="bl">${esc(r[0])}</span><div class="bpair">${r[1].map((v,i)=>`<div class="bline"><span class="bs">${esc(ch.series[i])}</span>${bar(v,i===1)}</div>`).join('')}</div></div>`).join('')
+    : ch.rows.map(r => `<div class="brow"><span class="bl">${esc(r[0])}</span><div class="bline">${bar(r[1], r[2]==='hl')}</div></div>`).join('');
+  const label = ch.title + '. ' + ch.rows.map(r => r[0] + ': ' + (ch.type==='group' ? r[1].map((v,i)=>ch.series[i]+' '+fmtNum(v,ch.fmt)).join(', ') : fmtNum(r[1],ch.fmt))).join('; ');
+  return `<figure class="chart" role="img" aria-label="${esc(label)}"><figcaption><b>${esc(ch.title)}</b><span class="muted">${esc(ch.sub)}</span></figcaption>
+    <div class="bars" aria-hidden="true">${rows}</div>
+    <p class="footnote">Source: ${ch.c.map(n=>`<a class="cite" style="vertical-align:baseline" href="#analysis-${aid}" data-act="src" data-v="${aid}-${n}">${n}</a>`).join(', ')}</p></figure>`;
+}
+function tableBlock(t, aid){
+  return `<div class="tablebox"><table><thead><tr>${t.cols.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>i?`<td>${citeText(c,aid)}</td>`:`<th scope="row" style="font-weight:700">${citeText(c,aid)}</th>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function analysisCard(x){
+  return `<a class="card acard" href="#analysis-${x.id}"><span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span><h3>${esc(x.title)}</h3><p class="muted">${esc(x.standfirst)}</p>
+    <div class="row" style="gap:6px;margin-top:auto"><span class="badge b-official">Free</span><span class="badge b-plain">${esc(x.sector)}</span><span class="badge b-plain">${x.readMins} min read</span></div></a>`;
+}
+V.analysis = id => {
+  const x = ANALYSES.find(a => a.id === id) || ANALYSES[0];
+  if (!x) return V.reports();
+  const DIR = {'+':['Positive','imp-pos','▲'],'−':['Negative','imp-neg','▼'],'±':['Mixed','imp-mix','◆']};
+  const nav = [['a-overview','Overview'],['a-charts','In numbers'],['a-impact','Impact'],['a-world','Around the world'],['a-home','Inside the country'],['a-watch','What to watch'],['a-sources','Sources']];
+  return `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#reports">Analysis</a> / In-depth</p>
+    <span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span>
+    <h1 style="max-width:30ch">${esc(x.title)}</h1>
+    <p class="lead" style="max-width:68ch">${esc(x.standfirst)}</p>
+    <p class="mono muted">DIGIVERN ANALYSIS · ${esc(x.date).toUpperCase()} · ${x.readMins} MIN READ · ${x.sources.length} SOURCES</p></div></div>
+  <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',x.id)}</span></div>`).join('')}</div></div></section>
+  <section class="band"><div class="wrap layout-side">
+    <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
+      <div id="a-overview" class="stack" style="gap:14px">${x.body.map(s=>`<h2>${esc(s.h)}</h2>${s.p.map(p=>`<p>${citeText(p,x.id)}</p>`).join('')}`).join('')}</div>
+
+      <h2 id="a-charts">In numbers</h2>
+      ${x.charts.map(c=>chartBlock(c,x.id)).join('')}
+
+      <h3>${esc(x.timeline.title)}</h3>
+      <ol class="timeline">${x.timeline.items.map(t=>`<li><span class="t-date">${esc(t[0])}</span><span>${esc(t[1])}<a class="cite" href="#analysis-${x.id}" data-act="src" data-v="${x.id}-${t[2]}">${t[2]}</a></span></li>`).join('')}</ol>
+
+      <h2 id="a-impact">Impact assessment</h2>
+      <p class="muted" style="margin-top:-8px">Who gains, who loses and how much, in Digivern’s assessment.</p>
+      <div class="impact">${x.impact.map(i=>`<div class="imp ${DIR[i.dir][1]}"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(i.who)}</b><span class="imp-tag"><span aria-hidden="true">${DIR[i.dir][2]}</span> ${DIR[i.dir][0]} · ${esc(i.size)}</span></div><p>${citeText(i.text,x.id)}</p></div>`).join('')}</div>
+
+      <h2 id="a-world">${esc(x.world.title)}</h2>
+      ${tableBlock(x.world,x.id)}
+
+      <h2 id="a-home">${esc(x.home.title)}</h2>
+      ${tableBlock(x.home,x.id)}
+
+      <h2 id="a-watch">What to watch</h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px">${x.watch.map(w=>`<li>${citeText(w,x.id)}</li>`).join('')}</ul>
+
+      <h2 id="a-sources">Sources</h2>
+      <ol class="srclist">${x.sources.map((s,i)=>`<li id="src-${x.id}-${i+1}"><a href="${esc(s[2])}" target="_blank" rel="noopener">${esc(s[0])}</a> <span class="muted">${esc(s[1])}</span></li>`).join('')}</ol>
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. Charts and tables use only the figures in those sources; the assessment and impact ratings are Digivern’s own analysis.</p></div>
+    </article>
+    <aside class="stack">
+      <div class="card toc"><span class="eyebrow">In this analysis</span>${nav.map(n=>`<a href="#analysis-${x.id}" data-act="jump" data-v="${n[0]}">${n[1]}</a>`).join('')}</div>
+      ${x.related.length?`<div class="card"><span class="eyebrow">Related news</span>${x.related.map(id=>NEWS.find(n=>n.id===id)).filter(Boolean).map(n=>`<a href="#story-${n.id}" style="font-weight:600">${esc(n.title)}</a>`).join('')}</div>`:''}
+      <div class="card"><span class="eyebrow">More analysis</span>${ANALYSES.filter(a=>a.id!==x.id).map(a=>`<a href="#analysis-${a.id}" style="font-weight:600">${esc(a.title)}</a>`).join('')}<a href="#reports">All analysis and reports →</a></div>
+    </aside>
+  </div></section>`;
+};
+
+V.reports = () => pagehead('Analysis &amp; Reports','Analysis &amp; Reports','In-depth analysis with charts, impact and global comparison, plus the Weekly Global Brief, explainers, monthly deep-dives, quarterly regional reports and the annual State of Digital Governance outlook. Every figure is footnoted.') + `
   <section class="band"><div class="wrap stack" style="gap:28px">
+    ${ANALYSES.length?`<div><div class="head-row"><div class="stack" style="gap:6px"><h2>In-depth analysis</h2><p class="muted">Charts, impact assessment, and comparison with similar work around the world and inside the country.</p></div></div><div class="grid g2">${ANALYSES.map(analysisCard).join('')}</div></div>`:''}
     ${[['Free','free'],['Premium','premium']].map(([lab,acc])=>`<div><div class="head-row"><h2>${lab}</h2>${acc==='premium'?'<a href="#premium">See Premium plans →</a>':''}</div><div class="grid g4">${REPORTS.filter(r=>r.access===acc).map(reportCard).join('')}</div></div>`).join('')}
   </div></section>`;
 
@@ -513,11 +584,11 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
   </div></section>`;
 
 /* ---------- router ---------- */
-const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices'};
+const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices'};
 function render(){
   const h = (location.hash || '#home').slice(1);
   let name = h, param = '';
-  const m = h.match(/^(story|report|country|writeup)-(.+)$/);
+  const m = h.match(/^(story|report|analysis|country|writeup)-(.+)$/);
   if (m) { name = m[1]; param = m[2]; }
   if (!V[name]) name = 'home';
   $('#view').innerHTML = V[name](param);
@@ -543,6 +614,7 @@ document.addEventListener('click', e => {
   else if (a === 'lawcat') { st.lawCat = v; render(); }
   else if (a === 'cregion') { st.cRegion = v; render(); }
   else if (a === 'askq') { st.askI = +v; st.askFree = ''; render(); }
+  else if (a === 'src' || a === 'jump') { e.preventDefault(); const el = document.getElementById(a==='src' ? 'src-'+v : v); if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); if (a==='src') { el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600); } } }
   else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
   else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');

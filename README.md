@@ -12,6 +12,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 | `index.html` | Page layout and styles |
 | `app.js` | How pages are drawn (routing, filters, forms) |
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
+| `analysis.js` | In-depth analysis: key numbers, charts, timeline, impact assessment, global and in-country comparison, numbered sources |
 | `_headers` | Security headers |
 | `netlify.toml` | Legacy Netlify settings (not used by Cloudflare) |
 
