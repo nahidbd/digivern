@@ -213,7 +213,7 @@ V.analysis = id => {
     <span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span>
     <h1 style="max-width:30ch">${esc(x.title)}</h1>
     <p class="lead" style="max-width:68ch">${esc(x.standfirst)}</p>
-    <p class="mono muted">DIGIVERN ANALYSIS · ${esc(x.date).toUpperCase()} · ${x.readMins} MIN READ · ${x.sources.length} SOURCES</p></div></div>
+    <p class="mono muted">DIGIVERN ANALYSIS · ${esc(x.date).toUpperCase()}${x.updated?' · UPDATED '+esc(x.updated).toUpperCase():''} · ${x.readMins} MIN READ · ${x.sources.length} SOURCES</p></div></div>
   <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',x.id)}</span></div>`).join('')}</div></div></section>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack analysis" style="gap:22px;font-size:1.05rem">

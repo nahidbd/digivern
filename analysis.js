@@ -2,6 +2,7 @@
    Each analysis has: key numbers, body sections, charts (bar = one series, group = two series), a timeline,
    an impact assessment, a comparison with similar work around the world, a comparison inside the country,
    what to watch, and numbered sources. "[n]" in any text becomes a link to source n.
+   updated: optional date string shown as 'Updated <date>' when an analysis is revised with new sources.
    Sections expected in every analysis:
      policy:{title?, intro?, rows:[[instrument, year, what it does, status]]}
      implementation:{title?, intro?, rows:[[milestone, date or target, 'done'|'on track'|'delayed'|'not started'|'unclear', evidence]]}
