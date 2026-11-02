@@ -1,11 +1,11 @@
 (function(){
 const $ = s => document.querySelector(s);
-const {UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
+const {UPDATED, THEMES, T, SECTORS, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
 const WRITEUPS = window.DV.WRITEUPS || [];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- state ---------- */
-const st = {theme:'all', newsTheme:'all', region:'all', official:false, confirmed:false, q:'', lawCat:'all', lawQ:'', cRegion:'all', tTheme:'all', glossQ:'', askI:0, askFree:''};
+const st = {theme:'all', newsTheme:'all', sector:'all', region:'all', official:false, confirmed:false, q:'', lawCat:'all', lawQ:'', cRegion:'all', tTheme:'all', glossQ:'', askI:0, askFree:''};
 try { const saved = JSON.parse(localStorage.getItem('digivern-filters')||'{}'); Object.assign(st, saved); } catch(e) {}
 function persist(){ try{ localStorage.setItem('digivern-filters', JSON.stringify({region:st.region, official:st.official, confirmed:st.confirmed})); }catch(e){} }
 
@@ -93,6 +93,10 @@ V.home = () => {
       <span class="eyebrow" style="margin-right:6px">Browse by theme</span>
       ${THEMES.map(t => `<a class="chip" href="#news" data-act="gotheme" data-v="${t.id}" style="text-decoration:none">${esc(t.label)}</a>`).join('')}
     </div>
+    <div class="themes-row" role="navigation" aria-label="Browse by sector">
+      <span class="eyebrow" style="margin-right:6px">Browse by sector</span>
+      ${SECTORS.filter(x => NEWS.some(n => n.sector === x)).map(x => `<a class="chip" href="#news" data-act="gosector" data-v="${esc(x)}" style="text-decoration:none">${esc(x)}<span class="muted" style="margin-left:7px;font-weight:400">${NEWS.filter(n => n.sector === x).length}</span></a>`).join('')}
+    </div>
   </div>
 
   <section class="band" style="padding-bottom:0"><div class="wrap">
@@ -119,9 +123,9 @@ function pipeline(){
 }
 
 V.news = () => {
-  let items = SORTED.filter(n => (st.newsTheme==='all'||n.theme===st.newsTheme) && (st.region==='all'||n.region===st.region) && (!st.official||n.trust==='official') && (!st.confirmed||n.sources>=2));
+  let items = SORTED.filter(n => (st.newsTheme==='all'||n.theme===st.newsTheme) && (st.sector==='all'||n.sector===st.sector) && (st.region==='all'||n.region===st.region) && (!st.official||n.trust==='official') && (!st.confirmed||n.sources>=2));
   if (st.q) { const q = st.q.toLowerCase(); items = items.filter(n => (n.title+' '+n.summary+' '+T[n.theme].label+' '+n.region+' '+n.sector).toLowerCase().includes(q)); }
-  return pagehead('News Desk','News Desk','Curated global news across eight themes. Each item has an original summary, a note on why it matters and a direct link to its source.',
+  return pagehead('News Desk','News Desk','Curated global news across eight themes and every sector, from fintech and health to education and agriculture. Each item has an original summary, a note on why it matters and a direct link to its source.',
     `<button class="btn btn-line" data-act="follow">Follow these filters</button>`) + `
   <section class="band"><div class="wrap layout-side">
     <aside class="filterbox" aria-label="Filters">
@@ -131,6 +135,7 @@ V.news = () => {
         <button class="toggle" data-act="confirmed" aria-pressed="${st.confirmed}">Confirmed by 2+ sources <span class="sw">${st.confirmed?'ON':'OFF'}</span></button>
       </div>
       <div class="field"><label for="nt">Theme</label><select id="nt" data-change="newsTheme"><option value="all">All eight themes</option>${THEMES.map(t=>`<option value="${t.id}" ${st.newsTheme===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}</select></div>
+      <div class="field"><label for="ns">Sector</label><select id="ns" data-change="sector"><option value="all">All sectors</option>${SECTORS.map(x=>`<option ${st.sector===x?'selected':''}>${esc(x)}</option>`).join('')}</select></div>
       <div class="field"><label for="nr">Region</label><select id="nr" data-change="region"><option value="all">All regions</option>${REGIONS.map(r=>`<option ${st.region===r?'selected':''}>${r}</option>`).join('')}</select></div>
       <div class="field"><label for="na">Audience</label><select id="na"><option>Everyone</option><option>Government</option><option>Development partner</option><option>Civil society</option><option>Private sector</option><option>Research</option></select></div>
     </aside>
@@ -534,11 +539,12 @@ document.addEventListener('click', e => {
   if (a === 'theme') { st.theme = v; render(); }
   else if (a === 'official') { st.official = !st.official; persist(); render(); }
   else if (a === 'confirmed') { st.confirmed = !st.confirmed; persist(); render(); }
-  else if (a === 'reset') { Object.assign(st,{newsTheme:'all',region:'all',official:false,confirmed:false,q:''}); persist(); render(); }
+  else if (a === 'reset') { Object.assign(st,{newsTheme:'all',sector:'all',region:'all',official:false,confirmed:false,q:''}); persist(); render(); }
   else if (a === 'lawcat') { st.lawCat = v; render(); }
   else if (a === 'cregion') { st.cRegion = v; render(); }
   else if (a === 'askq') { st.askI = +v; st.askFree = ''; render(); }
-  else if (a === 'gotheme') { st.newsTheme = v; }
+  else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
+  else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');
   else if (a === 'alerts') toast('Alerts are part of Premium, which opens after the pilot.');
   else if (a === 'save') toast('Saving opens with reader accounts after the pilot.');

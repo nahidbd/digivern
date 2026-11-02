@@ -9,15 +9,47 @@ const THEMES = [
   {id:'pol',code:'POL',label:'Digital governance & policy',desc:'Data protection, interoperability, open data, digital rights, platform and telecom regulation, national strategies.'},
   {id:'ai',code:'AI',label:'Artificial intelligence',desc:'AI in the public sector, regulation and ethics, AI safety, national AI strategies.'},
   {id:'cyb',code:'CYB',label:'Cybersecurity',desc:'National cyber strategies and laws, critical infrastructure, incidents affecting public systems, capacity building.'},
-  {id:'sec',code:'SECT',label:'Sector digitalisation',desc:'E-health, digital agriculture, ed-tech, fintech and digital social protection.'},
+  {id:'sec',code:'SECT',label:'Sector digitalisation',desc:'Fintech and digital payments, health tech, ed-tech, agritech, digital social protection and digital trade.'},
   {id:'grn',code:'GRN',label:'Green digitalisation',desc:'E-waste, energy use of data centres and AI, circular-economy policy, climate tech in government.'},
   {id:'enb',code:'ENB',label:'Enabling areas',desc:'Connectivity and inclusion, digital skills, technology procurement, emerging technologies.'}
 ];
 const T = Object.fromEntries(THEMES.map(t => [t.id, t]));
+/* Sectors tag every news item (field `sector`) so readers can follow fintech, health, education and other sectors across all themes. */
+const SECTORS = ['Government','Fintech & payments','Health','Education','Agriculture','Social protection','Telecom','Trade & business','Energy & climate'];
 const REGIONS = ['Africa','Americas','Asia-Pacific','Europe','Middle East','Global'];
 
 const BU = 'Biometric Update';
 const NEWS = [
+  {id:'n19',theme:'dpi',region:'Africa',country:'',sector:'Fintech & payments',type:'Policy or law',trust:'media',sources:2,date:'2 Nov 2026',
+   title:'West Africa makes mobile money interoperable through one instant payment system and doubles wallet limits',
+   summary:'From 2 November 2026, new rules from the Central Bank of West African States (BCEAO) apply across the eight WAEMU countries. Instruction no. 020, signed on 8 October, requires interoperable person-to-person transfers to run through the BCEAO’s PI-SPI instant payment system, which already links more than 175 institutions and over 38 million users. Transfers are free up to CFAF 8,000 a day per user, with fees capped at 0.8% above that, and receiving money stays free. The maximum balance for an identified customer doubles from CFAF 2 million to CFAF 4 million, the monthly top-up ceiling rises from CFAF 10 million to CFAF 15 million, and issuers must keep 65% of customer funds in demand deposits, down from 75%.',
+   why:'A regional central bank is using a public instant payment switch to end closed mobile money networks, one of the clearest cases of payments being run as digital public infrastructure.',
+   links:[['The end of closed mobile money networks in West Africa','TechAfrica News','https://techafricanews.com/2026/10/26/89825/','media'],['BCEAO eases mobile money rules, gives operators more freedom to invest customer funds','Ecofin Agency','https://www.ecofinagency.com/news-finances/1210-59674-bceao-eases-mobile-money-rules-gives-operators-more-freedom-to-invest-customer-funds','media']]},
+  {id:'n20',theme:'sec',region:'Africa',country:'',sector:'Health',type:'Policy or law',trust:'official',sources:2,date:'22 Oct 2026',
+   title:'African Union member states validate the first continental framework for governing health data',
+   summary:'Meeting in Addis Ababa, AU member states validated the African Continental Health Data Governance Framework, developed by Africa CDC with Transform Health through consultations since 2025. It sets common rules for lawful, secure and ethical use of health data and proposes a federated model, so countries can share data across borders for disease surveillance and care while keeping control of their national systems. It builds on the Malabo Convention, the AU Data Policy Framework and the Digital Transformation Strategy for Africa. Africa CDC will now finalise the text, which is expected to go through AU policy processes in 2027.',
+   why:'Cross-border health data sharing in Africa has stalled on trust and sovereignty concerns; a shared framework gives ministries a common baseline for national health data laws.',
+   links:[['AU member states validate African Continental Health Data Governance Framework','Africa CDC','https://africacdc.org/news-item/au-member-states-validate-african-continental-health-data-governance-framework/','official'],['AU member states validate African Continental Health Data Governance Framework','allAfrica','https://allafrica.com/stories/202610230017.html','media']]},
+  {id:'n21',theme:'sec',region:'Asia-Pacific',country:'bangladesh',sector:'Health',type:'News',trust:'media',sources:1,date:'18 Oct 2026',
+   title:'Bangladesh unveils a digital health push built on an e-health card and a national health database',
+   summary:'At an event in Dhaka organised with the World Health Organization, State Minister for Health and Family Welfare Dr M A Muhit set out plans for a universal electronic health card and a national health database for nearly 200 million people. The database would link consultations, prescriptions, medicine purchases and test results. Plans also include app-based appointment booking, digital tracking of medicines supplied to public hospitals to curb illegal sales, and a national e-Hackathon. No budget or rollout timetable was announced.',
+   why:'A shared health record linked to a national card would be the backbone for e-prescriptions and referrals; the missing timetable and budget will decide whether it moves beyond announcements.',
+   links:[['From paper prescriptions to digital care: a new hope for Bangladesh','The Daily Star','https://www.thedailystar.net/health/news/paper-prescriptions-digital-care-new-hope-bangladesh-4306636','media']]},
+  {id:'n22',theme:'ai',region:'Europe',country:'',sector:'Fintech & payments',type:'Guidance',trust:'official',sources:2,date:'19 Oct 2026',
+   title:'UK financial regulator sets out good and poor practice for firms using AI, including agentic tools',
+   summary:'The Financial Conduct Authority published examples of good practice and areas for improvement in how financial firms use machine learning, generative AI and agentic AI, drawn from its 2026 supervisory testing. It creates no new rules: existing rules, including the Consumer Duty and senior managers’ accountability, still apply. Good practice includes independent panels that challenge AI use cases and named senior owners for each one. Weak practice includes deploying AI before governance is in place and treating human review as a fix for flawed systems. The FCA also plans a framework for “agentic finance” covering agent identity and delegated authority.',
+   why:'Regulators elsewhere are watching how the FCA supervises AI under existing law rather than new AI-specific rules; the approach offers a template for central banks and financial regulators in emerging markets.',
+   links:[['AI in financial services: good practice and areas for improvement','Financial Conduct Authority','https://www.fca.org.uk/publications/good-poor-practice/ai-financial-services','official'],['FCA publishes AI good and poor practice for financial firms','The Paypers','https://thepaypers.com/regulations/news/fca-publishes-ai-good-and-poor-practice-for-financial-firms','media']]},
+  {id:'n23',theme:'sec',region:'Americas',country:'',sector:'Education',type:'News',trust:'media',sources:1,date:'23 Oct 2026',
+   title:'New York City lists 38 ed-tech products caught by its ban on student-facing AI in public schools',
+   summary:'Chalkbeat obtained the list of 38 previously approved products whose generative AI features New York City public schools must switch off or drop under restrictions announced by Mayor Zohran Mamdani. It covers widely used reading and maths programmes, assessment tools and the education department’s own chatbot teaching assistant. The AI reading tutor Amira, used in more than 200 schools, was banned outright, and Google’s Gemini is being turned off for students. Some vendors dispute that their tools use generative AI; the department is reviewing products case by case, with a carve-out for tools that help English language learners.',
+   why:'The largest US school system is showing how hard it is to regulate AI inside ed-tech procurement when vendors’ definitions of AI differ; education ministries face the same vetting problem.',
+   links:[['NYC school AI ban: see 38 ed tech products officials say violate the policy','Chalkbeat','https://www.chalkbeat.org/newyork/2026/10/23/nyc-schools-ai-ban-list-38-education-technology-products/','media']]},
+  {id:'n24',theme:'sec',region:'Asia-Pacific',country:'india',sector:'Education',type:'News',trust:'media',sources:1,date:'22–31 Oct 2026',
+   title:'Himachal Pradesh puts every government school teacher on a digital profile with an AI skills baseline',
+   summary:'India’s Himachal Pradesh signed an agreement on 22 October with Bharti Airtel Foundation to use its free Teacher App across government schools. On 31 October the Directorate of School Education told district officials to make sure all teachers and heads of schools register and complete a baseline survey of their digital and AI skills. The results will steer needs-based training, including AI Samarth Level 1 and 2 courses and an “AI Tools in Teaching” kit, in place of one-size-fits-all workshops.',
+   why:'Mapping teachers’ digital skills before rolling out AI in classrooms is a step many education systems skip; a state-wide baseline lets training budgets follow actual gaps.',
+   links:[['Himachal Pradesh puts every government school teacher on The Teacher App','Elets digitalLEARNING','https://digitallearning.eletsonline.com/2026/11/himachal-pradesh-the-teacher-app-bharti-airtel-foundation-teacher-digital-profiles-ai-training','media']]},
   {id:'n15',theme:'cyb',region:'Europe',country:'',sector:'Government',type:'News',trust:'media',sources:2,date:'27–29 Oct 2026',
    title:'Moldova takes 82 e-services offline after attackers extract data linked to 750,000 ID numbers',
    summary:'Moldova’s Electronic Governance Agency (AGE) said attackers exploited government e-services that needed no login between 19 and 23 October, querying about one million personal identification numbers (IDNPs) and extracting data linked to about 750,000 of them. Exposed fields include family links, health insurance status, benefits and pensions, driving licences, photographs, bank account numbers (IBANs) and tax debts; bank card data and state registers were not affected. As a precaution, 82 public services and more than 30 information systems were disconnected. Prime Minister Vasile Tofan said foreign state involvement is being examined, and AGE director Nicoleta Colomeeț is stepping down, with Artiom Cociu leading the agency on an interim basis.',
@@ -98,7 +130,7 @@ const NEWS = [
    summary:'Benin’s identification agency ANIP now lets citizens apply for and track renewals of the national biometric ID card online, around the clock. Applications are still validated manually and cards are usually collected in person. Enrolment reportedly covers nearly 99% of the population.',
    why:'Moving ID services online is a common next step once enrolment is near-universal.',
    links:[['Benin moves biometric national ID card renewals online',BU,'https://www.biometricupdate.com/202610/benin-moves-biometric-national-id-card-renewals-online','media']]},
-  {id:'n13',theme:'egov',region:'Asia-Pacific',country:'india',sector:'Government',type:'Event',trust:'expert',sources:1,date:'28 Oct 2026',
+  {id:'n13',theme:'egov',region:'Asia-Pacific',country:'india',sector:'Government',type:'News',trust:'expert',sources:1,date:'28 Oct 2026',
    title:'Digital Citizen Summit in Hyderabad debates making India’s DPI more accountable',
    summary:'IIIT Hyderabad hosted the Digital Citizen Summit regional dialogue on digital public infrastructure for governance, organised with the Digital Empowerment Foundation and Code for Good Tech. Participants discussed how to make DPI such as Aadhaar, UPI and DigiLocker more inclusive, accountable and accessible.',
    why:'Civil society scrutiny of India’s DPI matters globally because the model is being promoted abroad.',
@@ -197,9 +229,9 @@ const GLOSSARY = [
 ];
 
 const SOURCES = {
-  'Tier 1 · Official':['UN DESA','UNDP','ITU','UNICEF','WHO (digital health)','FAO (digital agriculture)','UNEP','World Bank (incl. ID4D)','Asian Development Bank','African Development Bank','Inter-American Development Bank','OECD','European Commission and EUR-Lex','Council of Europe','National digital agencies and regulators','Official gazettes and legislation portals'],
-  'Tier 2 · Expert':['Co-Develop','Digital Public Goods Alliance','CIPESA','Center for Global Development','Observer Research Foundation','LIRNEasia','Ada Lovelace Institute','Stanford HAI (AI Index)','Partnership on AI','Global Forum on Cyber Expertise','CyberPeace Institute','Digital Square (PATH)','CGIAR','StEP Initiative','GSMA','Open Government Partnership','Access Now','ID4Africa','University research centres'],
-  'Tier 3 · Media':['Biometric Update','Established international news agencies','National newspapers of record','Specialist GovTech, AI and cybersecurity trade press','Law firm and policy briefings']
+  'Tier 1 · Official':['UN DESA','UNDP','ITU','UNICEF','WHO (digital health)','FAO (digital agriculture)','UNESCO (education technology)','Central banks and financial regulators','Bank for International Settlements','Africa CDC','UNEP','World Bank (incl. ID4D)','Asian Development Bank','African Development Bank','Inter-American Development Bank','OECD','European Commission and EUR-Lex','Council of Europe','National digital agencies and regulators','Official gazettes and legislation portals'],
+  'Tier 2 · Expert':['Co-Develop','Digital Public Goods Alliance','CIPESA','Center for Global Development','Observer Research Foundation','LIRNEasia','Ada Lovelace Institute','Stanford HAI (AI Index)','Partnership on AI','Global Forum on Cyber Expertise','CyberPeace Institute','Digital Square (PATH)','CGIAR','StEP Initiative','GSMA (incl. mobile money)','CGAP','Alliance for Financial Inclusion','Better Than Cash Alliance','Transform Health','Open Government Partnership','Access Now','ID4Africa','University research centres'],
+  'Tier 3 · Media':['Reuters','Associated Press','AFP','BBC News','The Guardian','Financial Times','The Economist','Bloomberg','Nikkei Asia','Al Jazeera','Rest of World','Devex','The Hindu','The Daily Star (Bangladesh)','Dawn','Nation (Kenya)','TechCabal','Biometric Update','The Record','Specialist GovTech, fintech, health tech, ed-tech, AI and cybersecurity trade press','Law firm and policy briefings']
 };
 
 const SAMPLE_QS = [
@@ -213,11 +245,11 @@ const ANSWERS = {
   2:{p:['The State of Internet Freedom in Africa 2026 report covers 11 countries. It finds that design flaws, technical failures and inaccurate records in foundational ID and mandatory digital gateways often exclude vulnerable groups.','It calls for rights-respecting frameworks before DPI becomes further entrenched.'],src:['n2']}
 };
 
-const NEWSORDER = ['n15','n16','n17','n18','n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5','n11','n14'];
+const NEWSORDER = ['n19','n15','n16','n17','n18','n24','n23','n20','n22','n21','n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5','n11','n14'];
 /* Weekly Global Brief (report r1): top = five lead item ids, also = other item ids. Refresh every Monday. */
 const BRIEF = {top:['n15','n16','n17','n18','n4'], also:['n1','n9','n8','n10','n5']};
 /* Voices: approved contributor writeups, newest first. Only added when the Editor-in-Chief approves a submission.
    Shape: {id:'w1', title, theme, date:'D Mon YYYY', summary, body:[paragraphs; '## ' starts a subheading], author:{name, role, org, country, bio, link, photo}} */
 const WRITEUPS = [];
-window.DV = {WRITEUPS, BRIEF, UPDATED, THEMES, T, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER};
+window.DV = {WRITEUPS, BRIEF, UPDATED, THEMES, T, SECTORS, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER};
 })();
