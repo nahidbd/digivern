@@ -2,7 +2,7 @@
    The daily update edits this file only. Keep the structure: arrays of plain objects.
    NEWSORDER lists news ids newest first; UPDATED is the date shown on the site. */
 (function(){
-const UPDATED = '1 Nov 2026';
+const UPDATED = '2 Nov 2026';
 const THEMES = [
   {id:'egov',code:'EGOV',label:'E-governance & services',desc:'Online services, service design, GovTech, digital transformation of ministries and local government.'},
   {id:'dpi',code:'DPI',label:'Digital Public Infrastructure',desc:'Digital ID, payments, data exchange, civil and business registries, CRVS, digital public goods.'},
@@ -18,6 +18,26 @@ const REGIONS = ['Africa','Americas','Asia-Pacific','Europe','Middle East','Glob
 
 const BU = 'Biometric Update';
 const NEWS = [
+  {id:'n15',theme:'cyb',region:'Europe',country:'',sector:'Government',type:'News',trust:'media',sources:2,date:'27–29 Oct 2026',
+   title:'Moldova takes 82 e-services offline after attackers extract data linked to 750,000 ID numbers',
+   summary:'Moldova’s Electronic Governance Agency (AGE) said attackers exploited government e-services that needed no login between 19 and 23 October, querying about one million personal identification numbers (IDNPs) and extracting data linked to about 750,000 of them. Exposed fields include family links, health insurance status, benefits and pensions, driving licences, photographs, bank account numbers (IBANs) and tax debts; bank card data and state registers were not affected. As a precaution, 82 public services and more than 30 information systems were disconnected. Prime Minister Vasile Tofan said foreign state involvement is being examined, and AGE director Nicoleta Colomeeț is stepping down, with Artiom Cociu leading the agency on an interim basis.',
+   why:'Unauthenticated services that query interconnected registries can turn a data exchange layer into a single point of mass exposure; it is a warning for every country building once-only services.',
+   links:[['Moldova investigates possible foreign involvement in cyberattacks','The Record','https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks','media'],['Moldova e-government chief resigns after hack exposed data tied to 750,000 ID numbers','ID Tech','https://idtechwire.com/moldova-e-government-chief-resigns-after-hack-exposed-data-tied-to-750000-id-numbers/','media']]},
+  {id:'n16',theme:'cyb',region:'Europe',country:'',sector:'Government',type:'News',trust:'media',sources:2,date:'28–29 Oct 2026',
+   title:'Cyberattack takes Belgium’s MyMinfin tax portal offline; filing deadline moved to 16 November',
+   summary:'Belgium’s Federal Public Service Finance took MyMinfin, Tax-on-web and Biztax offline as a precaution after intruders entered its systems overnight on 27–28 October and tried to alter parts of its digital environment. The ministry says the intrusion was contained within hours and that no data was leaked. Returns due on 31 October can now be filed until 16 November 2026. Federal police and the Centre for Cybersecurity Belgium are investigating.',
+   why:'When a single tax portal goes down days before a deadline, the whole filing calendar moves; resilience and recovery planning matter as much as prevention for core e-services.',
+   links:[['Cyberattack disrupts Belgian tax services before deadline','The Record','https://therecord.media/cyberattack-disrupts-belgian-tax-services-before-deadline','media'],['No data leaked in Finance Ministry cyberattack, services still down','The Brussels Times','https://brusselstimes.com/2383490/no-data-leaked-in-finance-ministry-cyberattack-services-still-down','media']]},
+  {id:'n17',theme:'dpi',region:'Europe',country:'',sector:'Government',type:'Policy or law',trust:'media',sources:1,date:'27 Oct 2026',
+   title:'Türkiye plans a digital ID wallet prototype in 2027 and sets e-Devlet growth targets',
+   summary:'Türkiye’s 2027 Presidential Annual Program, published in the Official Gazette on 27 October, plans a national digital ID wallet prototype in 2027, led by the Cybersecurity Presidency with the Ministry of Interior. It would first hold basic identity documents and diplomas, piloted with a university and prioritising public employees. The programme targets at least 71 million e-Devlet users and about 10,000 services in 2027. Separately, from 1 November social media platforms may not open accounts for children under 15, with ages checked through an e-Devlet age token.',
+   why:'Türkiye is pairing a mature e-government portal with a wallet and privacy-preserving age checks, a combination many countries outside the EU are now weighing.',
+   links:[['Türkiye plans digital ID wallet pilot for 2027 as age verification expands',BU,'https://www.biometricupdate.com/202610/turkiye-plans-digital-id-wallet-pilot-for-2027-as-age-verification-expands','media']]},
+  {id:'n18',theme:'pol',region:'Americas',country:'brazil',sector:'Telecom',type:'Policy or law',trust:'media',sources:1,date:'28 Oct 2026',
+   title:'Brazil’s telecom regulator makes face biometrics mandatory to activate and keep mobile lines',
+   summary:'Anatel issued Technical Norm GT-SEG.2026.11, drafted by a fraud and scams subgroup, requiring all mobile operators, including MVNOs, to verify individual customers with a face check and liveness detection at ISO/IEC 30107-3 level 2 or higher. Deadlines are 30 September 2027 for new prepaid lines, 31 December 2027 for postpaid activations, portability and SIM swaps, and 31 December 2028 for existing customers. From January 2029, unvalidated lines face a 120-day suspension, with emergency calls preserved, and then cancellation.',
+   why:'It ties the right to a phone line to biometric verification for millions of people, raising inclusion and data protection questions that other regulators fighting SIM fraud will face too.',
+   links:[['Brazil’s Anatel makes facial biometric checks mandatory for mobile lines','ID Tech','https://idtechwire.com/brazils-anatel-makes-facial-biometric-checks-mandatory-for-mobile-lines/','media']]},
   {id:'n1',theme:'ai',region:'Europe',country:'',sector:'Government',type:'Policy or law',trust:'official',sources:2,date:'27 Jul 2026 · deadline 2 Dec 2026',
    title:'EU delays high-risk AI Act rules; two new bans apply from 2 December',
    summary:'The EU’s "Digital Omnibus on AI" (Regulation 2026/1744) entered into force on 27 July 2026. It moves the AI Act’s high-risk obligations for Annex III uses, such as employment, credit, education and biometrics, from August 2026 to 2 December 2027. Obligations for AI in regulated products move to 2 August 2028. Two new prohibitions, on non-consensual intimate deepfakes and child sexual abuse material, apply from 2 December 2026.',
@@ -92,7 +112,7 @@ const NEWS = [
 const TRUST = {official:['Official','b-official'],expert:['Expert','b-expert'],media:['Media','b-media']};
 
 const REPORTS = [
-  {id:'r1',kind:'Weekly Global Brief',freq:'Weekly',access:'free',status:'live',title:'Weekly Global Brief: 26 Oct – 1 Nov 2026',theme:'egov'},
+  {id:'r1',kind:'Weekly Global Brief',freq:'Weekly',access:'free',status:'live',title:'Weekly Global Brief: 2 – 8 Nov 2026',theme:'egov'},
   {id:'r7',kind:'Explainer',freq:'Ongoing',access:'free',status:'live',title:'What is digital public infrastructure? A plain-language guide',theme:'dpi'},
   {id:'r2',kind:'Thematic deep-dive',freq:'Monthly',access:'premium',status:'soon',title:'Regulating AI in public services after the EU Digital Omnibus',theme:'ai'},
   {id:'r3',kind:'Thematic deep-dive',freq:'Monthly',access:'premium',status:'soon',title:'Safeguards in digital ID systems: what the evidence shows',theme:'dpi'},
@@ -193,9 +213,9 @@ const ANSWERS = {
   2:{p:['The State of Internet Freedom in Africa 2026 report covers 11 countries. It finds that design flaws, technical failures and inaccurate records in foundational ID and mandatory digital gateways often exclude vulnerable groups.','It calls for rights-respecting frameworks before DPI becomes further entrenched.'],src:['n2']}
 };
 
-const NEWSORDER = ['n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5','n11','n14'];
+const NEWSORDER = ['n15','n16','n17','n18','n1','n3','n2','n4','n9','n8','n10','n6','n7','n12','n13','n5','n11','n14'];
 /* Weekly Global Brief (report r1): top = five lead item ids, also = other item ids. Refresh every Monday. */
-const BRIEF = {top:['n1','n3','n4','n2','n8'], also:['n9','n10','n12','n13']};
+const BRIEF = {top:['n15','n16','n17','n18','n4'], also:['n1','n9','n8','n10','n5']};
 /* Voices: approved contributor writeups, newest first. Only added when the Editor-in-Chief approves a submission.
    Shape: {id:'w1', title, theme, date:'D Mon YYYY', summary, body:[paragraphs; '## ' starts a subheading], author:{name, role, org, country, bio, link, photo}} */
 const WRITEUPS = [];
