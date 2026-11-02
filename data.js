@@ -151,12 +151,12 @@ const TRUST = {official:['Official','b-official'],expert:['Expert','b-expert'],m
 const REPORTS = [
   {id:'r1',kind:'Weekly Global Brief',freq:'Weekly',access:'free',status:'live',title:'Weekly Global Brief: 2 – 8 Nov 2026',theme:'egov'},
   {id:'r7',kind:'Explainer',freq:'Ongoing',access:'free',status:'live',title:'What is digital public infrastructure? A plain-language guide',theme:'dpi'},
-  {id:'r2',kind:'Thematic deep-dive',freq:'Monthly',access:'premium',status:'soon',title:'Regulating AI in public services after the EU Digital Omnibus',theme:'ai'},
-  {id:'r3',kind:'Thematic deep-dive',freq:'Monthly',access:'premium',status:'soon',title:'Safeguards in digital ID systems: what the evidence shows',theme:'dpi'},
-  {id:'r4',kind:'Regional report',freq:'Quarterly',access:'premium',status:'soon',title:'Asia-Pacific digital governance review',theme:'pol'},
-  {id:'r5',kind:'Regional report',freq:'Quarterly',access:'premium',status:'soon',title:'Africa digital governance review',theme:'pol'},
-  {id:'r6',kind:'Annual outlook',freq:'Annual',access:'premium',status:'soon',title:'State of Digital Governance 2027',theme:'egov'},
-  {id:'r8',kind:'Thematic deep-dive',freq:'Monthly',access:'premium',status:'soon',title:'Cyber resilience of local government systems',theme:'cyb'}
+  {id:'r2',kind:'Thematic deep-dive',freq:'Monthly',access:'free',status:'soon',title:'Regulating AI in public services after the EU Digital Omnibus',theme:'ai'},
+  {id:'r3',kind:'Thematic deep-dive',freq:'Monthly',access:'free',status:'soon',title:'Safeguards in digital ID systems: what the evidence shows',theme:'dpi'},
+  {id:'r4',kind:'Regional report',freq:'Quarterly',access:'free',status:'soon',title:'Asia-Pacific digital governance review',theme:'pol'},
+  {id:'r5',kind:'Regional report',freq:'Quarterly',access:'free',status:'soon',title:'Africa digital governance review',theme:'pol'},
+  {id:'r6',kind:'Annual outlook',freq:'Annual',access:'free',status:'soon',title:'State of Digital Governance 2027',theme:'egov'},
+  {id:'r8',kind:'Thematic deep-dive',freq:'Monthly',access:'free',status:'soon',title:'Cyber resilience of local government systems',theme:'cyb'}
 ];
 
 /* country profiles: [label, value, status] ; status: op = operational, part = partial/in rollout, law = law in force, ver = to verify */

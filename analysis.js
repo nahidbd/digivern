@@ -1,7 +1,12 @@
 /* Digivern in-depth analysis.
    Each analysis has: key numbers, body sections, charts (bar = one series, group = two series), a timeline,
    an impact assessment, a comparison with similar work around the world, a comparison inside the country,
-   what to watch, and numbered sources. "[n]" in any text becomes a link to source n. */
+   what to watch, and numbered sources. "[n]" in any text becomes a link to source n.
+   Optional sections (expected in every new analysis):
+     policy:{title?, intro?, rows:[[instrument, year, what it does, status]]}
+     implementation:{title?, intro?, rows:[[milestone, date or target, 'done'|'on track'|'delayed'|'not started'|'unclear', evidence]]}
+     economics:{title?, figures:[{v,l,c}], p:[paragraphs on budget, cost, savings, market size, cost-benefit]}
+     voices:[{who, group:'Government'|'Industry'|'Expert'|'Civil society'|'Users'|'Development partner', stance:'support'|'concern'|'mixed', view (attributed paraphrase or short quote), c}] */
 const ANALYSES = [
 {
   id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:11,

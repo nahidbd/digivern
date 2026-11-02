@@ -200,7 +200,9 @@ V.analysis = id => {
   const x = ANALYSES.find(a => a.id === id) || ANALYSES[0];
   if (!x) return V.reports();
   const DIR = {'+':['Positive','imp-pos','▲'],'−':['Negative','imp-neg','▼'],'±':['Mixed','imp-mix','◆']};
-  const nav = [['a-overview','Overview'],['a-charts','In numbers'],['a-impact','Impact'],['a-world','Around the world'],['a-home','Inside the country'],['a-watch','What to watch'],['a-sources','Sources']];
+  const nav = [['a-overview','Overview'],['a-charts','In numbers'],x.policy&&['a-policy','Policy and law'],x.implementation&&['a-impl','Implementation'],x.economics&&['a-econ','Money and economics'],['a-impact','Impact'],x.voices&&['a-voices','What people say'],['a-world','Around the world'],['a-home','Inside the country'],['a-watch','What to watch'],['a-sources','Sources']].filter(Boolean);
+  const IST = {'done':['Done','b-official'],'on track':['On track','b-official'],'delayed':['Delayed','b-media'],'not started':['Not started','b-plain'],'unclear':['Unclear','b-plain']};
+  const VST = {support:['Supportive','imp-pos'],concern:['Concerned','imp-neg'],mixed:['Mixed','imp-mix']};
   return `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#reports">Analysis</a> / In-depth</p>
     <span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span>
     <h1 style="max-width:30ch">${esc(x.title)}</h1>
@@ -217,9 +219,15 @@ V.analysis = id => {
       <h3>${esc(x.timeline.title)}</h3>
       <ol class="timeline">${x.timeline.items.map(t=>`<li><span class="t-date">${esc(t[0])}</span><span>${esc(t[1])}<a class="cite" href="#analysis-${x.id}" data-act="src" data-v="${x.id}-${t[2]}">${t[2]}</a></span></li>`).join('')}</ol>
 
+      ${x.policy ? `<h2 id="a-policy">${esc(x.policy.title || 'Policy and legal framework')}</h2>${x.policy.intro ? `<p>${citeText(x.policy.intro, x.id)}</p>` : ''}${tableBlock({cols:['Instrument','Year','What it does','Status'], rows:x.policy.rows}, x.id)}` : ''}
+      ${x.implementation ? `<h2 id="a-impl">${esc(x.implementation.title || 'Implementation status')}</h2>${x.implementation.intro ? `<p>${citeText(x.implementation.intro, x.id)}</p>` : ''}<div class="tablebox"><table><thead><tr><th scope="col">Milestone</th><th scope="col">Date or target</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>${x.implementation.rows.map(r => `<tr><th scope="row" style="font-weight:700">${citeText(r[0], x.id)}</th><td>${citeText(r[1], x.id)}</td><td><span class="badge ${(IST[r[2]]||IST.unclear)[1]}">${(IST[r[2]]||IST.unclear)[0]}</span></td><td>${citeText(r[3], x.id)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+      ${x.economics ? `<h2 id="a-econ">${esc(x.economics.title || 'Money and economics')}</h2>${x.economics.figures ? `<div class="keynums">${x.economics.figures.map(k => `<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l + ' [' + k.c + ']', x.id)}</span></div>`).join('')}</div>` : ''}${(x.economics.p || []).map(p => `<p>${citeText(p, x.id)}</p>`).join('')}` : ''}
+
       <h2 id="a-impact">Impact assessment</h2>
       <p class="muted" style="margin-top:-8px">Who gains, who loses and how much, in Digivern’s assessment.</p>
       <div class="impact">${x.impact.map(i=>`<div class="imp ${DIR[i.dir][1]}"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(i.who)}</b><span class="imp-tag"><span aria-hidden="true">${DIR[i.dir][2]}</span> ${DIR[i.dir][0]} · ${esc(i.size)}</span></div><p>${citeText(i.text,x.id)}</p></div>`).join('')}</div>
+
+      ${x.voices ? `<h2 id="a-voices">What people say</h2><p class="muted" style="margin-top:-8px">Views from officials, industry, experts, civil society and users, as reported in the sources.</p><div class="impact">${x.voices.map(v => `<figure class="imp ${(VST[v.stance]||VST.mixed)[1]}" style="margin:0"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(v.who)}</b><span class="imp-tag">${esc(v.group)} · ${(VST[v.stance]||VST.mixed)[0]}</span></div><blockquote style="margin:0">${citeText(v.view + ' [' + v.c + ']', x.id)}</blockquote></figure>`).join('')}</div>` : ''}
 
       <h2 id="a-world">${esc(x.world.title)}</h2>
       ${tableBlock(x.world,x.id)}
@@ -245,7 +253,7 @@ V.analysis = id => {
 V.reports = () => pagehead('Analysis &amp; Reports','Analysis &amp; Reports','In-depth analysis with charts, impact and global comparison, plus the Weekly Global Brief, explainers, monthly deep-dives, quarterly regional reports and the annual State of Digital Governance outlook. Every figure is footnoted.') + `
   <section class="band"><div class="wrap stack" style="gap:28px">
     ${ANALYSES.length?`<div><div class="head-row"><div class="stack" style="gap:6px"><h2>In-depth analysis</h2><p class="muted">Charts, impact assessment, and comparison with similar work around the world and inside the country.</p></div></div><div class="grid g2">${ANALYSES.map(analysisCard).join('')}</div></div>`:''}
-    ${[['Free','free'],['Premium','premium']].map(([lab,acc])=>`<div><div class="head-row"><h2>${lab}</h2>${acc==='premium'?'<a href="#premium">See Premium plans →</a>':''}</div><div class="grid g4">${REPORTS.filter(r=>r.access===acc).map(reportCard).join('')}</div></div>`).join('')}
+    <div><div class="head-row"><div class="stack" style="gap:6px"><h2>Reports and briefs</h2><p class="muted">Everything on Digivern is free for everyone during the beta.</p></div></div><div class="grid g4">${REPORTS.map(reportCard).join('')}</div></div>
   </div></section>`;
 
 function briefBody(){
@@ -277,7 +285,7 @@ V.report = id => {
     <article class="main stack prose" style="gap:18px;font-size:1.05rem">
       ${r.id==='r1' ? briefBody() : r.id==='r7' ? dpiBody() :
       `<p>This ${esc(r.kind.toLowerCase())} is in preparation. It will be built from the verified library, with a numbered footnote on every figure and a named expert reviewer.</p>
-      <div class="lock"><span class="badge b-premium">Premium</span><h3>Get it when it is published</h3><p class="muted">Premium readers receive deep-dives, regional reports and the annual outlook as they are released.</p><div class="row"><a class="btn" href="#premium">See plans</a><a class="btn btn-line" href="#report-r1">Read the free weekly brief</a></div></div>`}
+      <div class="lock"><span class="badge b-official">Free during beta</span><h3>Get it when it is published</h3><p class="muted">All reports are free for everyone while Digivern is in beta. Subscribe to hear when this one is released.</p><div class="row"><a class="btn" href="#subscribe">Subscribe free</a><a class="btn btn-line" href="#report-r1">Read the free weekly brief</a></div></div>`}
       ${live?`<div class="how"><span class="eyebrow">How this was made</span><p>Drafted by Digivern's Writer agent from items in the verified library, checked against their sources, and published automatically.</p></div>`:''}
     </article>
     <aside class="stack"><div class="card"><span class="eyebrow">More reports</span>${REPORTS.filter(x=>x.id!==r.id).slice(0,4).map(x=>`<a href="#report-${x.id}" style="font-weight:600">${esc(x.title)}</a>`).join('')}</div></aside>
@@ -413,7 +421,7 @@ V.learn = () => {
   </div></section>`;
 };
 
-V.readiness = () => pagehead('Readiness self-assessment','Readiness self-assessment','Answer five quick questions about your agency or programme to get an indicative score. The full Premium tool goes deeper.') + `
+V.readiness = () => pagehead('Readiness self-assessment','Readiness self-assessment','Answer five quick questions about your agency or programme to get an indicative score. More detailed tools will follow during the beta.') + `
   <section class="band"><div class="wrap layout-side">
     <form class="main card js-ready" style="padding:26px;gap:18px">
       <div class="field"><label for="ra">Assessment</label><select id="ra"><option>DPI readiness</option><option>AI readiness</option><option>Cybersecurity readiness</option></select></div>
@@ -424,14 +432,14 @@ V.readiness = () => pagehead('Readiness self-assessment','Readiness self-assessm
     <aside class="card"><h3>About the score</h3><p class="muted">This quick check scores five core questions equally. The full tool will weight a longer question set with an expert panel and produce a written report.</p></aside>
   </div></section>`;
 
-V.premium = () => pagehead('Premium','Plans','Free news and briefs for everyone. Premium for people who need full reports, alerts and tools.') + `
-  <section class="band"><div class="wrap"><div class="grid g3">
-    ${[['Free','$0','For everyone',['Daily News Desk','Weekly Global Brief','Explainers and glossary','Country profiles','Policy & Law Tracker'],false],
-       ['Individual','Price at launch','For consultants and researchers',['Everything in Free','Full deep-dives and regional reports','Policy change alerts','Readiness tool and report generator','Full archive'],true],
-       ['Institutional','Price at launch','For agencies, NGOs and firms',['Everything in Individual','Multiple named users','Annual State of Digital Governance briefing','Priority Consulting Desk slots'],false]]
-      .map(p=>`<div class="card plan ${p[4]?'featured':''}" style="padding:26px;gap:14px">${p[4]?'<span class="badge b-premium" style="align-self:flex-start">Most chosen</span>':''}<h3>${p[0]}</h3><div class="price">${p[1]}</div><p class="muted">${p[2]}</p><ul>${p[3].map(f=>`<li>${f}</li>`).join('')}</ul><button class="btn ${p[4]?'':'btn-line'}" data-act="plan" data-v="${p[0]}" style="margin-top:auto">${p[0]==='Free'?'Subscribe free':'Join the waiting list'}</button></div>`).join('')}
-  </div><p class="muted" style="margin-top:14px">Premium opens after the pilot. Development partners can sponsor free access for government users in lower-income countries.</p></div></section>`;
-
+V.premium = () => pagehead('Beta access','Everything is free during the beta','While Digivern is in beta, every feature is open to everyone at no cost: news, in-depth analysis, reports, country profiles, the Policy & Law Tracker, Ask Digivern and the tools.') + `
+  <section class="band"><div class="wrap stack" style="gap:18px">
+    <div class="grid g3">
+      ${[['Read','Daily News Desk, in-depth analysis, Weekly Global Brief, explainers and all reports.'],['Track','Country profiles, Policy & Law Tracker, sector and theme filters.'],['Use','Ask Digivern, readiness self-assessment, Consulting Desk requests and Write for Digivern.']].map(c=>`<div class="card" style="padding:24px"><span class="badge b-official" style="align-self:flex-start">Free</span><h3>${c[0]}</h3><p class="muted">${c[1]}</p></div>`).join('')}
+    </div>
+    <p class="muted">We will announce any change to access well in advance. Feedback during the beta shapes what comes next.</p>
+    <div class="row"><a class="btn" href="#subscribe">Subscribe free</a><a class="btn btn-line" href="#reports">Read the analysis</a></div>
+  </div></section>`;
 V.subscribe = () => pagehead('Subscribe','Subscribe to Digivern','Choose your themes and regions. We send the Weekly Global Brief and, if you like, daily alerts.') + `
   <section class="band"><div class="wrap"><form class="card js-sub" style="padding:26px;gap:18px;max-width:760px">
     <div class="field"><label for="s-email">Email address</label><input id="s-email" type="email" required placeholder="you@organisation.org"></div>
@@ -583,6 +591,80 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
     </aside>
   </div></section>`;
 
+
+/* ---------- site statistics ---------- */
+let lastTracked = null, firstHit = true;
+function track(name, param){
+  if (!/pages\.dev$|digivern\./.test(location.hostname) || name === 'stats') return;
+  const path = (param ? name + '-' + param : name).toLowerCase().slice(0, 60);
+  if (path === lastTracked) return; lastTracked = path;
+  let v = 0;
+  try { if (!sessionStorage.getItem('dv-visit')) { sessionStorage.setItem('dv-visit', '1'); v = 1; } } catch (e) { v = firstHit ? 1 : 0; }
+  firstHit = false;
+  let r = '';
+  if (v) {
+    try { const u = new URL(document.referrer); if (u.hostname !== location.hostname) r = u.hostname.replace(/^www\./, ''); } catch (e) {}
+    const utm = new URLSearchParams(location.search).get('utm_source'); if (utm) r = utm.toLowerCase().replace(/[^a-z0-9.-]/g, '').slice(0, 60);
+  }
+  try { navigator.sendBeacon('/api/hit', new Blob([JSON.stringify({ p: path, r, v })], { type: 'application/json' })); } catch (e) {}
+}
+const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment'};
+function pageInfo(path){
+  const m = path.match(/^(story|analysis|report|writeup|country)-(.+)$/);
+  if (m) {
+    const [_, k, id] = m;
+    if (k==='story') { const n = NEWS.find(x=>x.id===id); return ['News', n ? n.title : id, '#'+path]; }
+    if (k==='analysis') { const x = ANALYSES.find(y=>y.id===id); return ['Analysis', x ? x.title : id, '#'+path]; }
+    if (k==='report') { const x = REPORTS.find(y=>y.id===id); return ['Report', x ? x.title : id, '#'+path]; }
+    if (k==='writeup') { const x = WRITEUPS.find(y=>y.id===id); return ['Voices', x ? x.title + (x.author ? ' — ' + x.author.name : '') : id, '#'+path]; }
+    if (k==='country') { const x = COUNTRIES.find(y=>y.id===id); return ['Country', x ? x.name : id, '#'+path]; }
+  }
+  return ['Section', SECTION[path] || path, '#'+path];
+}
+const countryName = c => { if (!c) return 'Unknown'; try { return new Intl.DisplayNames(['en'], {type:'region'}).of(c); } catch (e) { return c; } };
+st.statDays = st.statDays || 30;
+V.stats = () => pagehead('Site statistics','Site statistics','How many people visit Digivern, what they read and where they come from. Counted without cookies or personal data.') + `
+  <section class="band"><div class="wrap stack" style="gap:22px">
+    <div class="row" role="toolbar" aria-label="Period">${[[7,'Last 7 days'],[30,'Last 30 days'],[90,'Last 90 days'],[3650,'All time']].map(d=>`<button class="chip" data-act="statdays" data-v="${d[0]}" aria-pressed="${st.statDays==d[0]}">${d[1]}</button>`).join('')}</div>
+    <div id="statbox"><p class="muted">Loading statistics…</p></div>
+  </div></section>`;
+function statList(title, rows, cols){
+  if (!rows.length) return `<div class="card"><h3>${title}</h3><p class="muted">No data yet.</p></div>`;
+  const max = Math.max(...rows.map(r=>r.n), 1);
+  return `<div class="card"><h3>${title}</h3><div class="bars">${rows.map(r=>`<div class="brow"><span class="bl">${r.link?`<a href="${r.link}">${esc(r.label)}</a>`:esc(r.label)}${r.tag?` <span class="muted" style="font-size:.85rem">· ${esc(r.tag)}</span>`:''}</span><div class="bline"><div class="bt"><div class="bf" style="width:${Math.max(100*r.n/max,2).toFixed(1)}%"></div></div><span class="bv">${r.n.toLocaleString('en-GB')}</span></div></div>`).join('')}</div>${cols?`<p class="footnote">${cols}</p>`:''}</div>`;
+}
+function loadStats(){
+  const box = $('#statbox'); if (!box) return;
+  fetch('/api/stats?days=' + st.statDays, {cache:'no-store'}).then(r => r.json()).then(d => {
+    if (d.error) throw new Error(d.error);
+    const t = d.total, visits = +t.visits || 0, views = +t.views || 0;
+    const items = d.pages.map(p => { const [k, label, link] = pageInfo(p.path); return {k, label, link, n:+p.views}; });
+    const pick = k => items.filter(i => i.k === k).slice(0, 10);
+    const peak = d.daily.reduce((m, x) => (+x.visits > (m ? +m.visits : -1) ? x : m), null);
+    const dmax = Math.max(...d.daily.map(x => +x.views), 1);
+    const direct = d.refs.find(r => !r.ref);
+    box.innerHTML = `
+      <div class="keynums">
+        <div class="keynum"><b>${visits.toLocaleString('en-GB')}</b><span>visits</span></div>
+        <div class="keynum"><b>${views.toLocaleString('en-GB')}</b><span>pages read</span></div>
+        <div class="keynum"><b>${visits ? (views / visits).toFixed(1) : '0'}</b><span>pages per visit</span></div>
+        <div class="keynum"><b>${(+d.allTime.visits || 0).toLocaleString('en-GB')}</b><span>visits since counting began${d.allTime.since ? ' (' + d.allTime.since + ')' : ''}</span></div>
+      </div>
+      <div class="card"><h3>Daily visits and pages read</h3>${d.daily.length ? `<div class="daychart">${d.daily.map(x => `<div class="dc" title="${x.day}: ${x.visits} visits, ${x.views} pages"><div class="dcb" style="height:${(100 * x.views / dmax).toFixed(1)}%"><div class="dcv" style="height:${x.views ? (100 * x.visits / x.views).toFixed(1) : 0}%"></div></div><span>${x.day.slice(8)}</span></div>`).join('')}</div><p class="footnote"><span class="sw-a"></span> pages read · <span class="sw-b"></span> visits${peak ? ' · Busiest day: ' + peak.day + ' (' + peak.visits + ' visits)' : ''}</p>` : '<p class="muted">No data yet.</p>'}</div>
+      <div class="grid g2">
+        ${statList('Most read news', pick('News'))}
+        ${statList('Most read analysis and reports', items.filter(i => i.k === 'Analysis' || i.k === 'Report').slice(0, 10))}
+        ${statList('Most read writeups (Voices)', pick('Voices'))}
+        ${statList('Most viewed countries', pick('Country'))}
+        ${statList('Where visitors come from', d.refs.filter(r => r.ref).slice(0, 12).map(r => ({label: r.ref, n: +r.visits})), direct ? `${(+direct.visits).toLocaleString('en-GB')} visits came directly (typed address, bookmark, app or private link).` : '')}
+        ${statList('Visitors by country', d.countries.filter(c => +c.visits).slice(0, 12).map(c => ({label: countryName(c.country), n: +c.visits})))}
+        ${statList('Sections', pick('Section'))}
+        ${statList('Devices', d.devices.map(x => ({label: x.device === 'mobile' ? 'Phone or tablet' : 'Computer', n: +x.visits})))}
+      </div>
+      <p class="footnote">A visit is counted once per browser tab session. Pages read counts every page opened. Search engines and bots are excluded. No cookies, IP addresses or personal data are stored.</p>`;
+  }).catch(() => { box.innerHTML = '<p class="notice">Statistics are not available right now. Please try again later.</p>'; });
+}
+
 /* ---------- router ---------- */
 const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices'};
 function render(){
@@ -592,6 +674,8 @@ function render(){
   if (m) { name = m[1]; param = m[2]; }
   if (!V[name]) name = 'home';
   $('#view').innerHTML = V[name](param);
+  track(name, param);
+  if (name === 'stats') loadStats();
   document.querySelectorAll('.nav a').forEach(a => { if (a.getAttribute('href') === '#' + NAVMAP[name]) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   $('#nav').dataset.open = 'false'; $('#menuBtn').setAttribute('aria-expanded','false');
 }
@@ -615,10 +699,11 @@ document.addEventListener('click', e => {
   else if (a === 'cregion') { st.cRegion = v; render(); }
   else if (a === 'askq') { st.askI = +v; st.askFree = ''; render(); }
   else if (a === 'src' || a === 'jump') { e.preventDefault(); const el = document.getElementById(a==='src' ? 'src-'+v : v); if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); if (a==='src') { el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600); } } }
+  else if (a === 'statdays') { st.statDays = +v; render(); }
   else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
   else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');
-  else if (a === 'alerts') toast('Alerts are part of Premium, which opens after the pilot.');
+  else if (a === 'alerts') toast('Alerts open later in the beta. Subscribe to be told when they start.');
   else if (a === 'save') toast('Saving opens with reader accounts after the pilot.');
   else if (a === 'plan') toast(v === 'Free' ? 'Everything in Free is open now.' : 'Noted. The waiting list opens after the pilot.');
   else if (a === 'copylink') {

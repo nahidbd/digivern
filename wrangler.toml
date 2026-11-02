@@ -1,0 +1,9 @@
+# Cloudflare Pages configuration for Digivern (static site + two small functions for site statistics).
+name = "digivern"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "digivern-stats"
+database_id = "993e8e1a-185a-49be-9deb-94437095530a"
