@@ -190,7 +190,7 @@ function chartBlock(ch, aid){
     <p class="footnote">Source: ${ch.c.map(n=>`<a class="cite" style="vertical-align:baseline" href="#analysis-${aid}" data-act="src" data-v="${aid}-${n}">${n}</a>`).join(', ')}</p></figure>`;
 }
 function tableBlock(t, aid){
-  return `<div class="tablebox"><table><thead><tr>${t.cols.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>i?`<td>${citeText(c,aid)}</td>`:`<th scope="row" style="font-weight:700">${citeText(c,aid)}</th>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return `<div class="tablebox"><table><thead><tr>${t.cols.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>i?`<td data-l="${esc(t.cols[i])}">${citeText(c,aid)}</td>`:`<th scope="row" style="font-weight:700">${citeText(c,aid)}</th>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function analysisCard(x){
   return `<a class="card acard" href="#analysis-${x.id}"><span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span><h3>${esc(x.title)}</h3><p class="muted">${esc(x.standfirst)}</p>
@@ -220,7 +220,7 @@ V.analysis = id => {
       <ol class="timeline">${x.timeline.items.map(t=>`<li><span class="t-date">${esc(t[0])}</span><span>${esc(t[1])}<a class="cite" href="#analysis-${x.id}" data-act="src" data-v="${x.id}-${t[2]}">${t[2]}</a></span></li>`).join('')}</ol>
 
       ${x.policy ? `<h2 id="a-policy">${esc(x.policy.title || 'Policy and legal framework')}</h2>${x.policy.intro ? `<p>${citeText(x.policy.intro, x.id)}</p>` : ''}${tableBlock({cols:['Instrument','Year','What it does','Status'], rows:x.policy.rows}, x.id)}` : ''}
-      ${x.implementation ? `<h2 id="a-impl">${esc(x.implementation.title || 'Implementation status')}</h2>${x.implementation.intro ? `<p>${citeText(x.implementation.intro, x.id)}</p>` : ''}<div class="tablebox"><table><thead><tr><th scope="col">Milestone</th><th scope="col">Date or target</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>${x.implementation.rows.map(r => `<tr><th scope="row" style="font-weight:700">${citeText(r[0], x.id)}</th><td>${citeText(r[1], x.id)}</td><td><span class="badge ${(IST[r[2]]||IST.unclear)[1]}">${(IST[r[2]]||IST.unclear)[0]}</span></td><td>${citeText(r[3], x.id)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+      ${x.implementation ? `<h2 id="a-impl">${esc(x.implementation.title || 'Implementation status')}</h2>${x.implementation.intro ? `<p>${citeText(x.implementation.intro, x.id)}</p>` : ''}<div class="tablebox"><table><thead><tr><th scope="col">Milestone</th><th scope="col">Date or target</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>${x.implementation.rows.map(r => `<tr><th scope="row" style="font-weight:700">${citeText(r[0], x.id)}</th><td data-l="Date or target">${citeText(r[1], x.id)}</td><td data-l="Status"><span class="badge ${(IST[r[2]]||IST.unclear)[1]}">${(IST[r[2]]||IST.unclear)[0]}</span></td><td data-l="Evidence">${citeText(r[3], x.id)}</td></tr>`).join('')}</tbody></table></div>` : ''}
       ${x.economics ? `<h2 id="a-econ">${esc(x.economics.title || 'Money and economics')}</h2>${x.economics.figures ? `<div class="keynums">${x.economics.figures.map(k => `<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l + ' [' + k.c + ']', x.id)}</span></div>`).join('')}</div>` : ''}${(x.economics.p || []).map(p => `<p>${citeText(p, x.id)}</p>`).join('')}` : ''}
 
       <h2 id="a-impact">Impact assessment</h2>
