@@ -12,6 +12,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 | `index.html` | Page layout and styles |
 | `app.js` | How pages are drawn (routing, filters, forms) |
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
+| `focus.js` | Monthly Focus: the Country of the Month and Sector of the Month pages (`#focus`, `#focus-country`, `#focus-sector`), with key numbers, map, facts, analysis, people's views and numbered sources. Older months stay in the archive. |
 | `analysis.js` | In-depth analysis: key numbers, charts, timeline, impact assessment, global and in-country comparison, numbered sources |
 | `_headers` | Security headers |
 | `wrangler.toml` | Cloudflare Pages settings and the statistics database binding |
@@ -24,6 +25,14 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 The repository is linked to Cloudflare Pages (project `digivern`, no build step). Every push to `main` publishes the site automatically within about a minute.
 
 Writeup submissions from the Write for Digivern form are sent to Netlify Forms on digivern.netlify.app (free, unlimited) and reviewed there.
+
+## Monthly Focus
+
+Each month Digivern covers one country and one sector in more depth. November 2026: **Uganda** and **Agritech**.
+
+- The editor chooses the next country and sector and records them in `NEXT` in `focus.js` (or tells Claude in chat).
+- On the first day of the month the daily update adds the new month at the top of `MONTHS`, builds the country profile in `data.js` if it does not exist yet, and sets `NEXT` back to `null`. Past months stay online at `#focus-country-YYYY-MM` and `#focus-sector-YYYY-MM`.
+- During the month the daily update adds extra news on the focus country (including its own national media and official sites) and on the focus sector worldwide, and refreshes the focus pages when sources show a change.
 
 ## Daily update
 

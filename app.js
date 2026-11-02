@@ -75,6 +75,12 @@ V.home = () => {
       ${seconds.map(n => `<article><p class="kicker" style="font-size:.76rem">${kick(n)}</p><h3><a href="#story-${n.id}">${esc(n.title)}</a></h3><p class="muted" style="font-size:1rem">${esc(n.why)}</p><p class="evidence">${esc(n.date).toUpperCase()} · ${verifyText(n)}</p></article>`).join('')}
     </div>
 
+    ${FOCUS.length ? (() => { const fm = FOCUS[0]; return `<section class="focus-strip" aria-label="Monthly Focus">
+      <div class="stack" style="gap:4px;flex:1 1 200px;min-width:0"><span class="kicker">Monthly Focus</span><b style="font-size:1.35rem;font-family:var(--f-display)">${esc(fm.label)}</b><a href="#focus" style="font-weight:700">How it works →</a></div>
+      <a class="fs-item" href="#focus-country">${flagImg(fm.country.iso2, fm.country.name, 60)}<span class="stack" style="gap:2px"><span class="eyebrow">Country of the Month</span><b>${esc(fm.country.name)}</b></span></a>
+      <a class="fs-item" href="#focus-sector">${sectorIcon()}<span class="stack" style="gap:2px"><span class="eyebrow">Sector of the Month</span><b>${esc(fm.sector.name)}</b></span></a>
+    </section>`; })() : ''}
+
     <div class="boxes">
       <section class="snap" aria-label="Policy and Law Tracker">
         <h2 style="color:var(--accent)">Policy &amp; Law Tracker</h2>
@@ -177,8 +183,8 @@ V.story = id => {
 /* ---------- in-depth analysis ---------- */
 const ANALYSES = window.DV_ANALYSES || [];
 const fmtNum = (v,f) => f==='pct' ? (v===0?'0% (free)':v.toFixed(2).replace(/0$/,'')+'%') : f==='dec' ? (Math.round(v*100)/100).toLocaleString('en-GB') : Math.round(v).toLocaleString('en-GB');
-function citeText(s, aid){ return esc(s).replace(/\[(\d+)\]/g, (m,n)=>`<a class="cite" href="#analysis-${aid}" data-act="src" data-v="${aid}-${n}" title="Source ${n}">${n}</a>`).replace(/<\/a><a class="cite"/g,'</a><span class="cite">,</span><a class="cite"'); }
-function chartBlock(ch, aid){
+function citeText(s, aid, hash){ return esc(s).replace(/\[(\d+)\]/g, (m,n)=>`<a class="cite" href="#${hash||'analysis-'+aid}" data-act="src" data-v="${aid}-${n}" title="Source ${n}">${n}</a>`).replace(/<\/a><a class="cite"/g,'</a><span class="cite">,</span><a class="cite"'); }
+function chartBlock(ch, aid, hash){
   const max = Math.max(...ch.rows.flatMap(r => ch.type==='group' ? r[1] : [r[1]]), 0.0001);
   const bar = (v, hl) => `<div class="bt"><div class="bf${hl?' hl':''}" style="width:${Math.max(100*v/max, v?1.5:0.6).toFixed(1)}%"></div></div><span class="bv">${fmtNum(v,ch.fmt)}</span>`;
   const rows = ch.type==='group'
@@ -187,7 +193,7 @@ function chartBlock(ch, aid){
   const label = ch.title + '. ' + ch.rows.map(r => r[0] + ': ' + (ch.type==='group' ? r[1].map((v,i)=>ch.series[i]+' '+fmtNum(v,ch.fmt)).join(', ') : fmtNum(r[1],ch.fmt))).join('; ');
   return `<figure class="chart" role="img" aria-label="${esc(label)}"><figcaption><b>${esc(ch.title)}</b><span class="muted">${esc(ch.sub)}</span></figcaption>
     <div class="bars" aria-hidden="true">${rows}</div>
-    <p class="footnote">Source: ${ch.c.map(n=>`<a class="cite" style="vertical-align:baseline" href="#analysis-${aid}" data-act="src" data-v="${aid}-${n}">${n}</a>`).join(', ')}</p></figure>`;
+    <p class="footnote">Source: ${ch.c.map(n=>`<a class="cite" style="vertical-align:baseline" href="#${hash||'analysis-'+aid}" data-act="src" data-v="${aid}-${n}">${n}</a>`).join(', ')}</p></figure>`;
 }
 function tableBlock(t, aid){
   return `<div class="tablebox"><table><thead><tr>${t.cols.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>i?`<td data-l="${esc(t.cols[i])}">${citeText(c,aid)}</td>`:`<th scope="row" style="font-weight:700">${citeText(c,aid)}</th>`).join('')}</tr>`).join('')}</tbody></table></div>`;
@@ -608,7 +614,7 @@ function track(name, param){
   }
   try { navigator.sendBeacon('/api/hit', new Blob([JSON.stringify({ p: path, r, v })], { type: 'application/json' })); } catch (e) {}
 }
-const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment'};
+const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment',focus:'Monthly Focus'};
 function pageInfo(path){
   const m = path.match(/^(story|analysis|report|writeup|country)-(.+)$/);
   if (m) {
@@ -619,6 +625,8 @@ function pageInfo(path){
     if (k==='writeup') { const x = WRITEUPS.find(y=>y.id===id); return ['Voices', x ? x.title + (x.author ? ' — ' + x.author.name : '') : id, '#'+path]; }
     if (k==='country') { const x = COUNTRIES.find(y=>y.id===id); return ['Country', x ? x.name : id, '#'+path]; }
   }
+  const f = path.match(/^focus-(country|sector)(?:-(\d{4}-\d{2}))?$/);
+  if (f && FOCUS.length) { const mo = focusMonth(f[2]); return ['Monthly Focus', (f[1]==='country' ? 'Country of the Month: ' + mo.country.name : 'Sector of the Month: ' + mo.sector.name) + ' (' + mo.label + ')', '#'+path]; }
   return ['Section', SECTION[path] || path, '#'+path];
 }
 const countryName = c => { if (!c) return 'Unknown'; try { return new Intl.DisplayNames(['en'], {type:'region'}).of(c); } catch (e) { return c; } };
@@ -665,12 +673,159 @@ function loadStats(){
   }).catch(() => { box.innerHTML = '<p class="notice">Statistics are not available right now. Please try again later.</p>'; });
 }
 
+/* ---------- monthly focus ---------- */
+const FOCUS = (window.DV_FOCUS && window.DV_FOCUS.MONTHS) || [];
+const focusMonth = key => FOCUS.find(m => m.key === key) || FOCUS[0];
+const flagImg = (iso2, name, w) => `<img class="flag" src="https://flagcdn.com/w320/${esc(iso2)}.png" srcset="https://flagcdn.com/w640/${esc(iso2)}.png 2x" width="${w}" height="${Math.round(w*2/3)}" alt="Flag of ${esc(name)}" loading="lazy">`;
+const sectorIcon = () => `<svg class="sector-ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="var(--accent-soft)"/><path d="M32 52V24" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M32 34c-9 0-14-6-14-14 8 0 14 5 14 14zM32 30c0-9 6-15 15-15 0 9-6 15-15 15z" fill="var(--accent)"/><path d="M18 52h28" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>`;
+function focusSources(list, key){
+  return `<ol class="srclist">${list.map((s,i)=>`<li id="src-${key}-${i+1}"><a href="${esc(s[2])}" target="_blank" rel="noopener">${esc(s[0])}</a> <span class="muted">${esc(s[1])}</span></li>`).join('')}</ol>`;
+}
+function focusNews(items, empty){
+  return items.length ? `<div class="stack" style="gap:0">${items.map(n=>`<div class="row" style="gap:14px;padding:10px 0;border-top:1px solid var(--line)"><span class="mono" style="color:var(--accent);min-width:110px">${esc(n.date).toUpperCase()}</span><a href="#story-${n.id}" style="flex:1 1 300px;font-weight:600">${esc(n.title)}</a></div>`).join('')}</div>` : `<p class="muted">${empty}</p>`;
+}
+function focusVoices(list, key, hash){
+  const VST = {support:['Supportive','imp-pos'],concern:['Concerned','imp-neg'],mixed:['Mixed','imp-mix']};
+  return `<div class="impact">${list.map(v => `<figure class="imp ${(VST[v.stance]||VST.mixed)[1]}" style="margin:0"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(v.who)}</b><span class="imp-tag">${esc(v.group)} · ${(VST[v.stance]||VST.mixed)[0]}</span></div><blockquote style="margin:0">${citeText(v.view + ' [' + v.c + ']', key, hash)}</blockquote></figure>`).join('')}</div>`;
+}
+function focusArchive(cur){
+  const past = FOCUS.filter(m => m !== cur);
+  return `<div class="card"><span class="eyebrow">Past focus months</span>${past.length ? past.map(m=>`<div class="stack" style="gap:2px"><b>${esc(m.label)}</b><span><a href="#focus-country-${m.key}">${esc(m.country.name)}</a> · <a href="#focus-sector-${m.key}">${esc(m.sector.name)}</a></span></div>`).join('') : '<p class="muted">This is the first focus month. Earlier months will be kept here, so you can come back to any country or sector.</p>'}</div>`;
+}
+
+V.focus = param => {
+  if (!FOCUS.length) return V.home();
+  const mm = (param || '').match(/^(country|sector)(?:-(\d{4}-\d{2}))?$/);
+  if (mm) return mm[1] === 'country' ? focusCountry(focusMonth(mm[2])) : focusSector(focusMonth(mm[2]));
+  const m = FOCUS[0], c = m.country, x = m.sector;
+  const cNews = SORTED.filter(n => n.country === c.id), sNews = SORTED.filter(n => n.sector === x.tag);
+  return pagehead('Monthly Focus', 'Monthly Focus · ' + esc(m.label), 'Each month Digivern picks one country and one sector and covers them in more depth: more news, a fuller profile, analysis, what people say and what to watch. The rest of the site keeps its global coverage.') + `
+  <section class="band"><div class="wrap layout-side">
+    <div class="main stack" style="gap:22px">
+      <div class="grid g2">
+        <a class="card focus-card" href="#focus-country"><span class="eyebrow" style="color:var(--red)">Country of the Month</span>
+          <div class="row" style="gap:16px;align-items:center">${flagImg(c.iso2, c.name, 84)}<div class="stack" style="gap:2px"><h2 style="margin:0">${esc(c.name)}</h2><span class="mono muted">${esc(c.region).toUpperCase()} · CAPITAL ${esc(c.capital).toUpperCase()}</span></div></div>
+          <p class="muted">${esc(c.standfirst)}</p><span class="row" style="gap:6px;margin-top:auto"><span class="badge b-plain">${cNews.length} news items</span><span class="badge b-plain">${c.sources.length} sources</span></span><b>Read the ${esc(c.name)} focus →</b></a>
+        <a class="card focus-card" href="#focus-sector"><span class="eyebrow" style="color:var(--red)">Sector of the Month</span>
+          <div class="row" style="gap:16px;align-items:center">${sectorIcon()}<div class="stack" style="gap:2px"><h2 style="margin:0">${esc(x.name)}</h2><span class="mono muted">GLOBAL COVERAGE</span></div></div>
+          <p class="muted">${esc(x.standfirst)}</p><span class="row" style="gap:6px;margin-top:auto"><span class="badge b-plain">${sNews.length} news items</span><span class="badge b-plain">${x.sources.length} sources</span></span><b>Read the ${esc(x.name)} focus →</b></a>
+      </div>
+      <div class="how"><span class="eyebrow">How the Monthly Focus works</span><p>A new country and a new sector are chosen on the first day of each month. During the month the daily update searches more widely for them, including the country’s own news outlets and official sites, and adds more items, profile updates and analysis. Every figure links to a numbered source. At the end of the month the pages stay online in the archive.</p></div>
+    </div>
+    <aside class="stack">${focusArchive(m)}<div class="card"><h3>Write about ${esc(c.name)} or ${esc(x.name.toLowerCase())}</h3><p class="muted">Practitioners can submit a writeup for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Submit a writeup</a></div></aside>
+  </div></section>`;
+};
+
+function focusCountry(m){
+  const c = m.country, key = 'fc' + m.key.replace('-',''), hash = 'focus-country' + (m === FOCUS[0] ? '' : '-' + m.key);
+  const cur = m === FOCUS[0];
+  const p = PROFILES[c.id];
+  const ST = {op:['Operational','b-official'],part:['In rollout','b-media'],law:['Law in force','b-expert'],ver:['To verify','b-plain']};
+  const IST = {'done':['Done','b-official'],'on track':['On track','b-official'],'delayed':['Delayed','b-media'],'not started':['Not started','b-plain'],'unclear':['Unclear','b-plain']};
+  const news = SORTED.filter(n => n.country === c.id);
+  const [w,s,e,nn] = c.bbox;
+  const map = `https://www.openstreetmap.org/export/embed.html?bbox=${w}%2C${s}%2C${e}%2C${nn}&layer=mapnik&marker=${c.lat}%2C${c.lon}`;
+  const big = `https://www.openstreetmap.org/?mlat=${c.lat}&mlon=${c.lon}#map=7/${c.lat}/${c.lon}`;
+  const nav = [['f-overview','Overview'],['f-map','Map and facts'],['f-numbers','In numbers'],p&&['f-blocks','Digital building blocks'],['f-policy','Policy and law'],['f-impl','Implementation'],['f-voices','What people say'],['f-news','News this month'],['f-watch','What to watch'],['f-sources','Sources']].filter(Boolean);
+  return `<div class="pagehead focus-head"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#focus">Monthly Focus</a> / ${esc(c.name)}</p>
+    <div class="row" style="gap:22px;align-items:center">${flagImg(c.iso2, c.name, 132)}
+      <div class="stack" style="gap:8px;flex:1 1 380px;min-width:0"><span class="eyebrow" style="color:var(--red)">Country of the Month · ${esc(m.label)}</span><h1>${esc(c.name)}</h1></div></div>
+    <p class="focus-lede">${esc(c.standfirst)}</p>
+    <p class="mono muted">${cur?'UPDATED THROUGH THE MONTH · LAST UPDATE '+esc(UPDATED).toUpperCase():'ARCHIVED FOCUS · '+esc(m.label).toUpperCase()} · ${c.sources.length} SOURCES</p>
+    <div class="row"><a class="btn btn-line" href="#country-${c.id}">Standard country profile</a><a class="btn btn-line" href="#focus-sector${cur?'':'-'+m.key}">Sector of the Month: ${esc(m.sector.name)}</a></div></div></div>
+  <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${c.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',key,hash)}</span></div>`).join('')}</div></div></section>
+  <section class="band"><div class="wrap layout-side">
+    <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
+      <div id="f-overview" class="stack" style="gap:14px">${c.body.slice(0,1).map(b=>`<h2>${esc(b.h)}</h2>${b.p.map(t=>`<p>${citeText(t,key,hash)}</p>`).join('')}`).join('')}</div>
+
+      <h2 id="f-map">Map and key facts</h2>
+      <div class="mapfacts">
+        <figure class="mapbox"><iframe title="Map of ${esc(c.name)} with a marker on ${esc(c.capital)}" src="${map}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <figcaption class="footnote">Marker: ${esc(c.capital)} (${c.lat.toFixed(2)}, ${c.lon.toFixed(2)}). Map © ${ext('https://www.openstreetmap.org/copyright','OpenStreetMap contributors')} · ${ext(big,'View larger map')}</figcaption></figure>
+        <dl class="facts">${c.facts.map(f=>`<div><dt>${esc(f[0])}</dt><dd>${citeText(f[1],key,hash)}</dd></div>`).join('')}</dl>
+      </div>
+      <p class="footnote">${esc(c.factsNote)}</p>
+
+      <h2 id="f-numbers">In numbers</h2>
+      ${c.charts.map(ch=>chartBlock(ch,key,hash)).join('')}
+
+      ${c.body.slice(1).map(b=>`<h2>${esc(b.h)}</h2>${b.p.map(t=>`<p>${citeText(t,key,hash)}</p>`).join('')}`).join('')}
+
+      ${p?`<h2 id="f-blocks">Digital building blocks</h2><div class="tablebox"><table><thead><tr><th scope="col">Building block</th><th scope="col">System or institution</th><th scope="col">Status</th></tr></thead><tbody>
+        ${p.rows.map(r=>`<tr><th scope="row" style="font-weight:600">${esc(r[0])}</th><td data-l="System">${esc(r[1])}</td><td data-l="Status"><span class="badge ${ST[r[2]][1]}">${ST[r[2]][0]}</span></td></tr>`).join('')}</tbody></table></div>
+        <p class="footnote">From the ${ext('#country-'+c.id, esc(c.name)+' country profile')}, which uses the same template as every Digivern profile.</p>`:''}
+
+      <h2 id="f-policy">Policy and legal framework</h2>
+      ${tableBlock({cols:['Instrument','Year','What it does','Status'], rows:c.policy.rows}, key).replace(/href="#analysis-[^"]*"/g,`href="#${hash}"`)}
+
+      <h2 id="f-impl">Implementation status</h2>
+      <div class="tablebox"><table><thead><tr><th scope="col">Milestone</th><th scope="col">Date or target</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>${c.implementation.rows.map(r=>`<tr><th scope="row" style="font-weight:700">${citeText(r[0],key,hash)}</th><td data-l="Date or target">${citeText(r[1],key,hash)}</td><td data-l="Status"><span class="badge ${(IST[r[2]]||IST.unclear)[1]}">${(IST[r[2]]||IST.unclear)[0]}</span></td><td data-l="Evidence">${citeText(r[3],key,hash)}</td></tr>`).join('')}</tbody></table></div>
+
+      <h2 id="f-voices">What people say</h2>
+      <p class="muted" style="margin-top:-8px">Views from government, Parliament, experts and civil society, as reported in the sources.</p>
+      ${focusVoices(c.voices,key,hash)}
+
+      <h2 id="f-news">${esc(c.name)} in the News Desk</h2>
+      ${focusNews(news, 'No items yet this month.')}
+
+      <h2 id="f-watch">What to watch</h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px">${c.watch.map(t=>`<li>${citeText(t,key,hash)}</li>`).join('')}</ul>
+
+      <h2 id="f-sources">Sources</h2>
+      ${focusSources(c.sources,key)}
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source, including ${esc(c.name)}’s own news outlets and official sites. The assessment is Digivern’s own analysis. Corrections are logged within 24 hours.</p></div>
+    </article>
+    <aside class="stack">
+      <div class="card toc"><span class="eyebrow">On this page</span>${nav.map(n=>`<a href="#${hash}" data-act="jump" data-v="${n[0]}">${n[1]}</a>`).join('')}</div>
+      ${focusArchive(m)}
+      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send a correction with a source, or submit a writeup about ${esc(c.name)} for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div>
+    </aside>
+  </div></section>`;
+}
+
+function focusSector(m){
+  const x = m.sector, key = 'fs' + m.key.replace('-',''), hash = 'focus-sector' + (m === FOCUS[0] ? '' : '-' + m.key);
+  const cur = m === FOCUS[0];
+  const news = SORTED.filter(n => n.sector === x.tag);
+  const nav = [['f-overview','Overview'],['f-tracker',x.tracker.title],['f-news','News this month'],['f-watch','What to watch'],['f-sources','Sources']];
+  return `<div class="pagehead focus-head"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#focus">Monthly Focus</a> / ${esc(x.name)}</p>
+    <div class="row" style="gap:22px;align-items:center">${sectorIcon()}<div class="stack" style="gap:8px;flex:1 1 380px;min-width:0"><span class="eyebrow" style="color:var(--red)">Sector of the Month · ${esc(m.label)}</span><h1>${esc(x.name)}</h1></div></div>
+    <p class="focus-lede">${esc(x.standfirst)}</p>
+    <p class="mono muted">${cur?'GLOBAL COVERAGE · LAST UPDATE '+esc(UPDATED).toUpperCase():'ARCHIVED FOCUS · '+esc(m.label).toUpperCase()} · ${x.sources.length} SOURCES</p>
+    <div class="row"><a class="btn btn-line" href="#news" data-act="gosector" data-v="${esc(x.tag)}">All ${esc(x.tag.toLowerCase())} news</a><a class="btn btn-line" href="#focus-country${cur?'':'-'+m.key}">Country of the Month: ${esc(m.country.name)}</a></div></div></div>
+  <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',key,hash)}</span></div>`).join('')}</div></div></section>
+  <section class="band"><div class="wrap layout-side">
+    <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
+      <div id="f-overview" class="stack" style="gap:14px">${x.body.map(b=>`<h2>${esc(b.h)}</h2>${b.p.map(t=>`<p>${citeText(t,key,hash)}</p>`).join('')}`).join('')}</div>
+
+      <h2 id="f-tracker">${esc(x.tracker.title)}</h2>
+      ${tableBlock(x.tracker, key).replace(/href="#analysis-[^"]*"/g,`href="#${hash}"`)}
+
+      <h2 id="f-news">${esc(x.name)} in the News Desk</h2>
+      <p class="muted" style="margin-top:-8px">Every news item tagged ${esc(x.tag)}, from all regions.</p>
+      ${focusNews(news, 'No items yet this month.')}
+
+      <h2 id="f-watch">What to watch</h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px">${x.watch.map(t=>`<li>${citeText(t,key,hash)}</li>`).join('')}</ul>
+
+      <h2 id="f-sources">Sources</h2>
+      ${focusSources(x.sources,key)}
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. The assessment is Digivern’s own analysis. Corrections are logged within 24 hours.</p></div>
+    </article>
+    <aside class="stack">
+      <div class="card toc"><span class="eyebrow">On this page</span>${nav.map(n=>`<a href="#${hash}" data-act="jump" data-v="${n[0]}">${esc(n[1])}</a>`).join('')}</div>
+      ${focusArchive(m)}
+      <div class="card"><h3>Working in ${esc(x.name.toLowerCase())}?</h3><p class="muted">Submit a writeup on your project or research for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div>
+    </aside>
+  </div></section>`;
+}
+
 /* ---------- router ---------- */
-const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices'};
+const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices',focus:'focus'};
 function render(){
   const h = (location.hash || '#home').slice(1);
   let name = h, param = '';
-  const m = h.match(/^(story|report|analysis|country|writeup)-(.+)$/);
+  const m = h.match(/^(story|report|analysis|country|writeup|focus)-(.+)$/);
   if (m) { name = m[1]; param = m[2]; }
   if (!V[name]) name = 'home';
   $('#view').innerHTML = V[name](param);
