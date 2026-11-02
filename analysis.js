@@ -4,15 +4,16 @@
    what to watch, and numbered sources. "[n]" in any text becomes a link to source n. */
 const ANALYSES = [
 {
-  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:9,
+  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:11,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
-  standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried three times since 2020 and now aims for full interoperability by July 2027. What the comparisons show, and what it would take.',
+  standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and it now aims for full interoperability by July 2027. What the comparisons show, and what it would take.',
   keynums:[
     {v:'25.47 bn',l:'UPI payments in India in October 2026',c:1},
     {v:'7.89 bn',l:'Pix payments in Brazil in September 2026',c:2},
     {v:'38 m',l:'users on West Africa’s PI-SPI, a year after launch',c:4},
-    {v:'Tk 201,337 cr',l:'monthly MFS value in Bangladesh, April 2026',c:11}
+    {v:'Tk 201,337 cr',l:'monthly MFS value in Bangladesh, April 2026',c:11},
+    {v:'Tk 143.54 cr',l:'daily Bangla QR payments, up from about Tk 28 cr in June 2026',c:18}
   ],
   body:[
     {h:'The short version',p:[
@@ -27,11 +28,17 @@ const ANALYSES = [
       'Bangladesh’s caps are low for bank-originated transfers (0.15%) but high for MFS-originated ones (0.85%, including VAT) [7], which is where most low-income users sit. A sender moving Tk 1,000 from one MFS account to another pays Tk 8.50; in India or Brazil the same transfer is free [7][13][14].',
       'The country has also been here before. An NPSB interoperability service launched in 2020 was suspended within hours [7]. The Binimoy platform, built for Tk 65 crore and launched in November 2022, attracted only eight banks, three MFS providers and two PSPs before Bangladesh Bank ended it in 2025, citing irregularities and a breach of the agreement behind it [8]. The lesson from both is that technology alone does not create interoperability: the incentives of the largest providers and the pricing for users decide whether people actually switch.'
     ]},
+    {h:'Bangla QR: the part that is working',p:[
+      'Bangla QR shows what changes when the central bank makes interoperability compulsory. Bangladesh Bank issued the national QR standard, based on the EMV merchant-presented specification, in January 2021 and told providers to replace their own QR codes by the end of that year [15]. For five years most merchants kept separate bKash, Nagad or bank codes. On 1 April 2026 the central bank ordered all banks, MFS providers and payment operators to switch to Bangla QR by 30 June, with penalties of up to Tk 30 lakh [20]; from 1 July it became mandatory for all businesses, so one sticker accepts payment from any bank or wallet app [16].',
+      'Use jumped. About 39 lakh merchant points now accept Bangla QR, and daily payments rose from about 1 lakh worth Tk 28 crore in June 2026 to nearly 3.5 lakh worth Tk 143.54 crore by late September [18]. From 1 October the central bank removed the 1% minimum merchant fee, set the interchange fee to zero and required instant settlement to merchants [17]. On 1 November it opened person-to-person transfers by Bangla QR: a user scans another person’s code to send money between banks and wallets without typing an account number [19][21]. Fees and limits for these transfers had not been published at launch [19].'
+    ]},
     {h:'Digivern’s assessment',p:[
-      'Bangladesh has the ingredients that India and Brazil had: a central bank willing to own the switch, open-source infrastructure (Mojaloop, also used in other countries), and a deep mobile money base. The weak point is pricing. While MFS-originated transfers carry a fee about as high as the West African cap that starts only above a free daily allowance, closed networks keep their advantage. The July 2027 target is achievable for connection; it will only change behaviour if person-to-person transfers become free or close to free and if the dominant MFS providers are required, not invited, to route through the national switch, as the BCEAO has now done.'
+      'Bangladesh has the ingredients that India and Brazil had: a central bank willing to own the switch, open-source infrastructure (Mojaloop, also used in other countries), and a deep mobile money base. Bangla QR has now proved the method: a fixed deadline, penalties and lower merchant costs moved the market in three months where five years of voluntary adoption had not [16][18]. The weak point is pricing. While MFS-originated transfers carry a fee about as high as the West African cap that starts only above a free daily allowance, closed networks keep their advantage. The July 2027 target is achievable for connection; it will only change behaviour if person-to-person transfers become free or close to free and if the dominant MFS providers are required, not invited, to route through the national switch, as the BCEAO has now done.'
     ]}
   ],
   charts:[
+    {type:'bar',title:'Bangla QR took off once it became compulsory',sub:'Average daily Bangla QR payments, Tk crore',fmt:'dec',
+     rows:[['June 2026 (before the mandate)',28,''],['Late September 2026 (after 1 July mandate)',143.54,'hl']],c:[18]},
     {type:'bar',title:'What an individual pays to send money across providers',sub:'Maximum fee on a person-to-person transfer, % of amount. Lower is better.',fmt:'pct',
      rows:[['India · UPI (consumers)',0,''],['Brazil · Pix (individuals)',0,''],['West Africa · PI-SPI (up to CFAF 8,000/day)',0,''],['West Africa · PI-SPI (above daily allowance)',0.8,''],['Bangladesh · from a bank account',0.15,'hl'],['Bangladesh · from a PSP',0.20,'hl'],['Bangladesh · from an MFS account',0.85,'hl']],
      c:[6,7,13,14]},
@@ -42,13 +49,18 @@ const ANALYSES = [
   ],
   timeline:{title:'Bangladesh’s road to interoperable payments',items:[
     ['2020','NPSB interoperability between providers launched and suspended within hours',7],
+    ['Jan 2021','Bangla QR national QR standard issued; providers told to replace their own codes by end-2021',15],
     ['Nov 2022','Binimoy platform launched (Tk 65 crore); used by 8 banks, 3 MFS and 2 PSPs',8],
     ['Aug 2025','Bangladesh Bank ends Binimoy, citing irregularities',8],
     ['1 Nov 2025','Cross-platform MFS, bank and PSP transfers via NPSB, with fee caps',7],
     ['Nov 2025','Mojaloop-based Inclusive Instant Payment System (IIPS) launched',10],
+    ['1 Jul 2026','Bangla QR mandatory for all merchants; one code accepts every bank and wallet',16],
+    ['1 Oct 2026','1% minimum merchant fee removed; instant settlement to merchants',17],
+    ['1 Nov 2026','Person-to-person transfers by Bangla QR go live',19],
     ['Jul 2027','Target: all financial institutions on an interoperable system',9]
   ]},
   impact:[
+    {who:'Small merchants',dir:'+',size:'High',text:'One Bangla QR sticker replaces several provider codes and a POS machine; the 1% minimum fee is gone and money arrives instantly [16][17].'},
     {who:'Low-income users',dir:'+',size:'High',text:'Can pay anyone regardless of provider; gains are largest if MFS-originated fees fall towards zero [7].'},
     {who:'Large MFS providers',dir:'±',size:'High',text:'Lose the lock-in of closed networks but gain volume and access to bank customers; the main source of resistance in past attempts [8].'},
     {who:'Banks and PSPs',dir:'+',size:'Medium',text:'Low caps (0.15–0.20%) make them competitive for transfers into wallets for the first time [7].'},
@@ -69,9 +81,12 @@ const ANALYSES = [
       ['NPSB interoperability (first attempt)','Bangladesh Bank','2020','Suspended within hours of launch [7]'],
       ['Binimoy','ICT Division (IDEA), run by Bangladesh Bank','Nov 2022 – 2025','Low uptake; ended over irregularities and unpaid support [8]'],
       ['NPSB cross-platform transfers','Bangladesh Bank','From 1 Nov 2025','MFS, bank and PSP transfers with fee caps; sender pays [7]'],
-      ['Inclusive Instant Payment System (IIPS)','Bangladesh Bank, Mojaloop, Gates Foundation support','From Nov 2025','Feature-phone access, simpler accounts, fraud screening; to connect MFIs later [10]']
+      ['Inclusive Instant Payment System (IIPS)','Bangladesh Bank, Mojaloop, Gates Foundation support','From Nov 2025','Feature-phone access, simpler accounts, fraud screening; to connect MFIs later [10]'],
+      ['Bangla QR (merchant payments)','Bangladesh Bank, via NPSB','Standard Jan 2021; mandatory 1 Jul 2026','39 lakh merchant points; daily value up about fivefold in three months [15][16][18]'],
+      ['Bangla QR person-to-person','Bangladesh Bank','From 1 Nov 2026','Scan a person’s code to pay across banks and wallets; fees and limits not yet published [19][21]']
     ]},
   watch:[
+    'The fees and limits Bangladesh Bank sets for person-to-person Bangla QR transfers, and whether they are lower than the 0.85% cap on MFS-originated transfers.',
     'Whether Bangladesh Bank lowers the 0.85% cap on MFS-originated transfers or introduces a free daily allowance like the BCEAO’s.',
     'Whether the largest MFS providers are required to route person-to-person transfers through IIPS, and by when.',
     'Monthly interoperable transaction data: Bangladesh Bank does not yet publish it separately, which makes progress hard to track.',
@@ -91,9 +106,16 @@ const ANALYSES = [
     ['What Bangladesh’s payment surge does and does not tell us','The Daily Star, 10 Oct 2026','https://www.thedailystar.net/business/news/what-bangladeshs-payment-surge-does-and-does-not-tell-us-4295156'],
     ['Draft National Payment System Bill, 2026 gives CBK stronger powers over mobile money','Dawan Africa, 12 Oct 2026','https://www.dawan.africa/news/draft-national-payment-system-bill-2026-gives-cbk-stronger-powers-over-mobile-money-wallets-and-fintechs'],
     ['NPCI clarifies that customers won’t be charged for UPI transactions','The News Minute, 29 Mar 2023','https://www.thenewsminute.com/money/npci-clarifies-customers-wont-be-charged-upi-transactions-175237'],
-    ['Central Bank regulates tariff collection under Pix (free for individuals)','Felsberg Advogados, 26 Oct 2020','https://www.felsberg.com.br/en/central-bank-regulates-tariff-collection-and-rediscount-line-under-pix/']
+    ['Central Bank regulates tariff collection under Pix (free for individuals)','Felsberg Advogados, 26 Oct 2020','https://www.felsberg.com.br/en/central-bank-regulates-tariff-collection-and-rediscount-line-under-pix/'],
+    ['Central bank issues guidelines on “Bangla QR” payments','The Financial Express, 7 Jan 2021','https://old.thefinancialexpress.com.bd/trade/central-bank-issues-guidelines-on-bangla-qr-payments-1609991144'],
+    ['BB launches Bangla QR to drive cashless economy','UNB, 2 Jul 2026','https://unb.com.bd/category/business/bb-launches-bangla-qr-to-drive-cashless-economy/189653'],
+    ['Bangla QR payments to get cheaper, faster for merchants','The Daily Star, 1 Oct 2026','https://www.thedailystar.net/business/economy/news/bangla-qr-payments-get-cheaper-faster-merchants-4287316'],
+    ['Bangla QR transactions surge nearly fivefold to Tk 143.54cr daily: BB','UNB, 30 Sep 2026','https://unb.com.bd/category/Business/bangla-qr-transactions-surge-nearly-fivefold-to-tk-14354cr-daily-bb/196633'],
+    ['Bangladesh Bank launches QR-based P2P payment service','The Business Standard, 1 Nov 2026','https://www.tbsnews.net/economy/banking/bangladesh-bank-launches-qr-based-p2p-payment-service-1589731'],
+    ['What is Bangla QR?','The Daily Star, 2 Apr 2026','https://www.thedailystar.net/business/news/what-bangla-qr-4141941'],
+    ['BB set to introduce person-to-person money transfer through Bangla QR','The Financial Express, 14 Aug 2026','https://thefinancialexpress.com.bd/trade/bb-set-to-introduce-person-to-person-money-transfer-through-bangla-qr']
   ],
-  related:['n19']
+  related:['n25','n19']
 },
 {
   id:'a2', theme:'sec', sector:'Health', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:8,
