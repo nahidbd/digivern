@@ -604,7 +604,8 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
 const EVENTS = window.DV_EVENTS || [], FUNDING = window.DV_FUNDING || [], FUNDNEWS = window.DV_FUNDNEWS || [];
 const todayDhaka = () => new Date(Date.now() + 6 * 3600e3).toISOString().slice(0, 10);
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-st.evRegion = st.evRegion || 'all'; st.evTheme = st.evTheme || 'all';
+st.evRegion = st.evRegion || 'all'; st.evTheme = st.evTheme || 'all'; st.evType = st.evType || 'all';
+const EVTYPES = ['Conference','Summit','Forum','Workshop','Seminar','Webinar','Training','Expo'];
 function evGroups(){
   const t = todayDhaka();
   const up = EVENTS.filter(e => e.start && (e.end || e.start) >= t).sort((a, b) => a.start.localeCompare(b.start));
@@ -620,23 +621,25 @@ function evDate(e){
 function evCard(e, compact){
   const live = e.start && e.start <= todayDhaka() && (e.end || e.start) >= todayDhaka();
   return `<article class="evcard">${evDate(e)}<div class="stack" style="gap:6px;min-width:0">
-    <div class="row" style="gap:6px">${live ? '<span class="badge b-media">Happening now</span>' : ''}<span class="badge b-plain">${esc(T[e.theme] ? T[e.theme].code : '')}</span><span class="badge b-plain">${esc(e.sector)}</span><span class="badge b-plain">${esc(e.format)}</span></div>
+    <div class="row" style="gap:6px">${live ? '<span class="badge b-media">Happening now</span>' : ''}<span class="badge b-official">${esc(e.type || 'Event')}</span><span class="badge b-plain">${esc(T[e.theme] ? T[e.theme].code : '')}</span><span class="badge b-plain">${esc(e.sector)}</span><span class="badge b-plain">${esc(e.format)}</span></div>
     <h3 style="margin:0"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></h3>
-    <p class="mono muted" style="margin:0">${esc(e.dateText)} · ${esc(e.city)}, ${esc(e.country)}</p>
+    <p class="mono muted" style="margin:0">${esc(e.dateText)} · ${esc(e.city === e.country ? e.city : e.city + ', ' + e.country)}</p>
     ${compact ? '' : `<p style="margin:0">${esc(e.organiser)}</p>${e.note ? `<p class="muted" style="margin:0">${esc(e.note)}</p>` : ''}<p class="footnote" style="margin:0">Cost: ${esc(e.cost)} · Source: <a href="${esc(e.source[2])}" target="_blank" rel="noopener">${esc(e.source[1])}</a> · checked ${esc(e.checked)}</p>`}
   </div></article>`;
 }
 V.events = () => {
   const g = evGroups();
-  const f = e => (st.evRegion === 'all' || e.region === st.evRegion) && (st.evTheme === 'all' || e.theme === st.evTheme);
+  const f = e => (st.evRegion === 'all' || e.region === st.evRegion) && (st.evTheme === 'all' || e.theme === st.evTheme) && (st.evType === 'all' || e.type === st.evType);
+  const types = EVTYPES.filter(t => EVENTS.some(e => e.type === t));
   const regions = ['Africa','Americas','Asia-Pacific','Europe','Middle East','Global','Online'].filter(r => EVENTS.some(e => e.region === r));
   const sec = (title, list, empty) => `<div class="stack" style="gap:12px"><h2>${title}</h2>${list.length ? list.map(e => evCard(e)).join('') : `<p class="muted">${empty}</p>`}</div>`;
-  return pagehead('Events','Events','Conferences, summits and forums around the world on e-governance, digital public infrastructure, AI, cybersecurity, fintech and digital sectors. Every date is checked against the organiser or a published source.') + `
+  return pagehead('Events','Events','Conferences, summits, forums, workshops, seminars and webinars around the world on e-governance, digital public infrastructure, AI, cybersecurity, fintech and digital sectors. Every date is checked against the organiser or a published source.') + `
   <section class="band"><div class="wrap stack" style="gap:26px">
     <div class="row" style="gap:8px;align-items:center">
       <div class="row" role="toolbar" aria-label="Region"><button class="chip" data-act="evregion" data-v="all" aria-pressed="${st.evRegion==='all'}">All regions</button>${regions.map(r => `<button class="chip" data-act="evregion" data-v="${r}" aria-pressed="${st.evRegion===r}">${r}</button>`).join('')}</div>
       <div class="field" style="margin-left:auto;min-width:220px"><label for="evt">Theme</label><select id="evt" data-change="evTheme"><option value="all">All themes</option>${THEMES.map(t => `<option value="${t.id}" ${st.evTheme===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}</select></div>
     </div>
+    <div class="row" role="toolbar" aria-label="Type of event"><button class="chip" data-act="evtype" data-v="all" aria-pressed="${st.evType==='all'}">All types</button>${types.map(t => `<button class="chip" data-act="evtype" data-v="${t}" aria-pressed="${st.evType===t}">${t}s</button>`).join('')}</div>
     ${sec('Upcoming', g.up.filter(f), 'No upcoming events match these filters.')}
     ${g.tba.filter(f).length ? sec('Dates to be announced', g.tba.filter(f), '') : ''}
     ${g.past.filter(f).length ? sec('Recently held', g.past.filter(f).slice(0, 8), '') : ''}
@@ -934,6 +937,7 @@ document.addEventListener('click', e => {
   else if (a === 'src' || a === 'jump') { e.preventDefault(); const el = document.getElementById(a==='src' ? 'src-'+v : v); if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); if (a==='src') { el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600); } } }
   else if (a === 'statdays') { st.statDays = +v; render(); }
   else if (a === 'evregion') { st.evRegion = v; render(); }
+  else if (a === 'evtype') { st.evType = v; render(); }
   else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
   else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');
