@@ -653,21 +653,25 @@ function fundCard(x, compact){
     <div class="row" style="gap:6px;justify-content:space-between"><div class="row" style="gap:6px"><span class="badge b-official">${esc(x.kind)}</span><span class="badge b-plain">${esc(T[x.theme] ? T[x.theme].code : '')}</span></div><span class="badge ${dl <= 7 ? 'b-media' : 'b-plain'}">${dl <= 0 ? 'Closes today' : 'Closes in ' + dl + (dl === 1 ? ' day' : ' days')}</span></div>
     <h3 style="margin:0"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a></h3>
     <p class="mono muted" style="margin:0">${esc(x.funder)}</p>
-    ${compact ? `<p style="margin:0"><b>${esc(x.amount)}</b></p>` : `
+    ${compact ? `<p style="margin:0"><b>${esc(x.amount || x.duration || x.where)}</b></p>` : `
     <p style="margin:0">${esc(x.summary)}</p>
-    <dl class="fundmeta"><dt>Amount</dt><dd>${esc(x.amount)}</dd><dt>Who can apply</dt><dd>${esc(x.who)}</dd><dt>Where</dt><dd>${esc(x.where)}</dd><dt>Deadline</dt><dd>${esc(x.closeText)}</dd></dl>
-    <p class="footnote" style="margin:0">Checked ${esc(x.checked)}${x.via ? ' · also listed on <a href="https://devfund.pages.dev" target="_blank" rel="noopener">DevFund</a>' : ''} · Always confirm details on the funder’s page before applying.</p>`}
+    <dl class="fundmeta">${x.amount ? `<dt>Amount</dt><dd>${esc(x.amount)}</dd>` : ''}${x.duration ? `<dt>Duration</dt><dd>${esc(x.duration)}</dd>` : ''}<dt>Who can apply</dt><dd>${esc(x.who)}</dd><dt>Where</dt><dd>${esc(x.where)}</dd><dt>Deadline</dt><dd>${esc(x.closeText)}</dd></dl>
+    <p class="footnote" style="margin:0">Checked ${esc(x.checked)} · Always confirm details on the organisation’s page before applying.</p>`}
   </article>`;
 }
 const openFunding = () => FUNDING.filter(x => new Date(x.close) > Date.now()).sort((a, b) => a.close.localeCompare(b.close));
+const KINDS = ['Grant','Fellowship','Scholarship','Award or prize','Incubator or accelerator','Call for proposals','Call for papers or speakers','Training','Job','Consultancy','Internship'];
+st.fKind = st.fKind || 'all';
 V.funding = () => {
-  const open = openFunding();
+  const all = openFunding(), kinds = KINDS.filter(k => all.some(x => x.kind === k));
+  const open = all.filter(x => st.fKind === 'all' || x.kind === st.fKind);
   const fn = FUNDNEWS.map(id => NEWS.find(n => n.id === id)).filter(Boolean);
-  return pagehead('Funding','Grants and funding','Open grants, fellowships, incubators and calls for digital government, DPI, AI, data and cybersecurity work around the world, with the latest money committed to digital programmes.') + `
+  return pagehead('Funding','Grants and opportunities','Grants, fellowships, scholarships, awards, calls for proposals and speakers, trainings, jobs and consultancies for people and organisations working on digital government, DPI, AI, data, cybersecurity and digital sectors worldwide, with the latest money committed to digital programmes.') + `
   <section class="band"><div class="wrap stack" style="gap:26px">
-    <div class="stack" style="gap:12px"><h2>Open calls, closing soonest first</h2>${open.length ? `<div class="grid g2">${open.map(x => fundCard(x)).join('')}</div>` : '<p class="muted">No open calls right now. New calls are added as they are announced.</p>'}</div>
+    <div class="row" role="toolbar" aria-label="Type of opportunity"><button class="chip" data-act="fkind" data-v="all" aria-pressed="${st.fKind==='all'}">All</button>${kinds.map(k => `<button class="chip" data-act="fkind" data-v="${k}" aria-pressed="${st.fKind===k}">${k}</button>`).join('')}</div>
+    <div class="stack" style="gap:12px"><h2>Open now, closing soonest first</h2>${open.length ? `<div class="grid g2">${open.map(x => fundCard(x)).join('')}</div>` : '<p class="muted">Nothing open in this category right now. New opportunities are added every day.</p>'}</div>
     ${fn.length ? `<div class="stack" style="gap:12px"><h2>Money for digital programmes</h2><p class="muted" style="margin-top:-6px">Recent loans, grants and budgets for digital ID, payments, AI and digital services, from the News Desk.</p><div class="card" style="padding:4px 22px">${fn.map(newsRow).join('')}</div></div>` : ''}
-    <div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:24px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Looking for all development funding?</h3><p class="muted">Our sister site DevFund lists grants, tenders, jobs and consultancies across every development sector, with a Bangladesh desk.</p></div><a class="btn" href="https://devfund.pages.dev" target="_blank" rel="noopener">Open DevFund</a></div>
+    
   </div></section>`;
 };
 function homeEventsFunding(){
@@ -675,7 +679,7 @@ function homeEventsFunding(){
   if (!up.length && !open.length) return '';
   return `<section class="band" style="padding-top:36px"><div class="wrap"><div class="grid g2">
     <div class="stack" style="gap:10px"><div class="head-row"><h2>Upcoming events</h2><a href="#events" style="font-weight:700">All events →</a></div>${up.map(e => evCard(e, true)).join('') || '<p class="muted">No upcoming events listed.</p>'}</div>
-    <div class="stack" style="gap:10px"><div class="head-row"><h2>Open funding calls</h2><a href="#funding" style="font-weight:700">All funding →</a></div>${open.map(x => fundCard(x, true)).join('') || '<p class="muted">No open calls right now.</p>'}</div>
+    <div class="stack" style="gap:10px"><div class="head-row"><h2>Grants and opportunities</h2><a href="#funding" style="font-weight:700">All opportunities →</a></div>${open.map(x => fundCard(x, true)).join('') || '<p class="muted">No open calls right now.</p>'}</div>
   </div></div></section>`;
 }
 
@@ -938,6 +942,7 @@ document.addEventListener('click', e => {
   else if (a === 'statdays') { st.statDays = +v; render(); }
   else if (a === 'evregion') { st.evRegion = v; render(); }
   else if (a === 'evtype') { st.evType = v; render(); }
+  else if (a === 'fkind') { st.fKind = v; render(); }
   else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
   else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');

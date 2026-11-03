@@ -9,12 +9,16 @@
    Events whose end date has passed move automatically to "Recently held"; remove them 90 days after they end.
    Events with no dates yet (start '') appear under "Dates to be announced".
 
-   FUNDING: open grants, fellowships, incubators and calls for proposals for digital government, DPI, AI, data, cybersecurity,
-   fintech and other digital work. Shape:
-     {id, title, funder, kind:'Grant'|'Fellowship'|'Incubator'|'Prize'|'Call for proposals', amount (as published),
-      who (eligible applicants), where (eligible countries, in words), close:'UTC ISO time', closeText (exactly as the funder states it),
-      summary (Digivern's own words), url (official call page), theme, sector, checked:'YYYY-MM-DD', via ('' or where it was found, e.g. 'DevFund')}
-   Calls past their deadline disappear automatically; remove them 30 days after closing.
+   FUNDING: grants and professional opportunities for people and organisations working on digital government, DPI, AI, data,
+   cybersecurity, fintech and other digital sectors: grants, fellowships, scholarships, awards and prizes, incubators and
+   accelerators, calls for proposals, papers or speakers, trainings, jobs, consultancies and internships. Shape:
+     {id, title, funder (the organisation offering it), kind: one of KINDS below, amount (as published, or ''),
+      duration (as published, or ''), who (eligible applicants), where (eligible countries or duty station, in words),
+      close:'UTC ISO time', closeText (exactly as the organisation states it), summary (Digivern's own words),
+      url (the organisation's official page), theme, sector, checked:'YYYY-MM-DD'}
+   KINDS: 'Grant','Fellowship','Scholarship','Award or prize','Incubator or accelerator','Call for proposals',
+          'Call for papers or speakers','Training','Job','Consultancy','Internship'
+   Opportunities past their deadline disappear automatically; remove them 30 days after closing. Never list tenders or procurement notices.
    FUNDNEWS: ids of NEWS items in data.js about money for digital programmes (loans, grants, budgets, new funds), newest first. */
 (function(){
 const EVENTS = [
@@ -96,35 +100,45 @@ const EVENTS = [
 
 const FUNDING = [
   {id:'f1', title:'Cities Deliver: AI Solutions for Public Services — open call, Round 1', funder:'The Rockefeller Foundation and OpenAI Foundation', kind:'Grant',
-   amount:'Seed grants $500,000 to under $1 million; Scale grants $1–2 million (24 months)', who:'NGOs, INGOs, academic institutions and firms working with a city government',
+   amount:'Seed grants $500,000 to under $1 million; Scale grants $1–2 million (24 months)', duration:'', who:'NGOs, INGOs, academic institutions and firms working with a city government',
    where:'Cities in all regions; organisations in countries under comprehensive US OFAC sanctions are excluded',
    close:'2026-11-30T04:59:00Z', closeText:'29 November 2026, 11:59 pm EST (Round 1 proposal)',
    summary:'Funds organisations that partner with a city government to use frontier AI in public health, economic mobility, environmental resilience or civic engagement. Each proposal needs a letter of intent from the city; research-only projects are not funded. Part of a $50 million initiative announced on 16 October 2026.',
-   url:'https://www.rockefellerfoundation.org/wp-content/uploads/2026/10/Cities-Deliver-AI-Solutions-for-Public-Services-FAQs-Final.pdf', theme:'ai', sector:'Government', checked:'2026-11-02', via:'DevFund'},
-  {id:'f2', title:'Mozilla Foundation Human-Scale AI Incubator 2026', funder:'Mozilla Foundation', kind:'Incubator',
-   amount:'$300,000, with up to $200,000 more for strong progress (up to $500,000 over three years)', who:'NGOs, start-ups, firms and academic teams',
+   url:'https://www.rockefellerfoundation.org/wp-content/uploads/2026/10/Cities-Deliver-AI-Solutions-for-Public-Services-FAQs-Final.pdf', theme:'ai', sector:'Government', checked:'2026-11-02'},
+  {id:'f2', title:'Mozilla Foundation Human-Scale AI Incubator 2026', funder:'Mozilla Foundation', kind:'Incubator or accelerator',
+   amount:'$300,000, with up to $200,000 more for strong progress (up to $500,000 over three years)', duration:'', who:'NGOs, start-ups, firms and academic teams',
    where:'Check the official call for country and organisation eligibility',
    close:'2026-11-21T07:59:00Z', closeText:'Friday 20 November 2026, 11:59 pm Pacific Standard Time',
    summary:'Non-dilutive funding for teams building smaller, specialised, community-focused AI. Incubation starts in April 2027 and runs for 12 months, with possible follow-on support.',
-   url:'https://www.mozillafoundation.org/en/what-we-do/grantmaking/incubator/human-scale-ai/call-for-proposals/', theme:'ai', sector:'Trade & business', checked:'2026-11-03', via:'DevFund'},
+   url:'https://www.mozillafoundation.org/en/what-we-do/grantmaking/incubator/human-scale-ai/call-for-proposals/', theme:'ai', sector:'Trade & business', checked:'2026-11-03'},
   {id:'f3', title:'Internet Society Fellowship Program 2027', funder:'Internet Society', kind:'Fellowship',
-   amount:'Project stipend up to $5,000, plus travel support to a global or regional internet event', who:'Individuals working on internet policy, connectivity, or safety and security',
+   amount:'Project stipend up to $5,000, plus travel support to a global or regional internet event', duration:'', who:'Individuals working on internet policy, connectivity, or safety and security',
    where:'No country restriction stated',
    close:'2026-11-22T23:59:00Z', closeText:'Finish the Pre-Fellowship Training by 22 November 2026; applications close 18 December 2026',
    summary:'A fellowship in three tracks (policy and mobilisation, connectivity, and safety and security) with a mentor, a project stipend and travel support. The application link is sent after the Pre-Fellowship Training is completed.',
-   url:'https://www.internetsociety.org/fellowship/', theme:'enb', sector:'Telecom', checked:'2026-11-02', via:'DevFund'},
+   url:'https://www.internetsociety.org/fellowship/', theme:'enb', sector:'Telecom', checked:'2026-11-02'},
   {id:'f4', title:'Mozilla Foundation Fellowships 2027–2028', funder:'Mozilla Foundation', kind:'Fellowship',
-   amount:'$100,000 (embedded track) or $125,000 (independent track), each including a $25,000 project budget', who:'Technologists, researchers, entrepreneurs, artists and change-makers',
+   amount:'$100,000 (embedded track) or $125,000 (independent track), each including a $25,000 project budget', duration:'', who:'Technologists, researchers, entrepreneurs, artists and change-makers',
    where:'Check the official call for full eligibility',
    close:'2026-12-18T07:59:00Z', closeText:'17 December 2026, 11:59 pm Pacific Time (letter of intent); full applications by 12 March 2027 if shortlisted',
    summary:'Ten fellowships for people building a more human-centred technology future, including trustworthy AI and digital rights.',
-   url:'https://www.mozillafoundation.org/what-we-do/grantmaking/fellowship/2027-call-for-applications/', theme:'ai', sector:'Government', checked:'2026-11-02', via:'DevFund'},
-  {id:'f5', title:'Global DPI Summit 2027: call for session proposals', funder:'Global DPI Summit co-hosts (Co-Develop, ITU, UN ODET, UNDP, World Bank)', kind:'Call for proposals',
-   amount:'Speaking slot (not a grant)', who:'Governments, practitioners, researchers, civil society and companies working on DPI',
+   url:'https://www.mozillafoundation.org/what-we-do/grantmaking/fellowship/2027-call-for-applications/', theme:'ai', sector:'Government', checked:'2026-11-02'},
+  {id:'f5', title:'Global DPI Summit 2027: call for session proposals', funder:'Global DPI Summit co-hosts (Co-Develop, ITU, UN ODET, UNDP, World Bank)', kind:'Call for papers or speakers',
+   amount:'', duration:'', who:'Governments, practitioners, researchers, civil society and companies working on DPI',
    where:'Global',
    close:'2026-12-01T23:59:00Z', closeText:'1 December 2026',
    summary:'Proposals for sessions at the Global DPI Summit in Bali, 22–25 March 2027. A chance to present country experience to the main global DPI community.',
-   url:'https://www.globaldpisummit.org/', theme:'dpi', sector:'Government', checked:'2026-11-04', via:''}
+   url:'https://www.globaldpisummit.org/', theme:'dpi', sector:'Government', checked:'2026-11-04'},
+  {id:'f6', title:'National Consultant – E-Governance Expert', funder:'UNDP Bangladesh', kind:'Consultancy',
+   amount:'', duration:'About 90 working days, December 2026 – May 2027', who:'Individual consultants', where:'Bangladeshi nationals only; based in Bangladesh',
+   close:'2026-11-08T17:59:00Z', closeText:'8 November 2026 (no time stated)',
+   summary:'Individual consultancy giving e-governance guidance on digital governance policy and implementation. Proposals go through the UNDP Quantum supplier portal (reference UNDP-BGD-01235).',
+   url:'https://procurement-notices.undp.org/view_negotiation.cfm?nego_id=51067', theme:'egov', sector:'Government', checked:'2026-11-02'},
+  {id:'f7', title:'International Consultant, Information Management Analyst (retainer, home-based)', funder:'UN Women, State of Palestine Country Office', kind:'Consultancy',
+   amount:'', duration:'6 months (retainer)', who:'Individuals with a master’s (or bachelor’s plus two years) and two years in humanitarian information management', where:'Open to all nationalities; home-based',
+   close:'2026-11-11T23:59:00Z', closeText:'11 November 2026 (no time zone stated)',
+   summary:'Supports information management for humanitarian and early-recovery work: reach analysis, sex- and age-disaggregated data, dashboards, the inter-agency community feedback system and joint-programme reporting. Arabic is desirable.',
+   url:'https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/37829', theme:'pol', sector:'Social protection', checked:'2026-11-03'}
 ];
 
 const FUNDNEWS = ['n3','n4','n8','n34'];
