@@ -10,7 +10,7 @@
      voices:[{who, group:'Government'|'Industry'|'Expert'|'Civil society'|'Users'|'Development partner', stance:'support'|'concern'|'mixed', view (attributed paraphrase or short quote), c}] */
 const ANALYSES = [
 {
-  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:16,
+  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'3 Nov 2026', readMins:16,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
   standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and the central bank aims for full interoperability by July 2027. What the laws, the money, the people and the comparisons show.',
@@ -36,7 +36,7 @@ const ANALYSES = [
     ]},
     {h:'Bangla QR: the part that is working',p:[
       'Bangladesh Bank issued the national QR standard, based on the EMV merchant-presented specification, in January 2021 [15], and piloted it in Motijheel, Dhaka, from 18 January 2023 [28]. Adoption stayed voluntary and slow: by the end of 2025 about 9.63 lakh merchants used it, through 46 banks, seven MFS providers and four PSPs [28]. On 1 April 2026 the central bank ordered all providers to replace their own QR codes by 30 June, with penalties of up to Tk 30 lakh [20]; from 1 July one sticker accepts payment from any bank or wallet app [16].',
-      'Use jumped. About 39 lakh merchant points now accept Bangla QR, and daily payments rose from about 1 lakh worth Tk 28 crore in June 2026 to nearly 3.5 lakh worth Tk 143.54 crore by late September [18]. From 1 October the central bank removed the 1% minimum merchant fee, set the interchange fee to zero and required instant settlement to merchants [17]. On 1 November it opened person-to-person transfers by Bangla QR: a user scans another person’s code to send money without typing an account number [19][21]. Fees and limits for these transfers had not been published at launch [19].',
+      'Use jumped. About 39 lakh merchant points now accept Bangla QR, and daily payments rose from about 1 lakh worth Tk 28 crore in June 2026 to nearly 3.5 lakh worth Tk 143.54 crore by late September [18]. Instant crediting of Bangla QR payments had applied to small and marginal merchants since 15 December 2025 [30]. From 1 October 2026 the central bank extended immediate crediting to all Bangla QR payments, removed the 1% minimum merchant fee and set the interchange fee to zero [17][31]; it also told providers that by 31 October every savings and current account holder must be able to pay by scanning Bangla QR in their app [31]. On 1 November it opened person-to-person transfers by Bangla QR: a user scans another person’s code to send money without typing an account number [19][21]. Fees and limits for these transfers had not been published at launch [19].',
       'The fast take-up has side effects. Some merchants have started letting customers withdraw cash through Bangla QR without buying anything, avoiding MFS cash-out fees and undercutting about 2 million agents; in one case Tk 36.4 lakh moved through two banks’ QR codes in five days [26].'
     ]},
     {h:'Digivern’s assessment',p:[
@@ -48,16 +48,19 @@ const ANALYSES = [
     ['MFS Regulations 2022','2022','Licensing and supervision of mobile financial service providers by Bangladesh Bank’s Payment Systems Department [23]','In force [23]'],
     ['Bangla QR guidelines','2021','National EMV-based QR standard for open-loop, interoperable payments; static QR payments capped at Tk 20,200 [15]','In force [15]'],
     ['NPSB cross-platform transfer circular','Oct 2025','MFS, bank and PSP transfers across providers from 1 Nov 2025; fee caps 0.15% (bank), 0.20% (PSP), 0.85% (MFS) including VAT; receiver pays nothing [7]','In force [7]'],
+    ['Bangla QR instant settlement circular','Nov 2025','Payments to small and marginal merchants credited instantly from 15 Dec 2025; other merchants on terms set by providers [30]','In force; widened to all Bangla QR payments from 1 Oct 2026 [31]'],
     ['Bangla QR directive','Apr 2026','All providers to replace proprietary merchant QR codes by 30 June 2026; penalties up to Tk 30 lakh [20]','Complied; mandatory from 1 Jul 2026 [16]'],
-    ['Bangla QR pricing changes','Oct 2026','1% minimum merchant fee removed, interchange set to zero, instant settlement, incentives for payments up to Tk 2,000 [17]','In force [17]'],
+    ['Bangla QR pricing and settlement directive','Sep 2026','From 1 Oct: 1% minimum merchant fee removed, interchange set to zero, all Bangla QR payments credited immediately, incentives for payments up to Tk 2,000; by 31 Oct, QR payment from every account holder’s app [17][31]','In force [17]'],
     ['National interoperability target','Nov 2025','All banks, MFS providers, insurers and other institutions on an interoperable system [9]','Target July 2027 [9]']
   ]},
   implementation:{intro:'Most 2025–26 milestones were met on time. The gaps are data and the final, all-institution target.',rows:[
     ['Bangla QR pilot','18 Jan 2023','done','Pilot launched in Motijheel, Dhaka [28]'],
     ['Cross-provider transfers through NPSB','1 Nov 2025','done','Circular issued 12 Oct 2025 with fee caps [7]'],
     ['Inclusive Instant Payment System (Mojaloop)','Nov 2025','done','Launched, per Bangladesh Bank’s Payment Systems Department [10]'],
+    ['Instant crediting for small and marginal merchants','15 Dec 2025','done','Circular of 24 Nov 2025 [30]'],
     ['Bangla QR mandatory for all merchants','1 Jul 2026','done','Launched by the governor at a bKash merchant outlet [16]'],
-    ['Merchant fee removal and instant settlement','1 Oct 2026','done','Minimum MDR removed, interchange zero [17]'],
+    ['Merchant fee removal and instant settlement','1 Oct 2026','done','Minimum MDR removed, interchange zero, all payments credited immediately [17][31]'],
+    ['Bangla QR payment from every bank account app','31 Oct 2026','unclear','Deadline set in the September directive [31]; no compliance data published'],
     ['Person-to-person Bangla QR','1 Nov 2026','done','Live; fees and limits not yet published [19]'],
     ['Limits on merchant cash-out misuse','Not set','not started','Officials considering transaction limits on merchants [26]'],
     ['All financial institutions interoperable','Jul 2027','unclear','Target set [9]; no monthly interoperability data published [11]']
@@ -92,8 +95,9 @@ const ANALYSES = [
     ['Aug 2025','Bangladesh Bank ends Binimoy, citing irregularities',8],
     ['1 Nov 2025','Cross-platform MFS, bank and PSP transfers via NPSB, with fee caps',7],
     ['Nov 2025','Mojaloop-based Inclusive Instant Payment System launched',10],
+    ['15 Dec 2025','Instant crediting of Bangla QR payments to small merchants',30],
     ['1 Jul 2026','Bangla QR mandatory for all merchants',16],
-    ['1 Oct 2026','Minimum merchant fee removed; instant settlement',17],
+    ['1 Oct 2026','Minimum merchant fee removed; instant settlement for all Bangla QR payments',31],
     ['1 Nov 2026','Person-to-person transfers by Bangla QR go live',19],
     ['Jul 2027','Target: all financial institutions interoperable',9]
   ]},
@@ -170,7 +174,9 @@ const ANALYSES = [
     ['Misuse of Bangla QR: merchants illegally offering cash-out services, 2m agents at risk','Prothom Alo, 15 Sep 2026','https://en.prothomalo.com/business/local/8mljzomg86'],
     ['Trust is the missing link to Bangla QR’s success','The Daily Star, 11 Aug 2026','https://www.thedailystar.net/opinion/views/news/trust-the-missing-link-bangla-qrs-success-4244856'],
     ['Mandatory Bangla QR code marks new phase in Bangladesh’s digital payments','Prothom Alo, 3 Jul 2026','https://en.prothomalo.com/business/local/h5dlqaen8x'],
-    ['BB sets Tk100cr to boost Bangla QR use','The New Nation, 9 Aug 2026','https://dailynewnation.com/news/848095']
+    ['BB sets Tk100cr to boost Bangla QR use','The New Nation, 9 Aug 2026','https://dailynewnation.com/news/848095'],
+    ['BB asks to ensure instant settlement for Bangla QR code-based transactions','BSS, 24 Nov 2025','https://www.bssnews.net/business/335351'],
+    ['Bangla QR payments to reach merchants instantly from Oct 1','The Daily Star, 18 Sep 2026','https://www.thedailystar.net/business/economy/news/bangla-qr-payments-reach-merchants-instantly-oct-1-4275841']
   ],
   related:['n25','n19']
 },

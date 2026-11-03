@@ -173,6 +173,8 @@ const MONTHS = [
       ['India','Bharat-VISTAAR AI advisory','Launched 17 Feb 2026; Hindi and English first [4]','Live, expanding'],
       ['Kenya','KIAMIS registry and fertiliser e-vouchers','6.58 million farmers; 53.6 million e-vouchers (Mar 2025) [5]','Operating'],
       ['Nigeria','National Digital Farmers Registry, anchored on NIN','Unified register proposed Sep 2026; no total published [6][7]','Planning'],
+      ['India','Agri Welfare Portal: single window for PM-KISAN, AgriStack and crop insurance','Upgraded 19 Oct 2026; online eligibility checks, DBT payments, works on basic phones [14]','Live'],
+      ['Nigeria','AgroPass (FCMB with Mastercard): farmers linked to buyers, inputs and lenders','FCMB lent ₦364.6 billion to agriculture last year, reaching 196,000+ smallholders [15]','Launched Oct 2026'],
       ['Lesotho','Lesotho Farmers Portal on a GovStack specification','Farmers linked to national ID and GPS land parcels [8]','Live since Aug 2026'],
       ['Ethiopia','Digital Agriculture Roadmap 2025–2033','22 use cases using the Fayda ID [3]','Planned'],
       ['Uganda','E-vouchers and e-extension in the Agriculture Strategic Plan','Part of a UGX 17 trillion plan, 2025/26–2029/30 [13]','Planned'],
@@ -199,7 +201,9 @@ const MONTHS = [
       ['EU Deforestation Regulation application postponed to 30 December 2026','EY Tax News, 20 Jan 2026','https://taxnews.ey.com/news/2026-0237-eu-deforestation-regulation-application-postponed-to-30-december-2026'],
       ['Commission updates product scope and tools to support EUDR','European Commission, 13 Jul 2026','https://environment.ec.europa.eu/news/commission-updates-product-scope-and-tools-support-eudr-2026-07-13_en'],
       ['1,000 initiatives and beyond: how FAO’s AgriTech Observatory helps navigate digital agriculture','FAO, 2 Jun 2026','https://www.fao.org/europe/news/detail/1-000-initiatives-and-beyond--how-fao-s-agritech-observatory-helps-navigate-digital-agriculture/en'],
-      ['MAAIF unveils strategic blueprints to transform Uganda’s agriculture by 2030','Publicist East Africa, 5 Jan 2026','https://publicisteastafrica.com/maaif-unveils-strategic-blueprints-to-transform-ugandas-agriculture-by-2030/']
+      ['MAAIF unveils strategic blueprints to transform Uganda’s agriculture by 2030','Publicist East Africa, 5 Jan 2026','https://publicisteastafrica.com/maaif-unveils-strategic-blueprints-to-transform-ugandas-agriculture-by-2030/'],
+      ['Government to stay live on mobile: Shivraj Singh Chouhan launches new portal for farmers','Press Information Bureau, Government of India, 19 Oct 2026','https://www.pib.gov.in/PressReleasePage.aspx?PRID=2325129&reg=48&lang=2'],
+      ['FCMB and Mastercard launch AgroPass to expand finance access for Nigerian farmers','TechAfrica News, 2 Nov 2026','https://techafricanews.com/2026/11/02/fcmb-mastercard-launch-agropass-expand-finance-access-nigerian-farmers']
     ]
   }
 }
