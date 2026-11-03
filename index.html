@@ -8,6 +8,20 @@
 <meta property="og:description" content="Global intelligence on digital governance.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E3A6E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-weight='700' font-size='19' text-anchor='middle' fill='%23FFFFFF'%3ED%3C/text%3E%3C/svg%3E">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* events and funding */
+.evcard{display:grid;grid-template-columns:76px 1fr;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.evdate{background:var(--accent);color:#FFFFFF;border-radius:6px;text-align:center;padding:8px 4px;display:flex;flex-direction:column;line-height:1.1}
+.evdate b{font-size:1.7rem}
+.evdate span{font:700 .72rem var(--f-mono);letter-spacing:.05em;text-transform:uppercase}
+.evdate.tba{background:var(--accent-soft);color:var(--accent)}
+.evdate.tba b{font-size:1.2rem}
+.evcard h3 a,.fundcard h3 a{color:var(--ink);text-decoration:none}
+.evcard h3 a:hover,.fundcard h3 a:hover{color:var(--accent);text-decoration:underline}
+.fundcard{gap:10px}
+.fundmeta{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0;font-size:.95rem}
+.fundmeta dt{font:700 .75rem var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.fundmeta dd{margin:0}
+@media (max-width:600px){.fundmeta{grid-template-columns:1fr}.evcard{grid-template-columns:60px 1fr;gap:12px}}
 /* site statistics */
 .daychart{display:flex;align-items:flex-end;gap:3px;height:180px;padding-top:8px}
 .dc{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;min-width:0}
@@ -325,6 +339,8 @@ footer .brand b{font-size:2rem;color:var(--accent)}
       <a href="#countries">Countries</a>
       <a href="#focus">Monthly Focus</a>
       <a href="#tracker">Policy Tracker</a>
+      <a href="#events">Events</a>
+      <a href="#funding">Funding</a>
       <a href="#voices">Voices</a>
       <a href="#ask">Ask Digivern</a>
       <a href="#consulting">Consulting</a>
@@ -345,7 +361,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
       <p style="font-size:.92rem">Digivern is in beta. Content, features and design may change.</p>
     </div>
     <div class="cols">
-      <div class="col"><b>Read</b><a href="#news">News Desk</a><a href="#reports">Analysis &amp; Reports</a><a href="#countries">Country profiles</a><a href="#focus">Monthly Focus</a><a href="#tracker">Policy &amp; Law Tracker</a><a href="#learn">Learning Hub</a></div>
+      <div class="col"><b>Read</b><a href="#news">News Desk</a><a href="#reports">Analysis &amp; Reports</a><a href="#countries">Country profiles</a><a href="#focus">Monthly Focus</a><a href="#tracker">Policy &amp; Law Tracker</a><a href="#events">Events</a><a href="#funding">Grants and funding</a><a href="#learn">Learning Hub</a></div>
       <div class="col"><b>Use</b><a href="#contribute">Write for Digivern</a><a href="#voices">Voices</a><a href="#ask">Ask Digivern</a><a href="#consulting">Consulting Desk</a><a href="#premium">Beta access (all free)</a><a href="#stats">Site statistics</a><a href="#subscribe">Subscribe</a></div>
       <div class="col"><b>Trust</b><a href="#about">Methodology</a><a href="#sources">Our sources</a><a href="#ai-policy">AI use policy</a><a href="#corrections">Corrections log</a><a href="#contact">Contact</a></div>
     </div>
@@ -366,6 +382,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 
 <script src="data.js"></script>
 <script src="analysis.js"></script>
+<script src="events.js"></script>
 <script src="focus.js"></script>
 <script src="app.js"></script>
 

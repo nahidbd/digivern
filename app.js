@@ -105,6 +105,7 @@ V.home = () => {
     </div>
   </div>
 
+  ${homeEventsFunding()}
   <section class="band" style="padding-bottom:0"><div class="wrap">
     <div class="head-row"><div class="stack" style="gap:6px"><h2>Voices</h2><p class="muted">Writeups by practitioners, reviewed by the editor.</p></div><a href="#voices" style="font-weight:700">All Voices \u2192</a></div>
     ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.slice(0,3).map(writeupCard).join('')}</div>` : `<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:26px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Write for Digivern</h3><p class="muted">Share your analysis or field experience on e-governance, DPI, AI or cybersecurity. Accepted pieces are published with your profile.</p></div><a class="btn" href="#contribute">Submit your writeup</a></div>`}
@@ -598,6 +599,83 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
   </div></section>`;
 
 
+
+/* ---------- events and funding ---------- */
+const EVENTS = window.DV_EVENTS || [], FUNDING = window.DV_FUNDING || [], FUNDNEWS = window.DV_FUNDNEWS || [];
+const todayDhaka = () => new Date(Date.now() + 6 * 3600e3).toISOString().slice(0, 10);
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+st.evRegion = st.evRegion || 'all'; st.evTheme = st.evTheme || 'all';
+function evGroups(){
+  const t = todayDhaka();
+  const up = EVENTS.filter(e => e.start && (e.end || e.start) >= t).sort((a, b) => a.start.localeCompare(b.start));
+  const tba = EVENTS.filter(e => !e.start);
+  const past = EVENTS.filter(e => e.start && (e.end || e.start) < t).sort((a, b) => b.start.localeCompare(a.start));
+  return {up, tba, past};
+}
+function evDate(e){
+  if (!e.start) return `<div class="evdate tba"><b>TBA</b><span>dates</span></div>`;
+  const [y, m, d] = e.start.split('-');
+  return `<div class="evdate"><b>${+d}</b><span>${MON[+m - 1]} ${y}</span></div>`;
+}
+function evCard(e, compact){
+  const live = e.start && e.start <= todayDhaka() && (e.end || e.start) >= todayDhaka();
+  return `<article class="evcard">${evDate(e)}<div class="stack" style="gap:6px;min-width:0">
+    <div class="row" style="gap:6px">${live ? '<span class="badge b-media">Happening now</span>' : ''}<span class="badge b-plain">${esc(T[e.theme] ? T[e.theme].code : '')}</span><span class="badge b-plain">${esc(e.sector)}</span><span class="badge b-plain">${esc(e.format)}</span></div>
+    <h3 style="margin:0"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></h3>
+    <p class="mono muted" style="margin:0">${esc(e.dateText)} · ${esc(e.city)}, ${esc(e.country)}</p>
+    ${compact ? '' : `<p style="margin:0">${esc(e.organiser)}</p>${e.note ? `<p class="muted" style="margin:0">${esc(e.note)}</p>` : ''}<p class="footnote" style="margin:0">Cost: ${esc(e.cost)} · Source: <a href="${esc(e.source[2])}" target="_blank" rel="noopener">${esc(e.source[1])}</a> · checked ${esc(e.checked)}</p>`}
+  </div></article>`;
+}
+V.events = () => {
+  const g = evGroups();
+  const f = e => (st.evRegion === 'all' || e.region === st.evRegion) && (st.evTheme === 'all' || e.theme === st.evTheme);
+  const regions = ['Africa','Americas','Asia-Pacific','Europe','Middle East','Global','Online'].filter(r => EVENTS.some(e => e.region === r));
+  const sec = (title, list, empty) => `<div class="stack" style="gap:12px"><h2>${title}</h2>${list.length ? list.map(e => evCard(e)).join('') : `<p class="muted">${empty}</p>`}</div>`;
+  return pagehead('Events','Events','Conferences, summits and forums around the world on e-governance, digital public infrastructure, AI, cybersecurity, fintech and digital sectors. Every date is checked against the organiser or a published source.') + `
+  <section class="band"><div class="wrap stack" style="gap:26px">
+    <div class="row" style="gap:8px;align-items:center">
+      <div class="row" role="toolbar" aria-label="Region"><button class="chip" data-act="evregion" data-v="all" aria-pressed="${st.evRegion==='all'}">All regions</button>${regions.map(r => `<button class="chip" data-act="evregion" data-v="${r}" aria-pressed="${st.evRegion===r}">${r}</button>`).join('')}</div>
+      <div class="field" style="margin-left:auto;min-width:220px"><label for="evt">Theme</label><select id="evt" data-change="evTheme"><option value="all">All themes</option>${THEMES.map(t => `<option value="${t.id}" ${st.evTheme===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}</select></div>
+    </div>
+    ${sec('Upcoming', g.up.filter(f), 'No upcoming events match these filters.')}
+    ${g.tba.filter(f).length ? sec('Dates to be announced', g.tba.filter(f), '') : ''}
+    ${g.past.filter(f).length ? sec('Recently held', g.past.filter(f).slice(0, 8), '') : ''}
+    <p class="muted">Know an event we should list? <a href="#contact">Send it to us</a> with a link to the organiser’s page. Looking for money rather than meetings? See <a href="#funding">Funding</a>.</p>
+  </div></section>`;
+};
+function daysLeft(iso){ return Math.ceil((new Date(iso) - Date.now()) / 86400e3); }
+function fundCard(x, compact){
+  const dl = daysLeft(x.close);
+  return `<article class="card fundcard">
+    <div class="row" style="gap:6px;justify-content:space-between"><div class="row" style="gap:6px"><span class="badge b-official">${esc(x.kind)}</span><span class="badge b-plain">${esc(T[x.theme] ? T[x.theme].code : '')}</span></div><span class="badge ${dl <= 7 ? 'b-media' : 'b-plain'}">${dl <= 0 ? 'Closes today' : 'Closes in ' + dl + (dl === 1 ? ' day' : ' days')}</span></div>
+    <h3 style="margin:0"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a></h3>
+    <p class="mono muted" style="margin:0">${esc(x.funder)}</p>
+    ${compact ? `<p style="margin:0"><b>${esc(x.amount)}</b></p>` : `
+    <p style="margin:0">${esc(x.summary)}</p>
+    <dl class="fundmeta"><dt>Amount</dt><dd>${esc(x.amount)}</dd><dt>Who can apply</dt><dd>${esc(x.who)}</dd><dt>Where</dt><dd>${esc(x.where)}</dd><dt>Deadline</dt><dd>${esc(x.closeText)}</dd></dl>
+    <p class="footnote" style="margin:0">Checked ${esc(x.checked)}${x.via ? ' · also listed on <a href="https://devfund.pages.dev" target="_blank" rel="noopener">DevFund</a>' : ''} · Always confirm details on the funder’s page before applying.</p>`}
+  </article>`;
+}
+const openFunding = () => FUNDING.filter(x => new Date(x.close) > Date.now()).sort((a, b) => a.close.localeCompare(b.close));
+V.funding = () => {
+  const open = openFunding();
+  const fn = FUNDNEWS.map(id => NEWS.find(n => n.id === id)).filter(Boolean);
+  return pagehead('Funding','Grants and funding','Open grants, fellowships, incubators and calls for digital government, DPI, AI, data and cybersecurity work around the world, with the latest money committed to digital programmes.') + `
+  <section class="band"><div class="wrap stack" style="gap:26px">
+    <div class="stack" style="gap:12px"><h2>Open calls, closing soonest first</h2>${open.length ? `<div class="grid g2">${open.map(x => fundCard(x)).join('')}</div>` : '<p class="muted">No open calls right now. New calls are added as they are announced.</p>'}</div>
+    ${fn.length ? `<div class="stack" style="gap:12px"><h2>Money for digital programmes</h2><p class="muted" style="margin-top:-6px">Recent loans, grants and budgets for digital ID, payments, AI and digital services, from the News Desk.</p><div class="card" style="padding:4px 22px">${fn.map(newsRow).join('')}</div></div>` : ''}
+    <div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:24px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Looking for all development funding?</h3><p class="muted">Our sister site DevFund lists grants, tenders, jobs and consultancies across every development sector, with a Bangladesh desk.</p></div><a class="btn" href="https://devfund.pages.dev" target="_blank" rel="noopener">Open DevFund</a></div>
+  </div></section>`;
+};
+function homeEventsFunding(){
+  const up = evGroups().up.slice(0, 3), open = openFunding().slice(0, 3);
+  if (!up.length && !open.length) return '';
+  return `<section class="band" style="padding-top:36px"><div class="wrap"><div class="grid g2">
+    <div class="stack" style="gap:10px"><div class="head-row"><h2>Upcoming events</h2><a href="#events" style="font-weight:700">All events →</a></div>${up.map(e => evCard(e, true)).join('') || '<p class="muted">No upcoming events listed.</p>'}</div>
+    <div class="stack" style="gap:10px"><div class="head-row"><h2>Open funding calls</h2><a href="#funding" style="font-weight:700">All funding →</a></div>${open.map(x => fundCard(x, true)).join('') || '<p class="muted">No open calls right now.</p>'}</div>
+  </div></div></section>`;
+}
+
 /* ---------- site statistics ---------- */
 let lastTracked = null, firstHit = true;
 function track(name, param){
@@ -614,7 +692,7 @@ function track(name, param){
   }
   try { navigator.sendBeacon('/api/hit', new Blob([JSON.stringify({ p: path, r, v })], { type: 'application/json' })); } catch (e) {}
 }
-const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment',focus:'Monthly Focus'};
+const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment',focus:'Monthly Focus',events:'Events',funding:'Funding'};
 function pageInfo(path){
   const m = path.match(/^(story|analysis|report|writeup|country)-(.+)$/);
   if (m) {
@@ -821,7 +899,7 @@ function focusSector(m){
 }
 
 /* ---------- router ---------- */
-const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices',focus:'focus'};
+const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices',focus:'focus',events:'events',funding:'funding'};
 function render(){
   const h = (location.hash || '#home').slice(1);
   let name = h, param = '';
@@ -855,6 +933,7 @@ document.addEventListener('click', e => {
   else if (a === 'askq') { st.askI = +v; st.askFree = ''; render(); }
   else if (a === 'src' || a === 'jump') { e.preventDefault(); const el = document.getElementById(a==='src' ? 'src-'+v : v); if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); if (a==='src') { el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600); } } }
   else if (a === 'statdays') { st.statDays = +v; render(); }
+  else if (a === 'evregion') { st.evRegion = v; render(); }
   else if (a === 'gotheme') { st.newsTheme = v; st.sector = 'all'; }
   else if (a === 'gosector') { st.sector = v; st.newsTheme = 'all'; }
   else if (a === 'follow') toast('Following opens with reader accounts after the pilot.');

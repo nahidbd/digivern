@@ -13,6 +13,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 | `app.js` | How pages are drawn (routing, filters, forms) |
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
 | `focus.js` | Monthly Focus: the Country of the Month and Sector of the Month pages (`#focus`, `#focus-country`, `#focus-sector`), with key numbers, map, facts, analysis, people's views and numbered sources. Older months stay in the archive. |
+| `events.js` | Events calendar (EVENTS) and open grants and funding calls (FUNDING) |
 | `analysis.js` | In-depth analysis: key numbers, charts, timeline, impact assessment, global and in-country comparison, numbered sources |
 | `_headers` | Security headers |
 | `wrangler.toml` | Cloudflare Pages settings and the statistics database binding |
