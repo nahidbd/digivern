@@ -95,7 +95,19 @@ const EVENTS = [
   {id:'e18', type:'Workshop', title:'Connectivity, Regulation and Emerging Technologies: Regional Cooperation for Inclusive Digital Ecosystems in Latin America', start:'2027-02-24', end:'2027-02-25', dateText:'24–25 February 2027',
    city:'City to be confirmed', country:'Brazil', region:'Americas', format:'In person', organiser:'International Telecommunication Union (ITU)',
    theme:'enb', sector:'Telecom', cost:'Not stated', note:'',
-   url:'https://www.itu.int/en/events/pages/Event-Details.aspx?eventid=24958', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/pages/upcoming-workshops-and-seminars.aspx'], checked:'2026-11-04'}
+   url:'https://www.itu.int/en/events/pages/Event-Details.aspx?eventid=24958', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/pages/upcoming-workshops-and-seminars.aspx'], checked:'2026-11-04'},
+  {id:'e19', type:'Summit', title:'Global Digital Health Summit 2026 (GDHS 2026): AI in Action', start:'2026-11-20', end:'2026-11-21', dateText:'20–21 November 2026',
+   city:'New Delhi', country:'India', region:'Asia-Pacific', format:'In person', organiser:'Digital Health Associates',
+   theme:'sec', sector:'Health', cost:'Paid registration (fees not stated on the event page)', note:'Venue: Bharat Mandapam, New Delhi. Registration open online.',
+   url:'https://www.globalsummit.health/', source:['GDHS 2026 - AI in Action','Global Digital Health Summit, official site','https://www.globalsummit.health/'], checked:'2026-11-04'},
+  {id:'e20', type:'Seminar', title:'World Radiocommunication Seminar 2026 (WRS-26)', start:'2026-12-07', end:'2026-12-11', dateText:'7–11 December 2026',
+   city:'Geneva', country:'Switzerland', region:'Europe', format:'In person', organiser:'International Telecommunication Union, Radiocommunication Sector (ITU-R)',
+   theme:'enb', sector:'Telecom', cost:'Not stated', note:'Global seminar of ITU’s Radiocommunication Sector; online registration is open on the ITU site.',
+   url:'https://www.itu.int/wrs-26/', source:['World Radiocommunication Seminar 2026 (WRS-26)','ITU event details','https://www.itu.int/en/events/pages/Event-Details.aspx?eventid=23862'], checked:'2026-11-04'},
+  {id:'e21', type:'Webinar', title:'The new AI operating model for government: from adoption to impact', start:'2026-11-18', end:'2026-11-18', dateText:'18 November 2026',
+   city:'Online', country:'Online', region:'Online', format:'Online', organiser:'Global Government Forum',
+   theme:'ai', sector:'Government', cost:'Not stated (the organiser describes its webinars as free)', note:'For public servants: moving from AI adoption to measurable improvements in public services. Related sessions in the same series on 12 and 17 November cover scaling AI and building the business case for AI in local government.',
+   url:'https://www.globalgovernmentforum.com/events/the-new-ai-operating-model-for-government-from-adoption-to-impact/', source:['Upcoming webinars','Global Government Forum','https://www.globalgovernmentforum.com/civil-service-webinars/'], checked:'2026-11-04'},
 ];
 
 const FUNDING = [
@@ -138,7 +150,27 @@ const FUNDING = [
    amount:'', duration:'6 months (retainer)', who:'Individuals with a master’s (or bachelor’s plus two years) and two years in humanitarian information management', where:'Open to all nationalities; home-based',
    close:'2026-11-11T23:59:00Z', closeText:'11 November 2026 (no time zone stated)',
    summary:'Supports information management for humanitarian and early-recovery work: reach analysis, sex- and age-disaggregated data, dashboards, the inter-agency community feedback system and joint-programme reporting. Arabic is desirable.',
-   url:'https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/37829', theme:'pol', sector:'Social protection', checked:'2026-11-03'}
+   url:'https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/37829', theme:'pol', sector:'Social protection', checked:'2026-11-03'},
+  {id:'f8', title:'Digital Health Systems and Interoperability Consultant (Multi-country), DHx Section', funder:'UNICEF, Health Practice, Nairobi Centre of Excellence', kind:'Consultancy',
+   amount:'', duration:'Not stated; supports a programme running September 2026 to August 2028', who:'Digital health systems and interoperability specialists; UNICEF welcomes applicants of all nationalities', where:'Duty station Nairobi, Kenya; flexible and home-based, with in-person work in Bangkok and Asia-Pacific and hours overlapping Bangkok’s',
+   close:'2026-11-11T20:55:00Z', closeText:'11 November 2026, 11:55 PM E. Africa Standard Time',
+   summary:'Leads UNICEF’s work on health information exchange and other enabling layers in three implementation countries under the Digital Health: High-Impact Solutions for Scale programme, feeds requirements and architecture into investment blueprints, and supports work with international financial institutions. Job no. 596658.',
+   url:'https://jobs.unicef.org/en-us/job/596658/digital-health-systems-and-interoperability-consultant-multicountry-digital-health-transformation-access-and-equity-dhx-section-health-practice-nairobi-coe-kenya-remote-596658', theme:'sec', sector:'Health', checked:'2026-11-04'},
+  {id:'f9', title:'Digital Health Financing and Investment Consultant (Multi-country), DHx Section', funder:'UNICEF, Health Practice, Nairobi Centre of Excellence', kind:'Consultancy',
+   amount:'', duration:'Not stated; supports a programme running September 2026 to August 2028', who:'Specialists in digital health financing and development-bank operations; fluent English and Spanish required, French an advantage', where:'Duty station Nairobi, Kenya; flexible and home-based, with in-person work in Panama and Latin America and the Caribbean',
+   close:'2026-11-11T20:55:00Z', closeText:'11 November 2026, 11:55 PM E. Africa Standard Time',
+   summary:'Advises country offices on financing digital health: tracking financing windows, briefs linking digital health to IFI operations and national budgets, and costed investment cases for ministries and lenders. Job no. 596662.',
+   url:'https://jobs.unicef.org/en-us/job/596662/digital-health-financing-and-investment-consultant-multicountry-digital-health-transformation-access-and-equity-dhx-section-health-practice-nairobi-coe-remote-with-travel-596662', theme:'sec', sector:'Health', checked:'2026-11-04'},
+  {id:'f10', title:'GovAI UK Summer Fellowship 2027, Research Track', funder:'Centre for the Governance of AI (GovAI)', kind:'Fellowship',
+   amount:'£14,000, plus travel support to London', duration:'Three months, 7 June to 27 August 2027, full-time', who:'Researchers and policy professionals from government, academia, industry or civil society, early-career to experienced; no strict degree requirement', where:'In person at GovAI’s London office; temporary work visas sponsored',
+   close:'2026-11-22T23:59:00Z', closeText:'23:59 UK time (GMT), Sunday 22 November 2026',
+   summary:'A paid three-month research fellowship on AI governance and policy, with mentorship and a desk at GovAI in London. Suits people whose main work is producing or using research or policy analysis.',
+   url:'https://www.governance.ai/post/uk-summer-fellowship-2027-research-track', theme:'ai', sector:'Government', checked:'2026-11-04'},
+  {id:'f11', title:'Digital Workplace and Knowledge Management Consultant', funder:'UNICEF Uganda', kind:'Consultancy',
+   amount:'', duration:'12 months', who:'National or international candidates with a degree in information systems, knowledge management, computer science or a related field and at least five years’ experience, including SharePoint Online and Microsoft 365 implementation', where:'Kampala, Uganda (remote arrangement)',
+   close:'2026-11-10T20:55:00Z', closeText:'10 November 2026, 11:55 PM EAT',
+   summary:'Supports UNICEF Uganda’s digital workplace and knowledge management on SharePoint Online and Microsoft 365, including facilitation, documentation and organisational change. Job no. 596663.',
+   url:'https://jobs.unicef.org/en-us/job/596663/digital-workplace-and-knowledge-management-consultant-national-or-international-uganda-kampala-remote-12-months-596663', theme:'enb', sector:'Government', checked:'2026-11-04'}
 ];
 
 const FUNDNEWS = ['n3','n4','n8','n34'];
