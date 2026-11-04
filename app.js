@@ -1,11 +1,11 @@
 (function(){
 const $ = s => document.querySelector(s);
-const {UPDATED, THEMES, T, SECTORS, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
+const {EGDI_SOURCE, UPDATED, THEMES, T, SECTORS, REGIONS, NEWS, TRUST, REPORTS, PROFILES, COUNTRIES, LAWS, LAWCATS, GLOSSARY, SOURCES, SAMPLE_QS, ANSWERS, NEWSORDER, BRIEF} = window.DV;
 const WRITEUPS = window.DV.WRITEUPS || [];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- state ---------- */
-const st = {theme:'all', newsTheme:'all', sector:'all', region:'all', official:false, confirmed:false, q:'', lawCat:'all', lawQ:'', cRegion:'all', tTheme:'all', glossQ:'', askI:0, askFree:''};
+const st = {theme:'all', newsTheme:'all', sector:'all', region:'all', official:false, confirmed:false, q:'', lawCat:'all', lawQ:'', cRegion:'all', cQ:'', cSort:'name', cOnly:false, tTheme:'all', glossQ:'', askI:0, askFree:''};
 try { const saved = JSON.parse(localStorage.getItem('digivern-filters')||'{}'); Object.assign(st, saved); } catch(e) {}
 function persist(){ try{ localStorage.setItem('digivern-filters', JSON.stringify({region:st.region, official:st.official, confirmed:st.confirmed})); }catch(e){} }
 
@@ -299,34 +299,67 @@ V.report = id => {
   </div></section>`;
 };
 
+const flagSm = c => `<img class="flag-sm" src="https://flagcdn.com/w40/${esc(c.iso2)}.png" srcset="https://flagcdn.com/w80/${esc(c.iso2)}.png 2x" width="30" height="20" alt="" loading="lazy">`;
+const fmtDate = d => { if (!d) return ''; const [y,m,dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]} ${y}`; };
 V.countries = () => {
-  const list = COUNTRIES.filter(c => st.cRegion==='all' || c.region===st.cRegion).sort((a,b)=> (b.ready-a.ready));
-  return pagehead('Countries','Country profiles','One template for every country, so profiles can be compared: digital ID, payments, data exchange, key laws, institutions and recent news.') + `
-  <section class="band"><div class="wrap stack" style="gap:20px">
-    <div class="row" role="toolbar" aria-label="Filter by region"><button class="chip" data-act="cregion" data-v="all" aria-pressed="${st.cRegion==='all'}">All regions</button>${REGIONS.filter(r=>r!=='Global').map(r=>`<button class="chip" data-act="cregion" data-v="${r}" aria-pressed="${st.cRegion===r}">${r}</button>`).join('')}</div>
-    <div class="grid g4">${list.map(c=>`<a class="card" href="#country-${c.id}"><span class="mono muted">${esc(c.region).toUpperCase()}</span><h3>${esc(c.name)}</h3><span class="badge ${c.ready?'b-official':'b-plain'}" style="align-self:flex-start">${c.ready?'Profile live':'In preparation'}</span></a>`).join('')}</div>
-    <p class="muted">${Object.keys(PROFILES).length} profiles are live. More are added each week, towards all UN member states.</p>
+  const q = st.cQ.trim().toLowerCase();
+  let list = COUNTRIES.filter(c => (st.cRegion==='all' || c.region===st.cRegion) && (!st.cOnly || c.ready) && (!q || c.name.toLowerCase().includes(q)));
+  list.sort(st.cSort==='rank' ? (a,b)=>a.egdiRank-b.egdiRank : st.cSort==='profile' ? (a,b)=>(b.ready-a.ready)||a.name.localeCompare(b.name) : (a,b)=>a.name.localeCompare(b.name));
+  const live = COUNTRIES.filter(c=>c.ready).length;
+  return pagehead('Countries','Country profiles',`All ${COUNTRIES.length} UN member states. Every country page shows its UN E-Government ranking and Digivern news; full profiles use one template for every country, so they can be compared: digital ID, payments, data exchange, key laws, institutions and sources.`) + `
+  <section class="band"><div class="wrap stack" style="gap:18px">
+    <div class="row" style="gap:12px;align-items:end">
+      <div class="field" style="flex:1 1 260px"><label for="cq">Find a country</label><input id="cq" type="search" value="${esc(st.cQ)}" placeholder="Type a country name…" data-input="cQ"></div>
+      <div class="field" style="flex:0 1 220px"><label for="csort">Sort by</label><select id="csort" data-act-change="csort"><option value="name"${st.cSort==='name'?' selected':''}>Name (A–Z)</option><option value="rank"${st.cSort==='rank'?' selected':''}>UN e-government rank</option><option value="profile"${st.cSort==='profile'?' selected':''}>Full profiles first</option></select></div>
+      <button class="chip" data-act="conly" aria-pressed="${st.cOnly}">Full profiles only (${live})</button>
+    </div>
+    <div class="row" role="toolbar" aria-label="Filter by region"><button class="chip" data-act="cregion" data-v="all" aria-pressed="${st.cRegion==='all'}">All regions</button>${REGIONS.filter(r=>r!=='Global').map(r=>`<button class="chip" data-act="cregion" data-v="${r}" aria-pressed="${st.cRegion===r}">${r}<span class="muted" style="font-weight:400;margin-left:6px">${COUNTRIES.filter(c=>c.region===r).length}</span></button>`).join('')}</div>
+    <p class="muted" style="margin:0">${list.length} of ${COUNTRIES.length} countries · ${live} full profiles live; new profiles are added every day.</p>
+    <div class="clist">${list.map(c=>`<a class="crow" href="#country-${c.id}">${flagSm(c)}<span class="cname">${esc(c.name)}</span><span class="mono muted creg">${esc(c.region)}</span><span class="mono crank" title="UN E-Government Development Index 2024 rank">#${c.egdiRank}</span><span class="badge ${c.ready?'b-official':'b-plain'}">${c.ready?'Full profile':'Basic data'}</span></a>`).join('') || '<p class="muted">No country matches. Try another name.</p>'}</div>
+    <p class="footnote">Rank: UN E-Government Development Index 2024, out of 193 (1 is highest). Source: ${ext(EGDI_SOURCE[1], esc(EGDI_SOURCE[0]))}.</p>
   </div></section>`;
 };
+
+function egdiBlock(c){
+  const peers = COUNTRIES.filter(x => x.region === c.region);
+  const avg = peers.reduce((a,x)=>a+x.egdi,0)/peers.length;
+  const world = COUNTRIES.reduce((a,x)=>a+x.egdi,0)/COUNTRIES.length;
+  const rRank = peers.slice().sort((a,b)=>b.egdi-a.egdi).findIndex(x=>x.id===c.id)+1;
+  const bar = (v,hl) => `<div class="bt"><div class="bf${hl?' hl':''}" style="width:${(100*v).toFixed(1)}%"></div></div>`;
+  return `<div class="card"><span class="eyebrow">UN E-Government Development Index 2024</span>
+    <div class="row" style="gap:28px;align-items:baseline"><div><b style="font-size:2rem;color:var(--accent)">#${c.egdiRank}</b> <span class="muted">of 193</span></div><div><b style="font-size:1.4rem">${c.egdi.toFixed(4)}</b> <span class="muted">score (0–1)</span></div><div><b style="font-size:1.4rem">${rRank}</b> <span class="muted">of ${peers.length} in ${esc(c.region)}</span></div></div>
+    <div class="bars" style="gap:8px">${[[c.name,c.egdi,true],[esc(c.region)+' average',avg],['World average',world]].map(r=>`<div class="brow"><span class="bl">${esc(r[0])}</span><div class="bline">${bar(r[1],r[2])}<span class="bv">${r[1].toFixed(3)}</span></div></div>`).join('')}</div>
+    <p class="footnote">Averages are Digivern calculations from the same dataset (all ${peers.length} ${esc(c.region)} countries and all 193 countries). Source: ${ext(EGDI_SOURCE[1], esc(EGDI_SOURCE[0]))}.</p></div>`;
+}
 
 V.country = id => {
   const c = COUNTRIES.find(x => x.id === id) || COUNTRIES[0];
   const p = PROFILES[c.id];
   const ST = {op:['Operational','b-official'],part:['In rollout','b-media'],law:['Law in force','b-expert'],ver:['To verify','b-plain']};
   const news = SORTED.filter(n => n.country === c.id);
+  const focusM = (window.DV_FOCUS && window.DV_FOCUS.MONTHS || []).find(m => m.country && m.country.id === c.id);
   const head = `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#countries">Countries</a> / ${esc(c.name)}</p>
-    <div class="row" style="justify-content:space-between;align-items:end"><div class="stack" style="gap:8px"><span class="eyebrow">${esc(c.region)} · Country profile</span><h1>${esc(c.name)}</h1><p class="mono muted">${p?'LAST REVIEWED '+UPDATED.toUpperCase():'PROFILE IN PREPARATION'}</p></div>
-    <div class="row"><a class="btn btn-line" href="#countries">All countries</a><button class="btn" data-act="follow">Follow ${esc(c.name)}</button></div></div></div></div>`;
-  if (!p) return head + `<section class="band"><div class="wrap stack" style="gap:16px"><div class="notice">This profile is in preparation. It will follow the same template as the live profiles, with every entry linked to a source.</div>
-    <p>Live profiles you can read now: ${Object.keys(PROFILES).map(k=>{const x=COUNTRIES.find(y=>y.id===k);return `<a href="#country-${k}">${esc(x.name)}</a>`;}).join(', ')}.</p></div></section>`;
+    <div class="row" style="justify-content:space-between;align-items:end;gap:16px"><div class="row" style="gap:18px;align-items:center"><img class="flag" src="https://flagcdn.com/w160/${esc(c.iso2)}.png" srcset="https://flagcdn.com/w320/${esc(c.iso2)}.png 2x" width="96" height="64" alt="Flag of ${esc(c.name)}" style="width:96px;height:64px"><div class="stack" style="gap:8px"><span class="eyebrow">${esc(c.region)} · ${p?'Country profile':'Basic country data'}</span><h1>${esc(c.name)}</h1><p class="mono muted">${p?'LAST REVIEWED '+esc(fmtDate(p.reviewed)).toUpperCase():'FULL PROFILE IN PREPARATION'}</p></div></div>
+    <div class="row"><a class="btn btn-line" href="#countries">All countries</a>${focusM?`<a class="btn" href="#focus-country${focusM===window.DV_FOCUS.MONTHS[0]?'':'-'+focusM.key}">Country of the Month: ${esc(focusM.label)}</a>`:''}</div></div></div></div>`;
+  const newsCard = `<div class="card"><h3>Digivern news on ${esc(c.name)}</h3>${news.length?news.map(n=>`<div class="row" style="gap:14px;padding:8px 0;border-top:1px solid var(--line)"><span class="mono" style="color:var(--accent);min-width:110px">${esc(n.date).toUpperCase()}</span><a href="#story-${n.id}" style="flex:1 1 300px">${esc(n.title)}</a></div>`).join(''):'<p class="muted">No items yet. News on '+esc(c.name)+' will appear here as it is published.</p>'}</div>`;
+  if (!p) return head + `<section class="band"><div class="wrap layout-side">
+    <div class="main stack" style="gap:20px">
+      ${egdiBlock(c)}
+      ${newsCard}
+      <div class="how"><span class="eyebrow">Full profile coming</span><p>A full profile of ${esc(c.name)} will follow the same template as the live profiles: lead agency, strategy, digital ID, payments, data exchange, civil registration, data protection, AI and cybersecurity, each linked to a source. New profiles are added every day.</p></div>
+    </div>
+    <aside class="stack"><div class="card"><span class="eyebrow">Full profiles you can read now</span>${COUNTRIES.filter(x=>x.ready).map(x=>`<a href="#country-${x.id}" class="row" style="gap:8px;align-items:center;font-weight:600">${flagSm(x)}${esc(x.name)}</a>`).join('')}</div>
+      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send facts with sources, or submit a writeup for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div></aside>
+  </div></section>`;
   return head + `
   <section class="band"><div class="wrap layout-side">
     <div class="main stack" style="gap:20px">
       <div class="tablebox"><table><thead><tr><th scope="col">Building block</th><th scope="col">System or institution</th><th scope="col">Status</th></tr></thead><tbody>
-        ${p.rows.map(r=>`<tr><th scope="row" style="font-weight:600">${esc(r[0])}</th><td>${esc(r[1])}</td><td><span class="badge ${ST[r[2]][1]}">${ST[r[2]][0]}</span></td></tr>`).join('')}
+        ${p.rows.map(r=>`<tr><th scope="row" style="font-weight:600">${esc(r[0])}</th><td data-l="System">${esc(r[1])}</td><td data-l="Status"><span class="badge ${ST[r[2]][1]}">${ST[r[2]][0]}</span></td></tr>`).join('')}
       </tbody></table></div>
-      <div class="card"><h3>Recent developments</h3>${news.length?news.map(n=>`<div class="row" style="gap:14px;padding:8px 0;border-top:1px solid var(--line)"><span class="mono" style="color:var(--accent);min-width:110px">${esc(n.date).toUpperCase()}</span><a href="#story-${n.id}" style="flex:1 1 300px">${esc(n.title)}</a></div>`).join(''):'<p class="muted">No items in the last month.</p>'}</div>
-      <div class="card"><h3>Sources</h3><ol style="margin:0;padding-left:20px" class="stack">${p.sources.map(s=>`<li>${ext(s[1],esc(s[0]))}</li>`).join('')}</ol><p class="footnote">Entries marked "To verify" are not yet confirmed against an official source.</p></div>
+      ${egdiBlock(c)}
+      ${newsCard}
+      <div class="card"><h3>Sources</h3><ol style="margin:0;padding-left:20px" class="stack">${p.sources.map(s=>`<li>${ext(s[1],esc(s[0]))}</li>`).join('')}</ol><p class="footnote">Every row was last checked against its sources on ${esc(fmtDate(p.reviewed))}. Entries marked "To verify" are not yet confirmed against an official source.</p></div>
     </div>
     <aside class="stack">
       <div class="card" style="background:var(--accent-soft);border-color:transparent"><span class="eyebrow" style="color:var(--accent)">Key facts</span>
@@ -937,6 +970,7 @@ document.addEventListener('click', e => {
   else if (a === 'reset') { Object.assign(st,{newsTheme:'all',sector:'all',region:'all',official:false,confirmed:false,q:''}); persist(); render(); }
   else if (a === 'lawcat') { st.lawCat = v; render(); }
   else if (a === 'cregion') { st.cRegion = v; render(); }
+  else if (a === 'conly') { st.cOnly = !st.cOnly; render(); }
   else if (a === 'askq') { st.askI = +v; st.askFree = ''; render(); }
   else if (a === 'src' || a === 'jump') { e.preventDefault(); const el = document.getElementById(a==='src' ? 'src-'+v : v); if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); if (a==='src') { el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1600); } } }
   else if (a === 'statdays') { st.statDays = +v; render(); }
@@ -956,6 +990,9 @@ document.addEventListener('click', e => {
 document.addEventListener('change', e => {
   const k = e.target.dataset && e.target.dataset.change; if (!k) return;
   st[k] = e.target.value; persist(); render();
+});
+document.addEventListener('change', e => {
+  if (e.target.dataset && e.target.dataset.actChange === 'csort') { st.cSort = e.target.value; render(); }
 });
 document.addEventListener('input', e => {
   const k = e.target.dataset && e.target.dataset.input; if (!k) return;

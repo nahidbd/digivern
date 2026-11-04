@@ -28,6 +28,10 @@ The repository is linked to Cloudflare Pages (project `digivern`, no build step)
 
 Writeup submissions from the Write for Digivern form are sent to Netlify Forms on digivern.netlify.app (free, unlimited) and reviewed there.
 
+## Country profiles
+
+`COUNTRIES` in `data.js` lists all 193 UN member states with region, flag code and UN E-Government Development Index 2024 rank and score (UN DESA). Every country has a page; countries with an entry in `PROFILES` get the full profile. Each profile has a `reviewed` date: the day every row was last checked against its sources. The daily update re-checks the profiles with the oldest `reviewed` dates and writes one new full profile each day until all 193 are done.
+
 ## Monthly Focus
 
 Each month Digivern covers one country and one sector in more depth. November 2026: **Uganda** and **Agritech**.
