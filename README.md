@@ -14,6 +14,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
 | `focus.js` | Monthly Focus: the Country of the Month and Sector of the Month pages (`#focus`, `#focus-country`, `#focus-sector`), with key numbers, map, facts, analysis, people's views and numbered sources. Older months stay in the archive. |
 | `events.js` | Events calendar (EVENTS) and open grants and funding calls (FUNDING) |
+| `tools/collect-leads.mjs` and `.github/workflows/collect-leads.yml` | Daily lead collection from Gemini and ChatGPT (see below) |
 | `analysis.js` | In-depth analysis: key numbers, charts, timeline, impact assessment, global and in-country comparison, numbered sources |
 | `_headers` | Security headers |
 | `wrangler.toml` | Cloudflare Pages settings and the statistics database binding |
@@ -34,6 +35,18 @@ Each month Digivern covers one country and one sector in more depth. November 20
 - The editor chooses the next country and sector and records them in `NEXT` in `focus.js` (or tells Claude in chat).
 - On the first day of the month the daily update adds the new month at the top of `MONTHS`, builds the country profile in `data.js` if it does not exist yet, and sets `NEXT` back to `null`. Past months stay online at `#focus-country-YYYY-MM` and `#focus-sector-YYYY-MM`.
 - During the month the daily update adds extra news on the focus country (including its own national media and official sites) and on the focus sector worldwide, and refreshes the focus pages when sources show a change.
+
+## Leads from Gemini and ChatGPT
+
+Every morning at 05:05 Dhaka time a GitHub Actions job asks Gemini (with Google Search) and ChatGPT (with web search) for developments from the last 48 hours in Digivern's themes, the Country of the Month and the Sector of the Month. It saves the answers as **unverified leads** in `leads/latest.json` on the separate `leads` branch (last 30 days kept). Nothing on that branch is published on the site.
+
+The daily update reads the leads, opens every source link itself, and publishes only what the original source confirms. Gemini and ChatGPT are never cited as sources.
+
+Setup (GitHub → Settings → Secrets and variables → Actions):
+
+- Secrets: `GEMINI_API_KEY` (from Google AI Studio) and `OPENAI_API_KEY` (from the OpenAI API platform). Either one alone also works.
+- Optional variables: `GEMINI_MODEL` (default `gemini-2.5-pro`) and `OPENAI_MODEL` (default `gpt-5`) to switch models without changing code.
+- Test: Actions → "Collect leads (Gemini and ChatGPT)" → Run workflow.
 
 ## Daily update
 

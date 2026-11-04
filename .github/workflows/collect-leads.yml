@@ -1,0 +1,62 @@
+# Asks Gemini and ChatGPT for recent developments and saves them as UNVERIFIED leads on the `leads` branch.
+# The Digivern daily update (06:38 Dhaka) reads them, opens every source itself and publishes only what the source confirms.
+# Needs repository secrets GEMINI_API_KEY and/or OPENAI_API_KEY. Optional repository variables GEMINI_MODEL, OPENAI_MODEL.
+name: Collect leads (Gemini and ChatGPT)
+
+on:
+  schedule:
+    - cron: '5 23 * * *'   # 05:05 Asia/Dhaka, before the 06:38 daily update
+  workflow_dispatch:       # "Run workflow" button for a manual test
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-leads
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out the site (for current themes and monthly focus)
+        uses: actions/checkout@v4
+        with:
+          path: site
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Ask Gemini and ChatGPT for leads
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+        run: node site/tools/collect-leads.mjs --site site --out out
+
+      - name: Check out the leads branch
+        uses: actions/checkout@v4
+        with:
+          ref: leads
+          path: leadsbranch
+
+      - name: Save leads and keep the last 30 days
+        run: |
+          mkdir -p leadsbranch/leads
+          cp out/*.json leadsbranch/leads/
+          cd leadsbranch
+          cutoff=$(date -u -d '30 days ago' +%F)
+          for f in leads/20??-??-??.json; do
+            [ -e "$f" ] || continue
+            d=$(basename "$f" .json)
+            if [[ "$d" < "$cutoff" ]]; then git rm -q "$f"; fi
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add leads
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -q -m "Leads for $(date -u -d '+6 hours' +%F)"
+          git push -q origin HEAD:leads
