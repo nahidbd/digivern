@@ -16,11 +16,12 @@ const dots = n => `<span class="dots" aria-hidden="true">${'●'.repeat(Math.min
 const evidence = n => `<div class="evidence"><span>${T[n.theme].code} / ${esc(n.region).toUpperCase()}</span><span>${esc(n.date).toUpperCase()}</span><span>${dots(n)} ${verifyText(n)}</span><span>AI SUMMARY · SOURCE-CHECKED</span></div>`;
 const ext = (url, text) => url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${text}</a>` : `<span class="muted">${text}</span>`;
 function newsRow(n){
-  return `<article class="newsitem"><span class="code">${T[n.theme].code}</span><div class="stack" style="gap:8px">
+  const im = imgOf(n);
+  return `<article class="newsitem${im?' has-pic':''}"><span class="code">${T[n.theme].code}</span><div class="stack" style="gap:8px">
     <div class="row" style="gap:6px">${trustBadge(n)}<span class="badge b-plain">${esc(n.type)}</span></div>
     <h3><a href="#story-${n.id}">${esc(n.title)}</a></h3>
     <p class="muted">${esc(n.summary.split('. ')[0])}.</p>
-    ${evidence(n)}</div></article>`;
+    ${evidence(n)}</div>${im?`<a class="row-pic" href="#story-${n.id}" tabindex="-1" aria-hidden="true">${imgTag(im,'pic-sm')}</a>`:''}</article>`;
 }
 function pagehead(crumb, title, lede, actions){
   return `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / ${crumb}</p>
@@ -33,6 +34,11 @@ function newsletterBlock(){
   <form class="row js-sub" style="flex:1 1 380px;min-width:0"><label class="sr" for="sub-email">Email address</label><input id="sub-email" type="email" required placeholder="you@organisation.org" style="flex:1 1 220px;width:auto"><button class="btn" type="submit">Subscribe</button></form>
   </div></div></section>`;
 }
+const IMAGES = window.DV_IMAGES || {};
+const imgOf = n => { const e = n && IMAGES[n.id]; return e && e.status === 'done' && e.src ? e : null; };
+const imgCredit = e => e.kind === 'ai' ? 'AI-generated illustration, not a photograph of the events described.' : `Photo: ${esc(e.credit)}${e.license ? ' · ' + (e.licenseUrl ? ext(e.licenseUrl, esc(e.license)) : esc(e.license)) : ''}${e.sourceUrl ? ' · ' + ext(e.sourceUrl, 'Wikimedia Commons') : ''}`;
+const imgTag = (e, cls, eager) => `<span class="pic ${cls||''}"><img src="${esc(e.src)}" width="${e.w||1200}" height="${e.h||675}" alt="${esc(e.alt||'')}" ${eager?'':'loading="lazy" '}decoding="async">${e.kind==='ai'?'<span class="pic-tag">Illustration</span>':''}</span>`;
+const imgFigure = (e, eager, cls) => `<figure class="picfig">${imgTag(e,cls||'',eager)}<figcaption class="footnote">${imgCredit(e)}</figcaption></figure>`;
 const SORTED = NEWSORDER.map(id => NEWS.find(n => n.id === id));
 
 /* ---------- views ---------- */
@@ -58,6 +64,7 @@ V.home = () => {
       <article class="lead">
         <p class="kicker">Lead · ${kick(lead)}</p>
         <h1><a href="#story-${lead.id}">${esc(lead.title)}</a></h1>
+        ${imgOf(lead)?imgFigure(imgOf(lead),true,'pic-lead'):''}
         <p class="standfirst">${esc(lead.summary)}</p>
         <p class="whyline">Why it matters: ${esc(lead.why)}</p>
         ${evidence(lead)}
@@ -72,7 +79,7 @@ V.home = () => {
     </div>
 
     <div class="seconds">
-      ${seconds.map(n => `<article><p class="kicker" style="font-size:.76rem">${kick(n)}</p><h3><a href="#story-${n.id}">${esc(n.title)}</a></h3><p class="muted" style="font-size:1rem">${esc(n.why)}</p><p class="evidence">${esc(n.date).toUpperCase()} · ${verifyText(n)}</p></article>`).join('')}
+      ${seconds.map(n => `<article>${imgOf(n)?`<a href="#story-${n.id}" tabindex="-1" aria-hidden="true">${imgTag(imgOf(n),'pic-sm')}</a>`:''}<p class="kicker" style="font-size:.76rem">${kick(n)}</p><h3><a href="#story-${n.id}">${esc(n.title)}</a></h3><p class="muted" style="font-size:1rem">${esc(n.why)}</p><p class="evidence">${esc(n.date).toUpperCase()} · ${verifyText(n)}</p></article>`).join('')}
     </div>
 
     ${FOCUS.length ? (() => { const fm = FOCUS[0]; return `<section class="focus-strip" aria-label="Monthly Focus">
@@ -163,6 +170,7 @@ V.story = id => {
     <h1 style="max-width:24ch">${esc(n.title)}</h1>${evidence(n)}</div></div>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack prose" style="gap:18px;font-size:1.06rem">
+      ${imgOf(n)?imgFigure(imgOf(n),true):''}
       <p>${esc(n.summary)}</p>
       <div class="why"><b>Why it matters.</b> ${esc(n.why)}</div>
       <div class="how"><span class="eyebrow">How this was made</span>

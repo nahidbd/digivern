@@ -80,6 +80,16 @@
 .srclist li.flash{background:#FFF3C4;border-radius:4px}
 .toc a{font-weight:600}
 @media (max-width:600px){.chart .cl,.chart .cv{font-size:15px}.keynum b{font-size:1.6rem}}
+/* news images */
+.picfig{margin:0;display:flex;flex-direction:column;gap:6px}
+.pic{position:relative;display:block;overflow:hidden;border-radius:6px;background:var(--sunken);aspect-ratio:16/9}
+.pic-lead{aspect-ratio:2/1}
+.pic img{display:block;width:100%;height:100%;object-fit:cover}
+.pic-tag{position:absolute;left:8px;bottom:8px;background:rgba(22,32,46,.82);color:#FFFFFF;font:700 .7rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:3px}
+.pic-sm .pic-tag{font-size:.6rem;padding:2px 5px;left:5px;bottom:5px}
+.newsitem.has-pic{grid-template-columns:72px minmax(0,1fr) 168px}
+.row-pic{align-self:start}
+@media (max-width:640px){.newsitem.has-pic{grid-template-columns:56px minmax(0,1fr)}.row-pic{grid-column:2;max-width:320px}}
 /* countries list */
 .clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:8px}
 .crow{display:grid;grid-template-columns:30px minmax(0,1fr) auto auto;grid-template-areas:"f n k b" "f r k b";column-gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--ink);background:var(--surface)}
@@ -387,6 +397,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 </form>
 
 <script src="data.js"></script>
+<script src="images.js"></script>
 <script src="analysis.js"></script>
 <script src="events.js"></script>
 <script src="focus.js"></script>

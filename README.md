@@ -15,6 +15,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 | `focus.js` | Monthly Focus: the Country of the Month and Sector of the Month pages (`#focus`, `#focus-country`, `#focus-sector`), with key numbers, map, facts, analysis, people's views and numbered sources. Older months stay in the archive. |
 | `events.js` | Events calendar (EVENTS) and open grants and funding calls (FUNDING) |
 | `tools/collect-leads.mjs` and `.github/workflows/collect-leads.yml` | Daily lead collection from Gemini and ChatGPT (see below) |
+| `images.js`, `img/`, `tools/process-images.mjs`, `.github/workflows/process-images.yml` | Images for news items (see below) |
 | `analysis.js` | In-depth analysis: key numbers, charts, timeline, impact assessment, global and in-country comparison, numbered sources |
 | `_headers` | Security headers |
 | `wrangler.toml` | Cloudflare Pages settings and the statistics database binding |
@@ -51,6 +52,17 @@ Setup (GitHub → Settings → Secrets and variables → Actions):
 - Secrets: `GEMINI_API_KEY` (from Google AI Studio) and `OPENAI_API_KEY` (from the OpenAI API platform). Either one alone also works.
 - Optional variables: `GEMINI_MODEL` (default `gemini-2.5-pro`) and `OPENAI_MODEL` (default `gpt-5`) to switch models without changing code.
 - Test: Actions → "Collect leads (Gemini and ChatGPT)" → Run workflow.
+
+## Images for news items
+
+Each news item can have one image, shown on the story page, the front page and the News Desk.
+
+1. The daily update adds a request to `images.js` for each new item: a Wikimedia Commons file showing a place, infrastructure, technology or sector scene (never a public figure or an identifiable person as the subject), plus a description for an illustration as a fallback.
+2. Pushing `images.js` starts the "Process images" GitHub Actions job. It reads the file's licence from Wikimedia Commons and accepts only public domain, CC0, CC BY or CC BY-SA files without extra restrictions, then saves a 1200×675 WebP in `img/` with the author credit and licence.
+3. If no usable photo exists, the job asks Gemini (secret `GEMINI_API_KEY`, optional variable `GEMINI_IMAGE_MODEL`, default `gemini-2.5-flash-image`) for an editorial illustration with no real people, text, logos or flags. Illustrations are labelled on the site as "AI-generated illustration, not a photograph of the events described".
+4. Items about elections, conflict, disasters, crime or health emergencies are marked `noAi`: they get a licensed photo or no image at all.
+
+News outlets' photos are never used: they are copyrighted.
 
 ## Daily update
 
