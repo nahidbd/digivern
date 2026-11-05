@@ -7,13 +7,33 @@
      policy:{title?, intro?, rows:[[instrument, year, what it does, status]]}
      implementation:{title?, intro?, rows:[[milestone, date or target, 'done'|'on track'|'delayed'|'not started'|'unclear', evidence]]}
      economics:{title?, figures:[{v,l,c}], p:[paragraphs on budget, cost, savings, market size, cost-benefit]}
-     voices:[{who, group:'Government'|'Industry'|'Expert'|'Civil society'|'Users'|'Development partner', stance:'support'|'concern'|'mixed', view (attributed paraphrase or short quote), c}] */
+     voices:[{who, group:'Government'|'Industry'|'Expert'|'Civil society'|'Users'|'Development partner', stance:'support'|'concern'|'mixed', view (attributed paraphrase or short quote), c}]
+     infographic (required in every new analysis and Monthly Focus page): {title, sub?, note?, blocks:[...]} drawn as a branded "At a glance" panel. Block types:
+       {type:'stats', title?, items:[{icon, v, l, c}]}
+       {type:'flow', title?, steps:[{icon?, date?, status?:'done'|'target'|'delayed'|'planned'|'unclear', label, note?, c?:[n]}]}
+       {type:'iconArray', title?, pct (0-100), icon, big?, label, c, legend?:[on, off]}
+       {type:'compare', title?, items:[{label, v (number for bar length), text, icon?, hl?}], c?:[n], note?}
+       {type:'meters', title?, items:[{label, pct, text?}], c?:[n]}
+       icons: id phone bank coin qr person people globe shield chip tower leaf health school law data link transfer card server wifi check clock alert map chart.
+       Use only figures that appear in the page's own sources, with their [n]; label own arithmetic as a Digivern calculation. Do not repeat a chart that is already on the page.
+*/
 const ANALYSES = [
 {
   id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'4 Nov 2026', readMins:16,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
   standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and the central bank aims for full interoperability by July 2027. What the laws, the money, the people and the comparisons show.',
+  infographic:{title:'Bangladesh’s road to one payment switch', sub:'Bangla QR took off once it became compulsory; full interoperability is the next test.', blocks:[
+    {type:'flow', title:'Milestones', steps:[
+      {date:'Jan 2023', status:'done', icon:'qr', label:'Bangla QR pilot in Motijheel, Dhaka', c:[28]},
+      {date:'Nov 2025', status:'done', icon:'transfer', label:'Transfers between banks, MFS and PSPs through NPSB, with fee caps', c:[7]},
+      {date:'Jul 2026', status:'done', icon:'qr', label:'Bangla QR compulsory for all merchants', c:[16]},
+      {date:'Oct 2026', status:'done', icon:'coin', label:'Merchant fees removed; payments credited instantly', c:[17,31]},
+      {date:'Nov 2026', status:'done', icon:'phone', label:'Person-to-person payments by Bangla QR', c:[19]},
+      {date:'Jul 2027', status:'target', icon:'link', label:'All financial institutions interoperable', c:[9]}]},
+    {type:'compare', title:'Daily Bangla QR payments rose nearly five-fold after the mandate', items:[{label:'June 2026', v:28, text:'about Tk 28 cr', icon:'qr'},{label:'Late September 2026', v:143.54, text:'Tk 143.54 cr', icon:'qr', hl:true}], c:[18]},
+    {type:'compare', title:'Most it can cost to send Tk 1,000 to another provider', items:[{label:'India · UPI', v:0, text:'Free', icon:'phone'},{label:'Brazil · Pix', v:0, text:'Free', icon:'phone'},{label:'Bangladesh · from a bank account', v:1.5, text:'Tk 1.50', icon:'bank'},{label:'Bangladesh · from a PSP', v:2, text:'Tk 2', icon:'card'},{label:'Bangladesh · from an MFS account', v:8.5, text:'Tk 8.50', icon:'phone', hl:true}], note:'Bangladesh figures are Digivern calculations from the fee caps of 0.15%, 0.2% and 0.85% [7]. UPI and Pix are free for individuals [13][14].'},
+    {type:'stats', title:'Where the leaders are', items:[{icon:'phone', v:'25.47 bn', l:'UPI payments in India in October 2026', c:1},{icon:'transfer', v:'7.89 bn', l:'Pix payments in Brazil in September 2026', c:2},{icon:'people', v:'38 m', l:'users on West Africa’s PI-SPI a year after launch', c:4}]}]},
   keynums:[
     {v:'25.47 bn',l:'UPI payments in India in October 2026',c:1},
     {v:'7.89 bn',l:'Pix payments in Brazil in September 2026',c:2},
@@ -185,6 +205,16 @@ const ANALYSES = [
   kicker:'Health tech · Bangladesh in global context',
   title:'A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore',
   standfirst:'Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting hospitals to use them, paying for it and protecting the data take years.',
+  infographic:{title:'Bangladesh’s e-health card: plans ahead of delivery', sub:'A card for every citizen is promised for 2028; the first district rollout has slipped.', blocks:[
+    {type:'iconArray', title:'Who pays for health care', pct:79, icon:'coin', big:'~79%', label:'of Bangladesh’s health spending is paid out of pocket by patients and families', c:12, legend:['Out of pocket','Other sources']},
+    {type:'flow', title:'From pilot to promise', steps:[
+      {date:'Nov 2015', status:'done', icon:'health', label:'Shared Health Record pilot in Kaliganj', c:[10]},
+      {date:'Mar 2016', status:'done', icon:'health', label:'Extended to Gazipur district', c:[10]},
+      {date:'Jun 2026', status:'delayed', icon:'card', label:'e-Health Card in five districts', c:[13,1,3]},
+      {date:'Oct 2026', status:'planned', icon:'data', label:'National health database and app booking unveiled, with no budget or timetable', c:[1]},
+      {date:'2027', status:'unclear', icon:'server', label:'Electronic health records in all public facilities', c:[15]},
+      {date:'2028', status:'target', icon:'id', label:'e-Health Card for every citizen', c:[2]}]},
+    {type:'stats', title:'What scale looks like elsewhere', items:[{icon:'id', v:'93 cr+', l:'ABHA health accounts in India, linked to 104 crore records', c:4},{icon:'phone', v:'16.7 m', l:'people used England’s NHS App in September 2026', c:5},{icon:'people', v:'~200 m', l:'people the planned Bangladesh health database would cover', c:1}]}]},
   keynums:[
     {v:'~200 m',l:'people the planned Bangladesh health database would cover',c:1},
     {v:'2028',l:'target for an e-health card for every Bangladeshi citizen',c:2},

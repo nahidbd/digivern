@@ -193,6 +193,57 @@ V.story = id => {
 const ANALYSES = window.DV_ANALYSES || [];
 const fmtNum = (v,f) => f==='pct' ? (v===0?'0% (free)':v.toFixed(2).replace(/0$/,'')+'%') : f==='dec' ? (Math.round(v*100)/100).toLocaleString('en-GB') : Math.round(v).toLocaleString('en-GB');
 function citeText(s, aid, hash){ return esc(s).replace(/\[(\d+)\]/g, (m,n)=>`<a class="cite" href="#${hash||'analysis-'+aid}" data-act="src" data-v="${aid}-${n}" title="Source ${n}">${n}</a>`).replace(/<\/a><a class="cite"/g,'</a><span class="cite">,</span><a class="cite"'); }
+/* ---------- infographics ---------- */
+const ICON_PATHS = {
+  id:'<rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.5 16c.6-1.6 1.8-2.4 3-2.4s2.4.8 3 2.4M14 10h4.5M14 13.5h4.5"/>',
+  phone:'<rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M10.5 18.5h3"/>',
+  bank:'<path d="M3 9.5 12 4l9 5.5M4.5 20h15M6 10.5v7M10 10.5v7M14 10.5v7M18 10.5v7"/>',
+  coin:'<circle cx="12" cy="12" r="8.5"/><path d="M9.2 9.5h4.3a1.8 1.8 0 0 1 0 3.6h-3a1.8 1.8 0 0 0 0 3.6H15M12 7.5v1.8M12 16.7v1.8"/>',
+  qr:'<rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1"/><path d="M14 14h2.5v2.5H14zM18 18h2.5v2.5H18zM18 14h2.5M14 18v2.5"/>',
+  person:'<circle cx="12" cy="7.5" r="3.5"/><path d="M5 20.5c.8-4 3.7-6 7-6s6.2 2 7 6"/>',
+  people:'<circle cx="9" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.4"/><path d="M3.5 19.5c.6-3.4 2.9-5 5.5-5s4.9 1.6 5.5 5M15 14.7c2.3-.2 4.6 1.1 5.3 4.3"/>',
+  globe:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5S9.4 5.9 12 3.5z"/>',
+  shield:'<path d="M12 3 19 6v5.5c0 4.3-2.9 7.7-7 9.5-4.1-1.8-7-5.2-7-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/>',
+  chip:'<rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/><path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21M10 10h4v4h-4z"/>',
+  tower:'<path d="M12 10v11M8.5 21 12 10l3.5 11M7 6.5a7 7 0 0 1 10 0M4.5 4a10.5 10.5 0 0 1 15 0"/><circle cx="12" cy="9" r="1.3"/>',
+  leaf:'<path d="M5 19c0-8 5-13.5 14-14 .5 9-5 14-13 14z"/><path d="M5 19c3-3.5 6-6 9.5-8"/>',
+  health:'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 8v8M8 12h8"/>',
+  school:'<path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5V16c1.5 1.5 3.4 2.2 5.5 2.2s4-.7 5.5-2.2v-4.5M21.5 9.5v5"/>',
+  law:'<path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14.5 3.5V8H19M9 12h7M9 15.5h7"/>',
+  data:'<ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V6M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>',
+  transfer:'<path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/>',
+  card:'<rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/>',
+  server:'<rect x="4" y="4" width="16" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="16" height="6.5" rx="1.5"/><path d="M7.5 7.3h.01M7.5 16.8h.01M11 7.3h5.5M11 16.8h5.5"/>',
+  wifi:'<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.7 16a5 5 0 0 1 6.6 0"/><circle cx="12" cy="19.2" r="1.1"/>',
+  check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  alert:'<path d="M12 3.5 21 19.5H3z"/><path d="M12 10v4.5M12 17.2h.01"/>',
+  map:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
+  chart:'<path d="M4 20V4M4 20h16M8 16v-5M12.5 16V8M17 16v-8"/>'
+};
+const icon = (name, cls) => `<svg class="ig-ico ${cls||''}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICON_PATHS[name] || ICON_PATHS.chart}</svg>`;
+const IG_STATUS = {done:['check','Done','ig-done'],target:['clock','Target','ig-target'],delayed:['alert','Delayed','ig-delayed'],unclear:['clock','Unclear','ig-target'],planned:['clock','Planned','ig-target']};
+function infographicBlock(ig, key, hash){
+  if (!ig) return '';
+  const cite = (s) => citeText(s, key, hash);
+  const cites = c => (c||[]).length ? ' ' + cite(c.map(n=>'['+n+']').join('')) : '';
+  const block = b => {
+    const head = b.title ? `<h4 class="ig-h">${esc(b.title)}</h4>` : '';
+    if (b.type === 'stats') return `<div class="ig-block">${head}<div class="ig-stats">${b.items.map(it=>`<div class="ig-stat">${icon(it.icon,'ig-ico-c')}<b>${esc(it.v)}</b><span>${cite(it.l + (it.c?' ['+it.c+']':''))}</span></div>`).join('')}</div></div>`;
+    if (b.type === 'flow') return `<div class="ig-block">${head}<ol class="ig-flow">${b.steps.map(s=>{const st=IG_STATUS[s.status]||null;return `<li class="${st?st[2]:''}"><span class="ig-step-ico">${icon(s.icon||(st?st[0]:'chart'))}</span><span class="ig-step-txt">${s.date?`<span class="ig-date">${esc(s.date)}${st?` · ${st[1]}`:''}</span>`:''}<b>${esc(s.label)}</b>${s.note?`<span class="ig-note">${cite(s.note)}</span>`:''}${s.c?`<span class="ig-cites">${cites(s.c)}</span>`:''}</span></li>`;}).join('')}</ol></div>`;
+    if (b.type === 'iconArray') { const n = Math.round(b.pct); return `<div class="ig-block">${head}<div class="ig-array-wrap"><div class="ig-array" role="img" aria-label="${esc(b.pct+' out of 100')}">${Array.from({length:100},(_,i)=>`<span class="${i<n?'on':''}">${icon(b.icon||'person')}</span>`).join('')}</div><div class="ig-array-txt"><b>${esc(b.big || (b.pct+'%'))}</b><span>${cite(b.label + (b.c?' ['+b.c+']':''))}</span>${b.legend?`<span class="ig-legend"><i class="on"></i>${esc(b.legend[0])}<i></i>${esc(b.legend[1])}</span>`:''}</div></div></div>`; }
+    if (b.type === 'compare') { const max = Math.max(...b.items.map(i=>i.v), 0.0001); return `<div class="ig-block">${head}<div class="ig-compare">${b.items.map(i=>`<div class="ig-crow${i.hl?' hl':''}"><span class="ig-clabel">${i.icon?icon(i.icon):''}${esc(i.label)}</span><span class="ig-cbar"><span style="width:${Math.max(100*i.v/max, i.v?2:0).toFixed(1)}%"></span></span><b class="ig-cval">${esc(i.text)}</b></div>`).join('')}</div>${b.note?`<p class="ig-foot">${cite(b.note)}</p>`:''}${b.c?`<p class="ig-foot">Source:${cites(b.c)}</p>`:''}</div>`; }
+    if (b.type === 'meters') return `<div class="ig-block">${head}<div class="ig-meters">${b.items.map(i=>`<div class="ig-meter${i.pct<50?' low':''}"><div class="ig-mtop"><span>${esc(i.label)}</span><b>${esc(i.text || i.pct+'%')}</b></div><span class="ig-mbar"><span style="width:${Math.min(100,i.pct)}%"></span></span></div>`).join('')}</div>${b.c?`<p class="ig-foot">Source:${cites(b.c)}</p>`:''}</div>`;
+    return '';
+  };
+  return `<figure class="ig" aria-label="${esc(ig.title)}">
+    <div class="ig-top"><span class="ig-kicker">Digivern infographic · At a glance</span><h3>${esc(ig.title)}</h3>${ig.sub?`<p>${esc(ig.sub)}</p>`:''}</div>
+    <div class="ig-body">${ig.blocks.map(block).join('')}</div>
+    <figcaption class="ig-cap"><span><b>Digi<i>vern</i></b> · every figure links to a numbered source below</span>${ig.note?`<span>${esc(ig.note)}</span>`:''}</figcaption>
+  </figure>`;
+}
+
 function chartBlock(ch, aid, hash){
   const max = Math.max(...ch.rows.flatMap(r => ch.type==='group' ? r[1] : [r[1]]), 0.0001);
   const bar = (v, hl) => `<div class="bt"><div class="bf${hl?' hl':''}" style="width:${Math.max(100*v/max, v?1.5:0.6).toFixed(1)}%"></div></div><span class="bv">${fmtNum(v,ch.fmt)}</span>`;
@@ -215,7 +266,7 @@ V.analysis = id => {
   const x = ANALYSES.find(a => a.id === id) || ANALYSES[0];
   if (!x) return V.reports();
   const DIR = {'+':['Positive','imp-pos','▲'],'−':['Negative','imp-neg','▼'],'±':['Mixed','imp-mix','◆']};
-  const nav = [['a-overview','Overview'],['a-charts','In numbers'],x.policy&&['a-policy','Policy and law'],x.implementation&&['a-impl','Implementation'],x.economics&&['a-econ','Money and economics'],['a-impact','Impact'],x.voices&&['a-voices','What people say'],['a-world','Around the world'],['a-home','Inside the country'],['a-watch','What to watch'],['a-sources','Sources']].filter(Boolean);
+  const nav = [x.infographic&&['a-glance','At a glance'],['a-overview','Overview'],['a-charts','In numbers'],x.policy&&['a-policy','Policy and law'],x.implementation&&['a-impl','Implementation'],x.economics&&['a-econ','Money and economics'],['a-impact','Impact'],x.voices&&['a-voices','What people say'],['a-world','Around the world'],['a-home','Inside the country'],['a-watch','What to watch'],['a-sources','Sources']].filter(Boolean);
   const IST = {'done':['Done','b-official'],'on track':['On track','b-official'],'delayed':['Delayed','b-media'],'not started':['Not started','b-plain'],'unclear':['Unclear','b-plain']};
   const VST = {support:['Supportive','imp-pos'],concern:['Concerned','imp-neg'],mixed:['Mixed','imp-mix']};
   return `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#reports">Analysis</a> / In-depth</p>
@@ -226,6 +277,7 @@ V.analysis = id => {
   <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',x.id)}</span></div>`).join('')}</div></div></section>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
+      ${x.infographic?`<div id="a-glance">${infographicBlock(x.infographic, x.id)}</div>`:''}
       <div id="a-overview" class="stack" style="gap:14px">${x.body.map(s=>`<h2>${esc(s.h)}</h2>${s.p.map(p=>`<p>${citeText(p,x.id)}</p>`).join('')}`).join('')}</div>
 
       <h2 id="a-charts">In numbers</h2>
@@ -873,6 +925,7 @@ function focusCountry(m){
       <p class="footnote">${esc(c.factsNote)}</p>
 
       <h2 id="f-numbers">In numbers</h2>
+      ${c.infographic?infographicBlock(c.infographic,key,hash):''}
       ${c.charts.map(ch=>chartBlock(ch,key,hash)).join('')}
 
       ${c.body.slice(1).map(b=>`<h2>${esc(b.h)}</h2>${b.p.map(t=>`<p>${citeText(t,key,hash)}</p>`).join('')}`).join('')}
@@ -922,6 +975,7 @@ function focusSector(m){
   <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',key,hash)}</span></div>`).join('')}</div></div></section>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
+      ${x.infographic?infographicBlock(x.infographic,key,hash):''}
       <div id="f-overview" class="stack" style="gap:14px">${x.body.map(b=>`<h2>${esc(b.h)}</h2>${b.p.map(t=>`<p>${citeText(t,key,hash)}</p>`).join('')}`).join('')}</div>
 
       <h2 id="f-tracker">${esc(x.tracker.title)}</h2>

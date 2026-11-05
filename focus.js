@@ -7,6 +7,7 @@
    Shape of country: {id (matches COUNTRIES in data.js), name, iso2 (for the flag), region, capital, lat, lon, bbox:[west,south,east,north],
      standfirst, facts:[[label,value]], factsNote, keynums:[{v,l,c}], charts:[...], body:[{h,p:[...]}], policy:{rows}, implementation:{rows},
      voices:[...], watch:[...], sources:[[title, publisher and date, url]]}
+   Both country and sector take infographic:{...} (see analysis.js for block types).
    Shape of sector: {name, tag (SECTORS value in data.js), icon, standfirst, keynums, body, tracker:{cols,rows}, watch, sources} */
 (function(){
 const MONTHS = [
@@ -37,6 +38,15 @@ const MONTHS = [
       {v:'UGX 1.66 tn',l:'five-year cost of the National Data Strategy launched in October 2026',c:5},
       {v:'4 days',l:'of near-total internet blackout around the January 2026 general election',c:14}
     ],
+    infographic:{title:'How Uganda’s digital government fits together', sub:'Strong building blocks; delivery and trust are the weak links.', blocks:[
+      {type:'flow', title:'From identity to services', steps:[
+        {icon:'id', label:'National ID (NIRA)', note:'About 35 million people in the system', c:[3]},
+        {icon:'shield', label:'UGPass digital ID and e-signature', c:[6]},
+        {icon:'link', label:'UGhub data exchange', note:'135 platforms integrated; target 300 by 2030/31', c:[5]},
+        {icon:'globe', label:'UGOV single services platform', note:'Unveiled in November 2025', c:[7]},
+        {icon:'phone', label:'Mobile money', note:'38 million active customers, July 2026', c:[10]}]},
+      {type:'iconArray', title:'ID cards: printed is not delivered', pct:35.5, icon:'card', big:'35.5%', label:'of national ID cards shipped to districts had been collected by 8 February 2026: 2.58 million of 7.26 million', c:3, legend:['Collected','Waiting']},
+      {type:'stats', title:'Trust and access', items:[{icon:'wifi', v:'4 days', l:'near-total internet blackout around the January 2026 election', c:14},{icon:'coin', v:'UGX 1.4 tn', l:'in expected transactions stalled during the blackout, per Unwanted Witness', c:14},{icon:'law', v:'~14,000', l:'organisations registered with the data protection office, against an estimated 500,000+ handling personal data', c:12}]}]},
     charts:[
       {title:'Uganda’s UN E-Government rank, 2003–2024',sub:'Rank among UN member states; a lower number is better',type:'bar',fmt:'int',
        rows:[['2003',119],['2008',133],['2012',143],['2014',156],['2016',128],['2018',135],['2020',137],['2022',144],['2024',150,'hl']],c:[1]},
@@ -143,6 +153,15 @@ const MONTHS = [
       {v:'1,000+',l:'digital agriculture initiatives documented by FAO’s AgriTech Observatory in Europe and Central Asia',c:12},
       {v:'30 Dec 2026',l:'date the EU Deforestation Regulation starts to apply to large and medium operators',c:11}
     ],
+    infographic:{title:'How a farmer registry turns into support', sub:'Countries are building agriculture services on top of national ID.', blocks:[
+      {type:'flow', title:'The DPI path for agriculture', steps:[
+        {icon:'id', label:'National ID', note:'The foundation for registering farmers', c:[3]},
+        {icon:'leaf', label:'Farmer registry', note:'Farmer, land plot and crop records', c:[3]},
+        {icon:'coin', label:'Targeted subsidies', note:'For example Kenya’s fertiliser e-vouchers', c:[5]},
+        {icon:'phone', label:'Advice in local languages', note:'For example India’s Bharat-VISTAAR', c:[4]},
+        {icon:'globe', label:'Traceability for trade', note:'EU deforestation rules apply from 30 December 2026', c:[11]}]},
+      {type:'stats', title:'Scale so far', items:[{icon:'id', v:'110 m', l:'Farmer IDs issued in India by October 2026', c:2},{icon:'people', v:'6.58 m', l:'Kenyan farmers registered for fertiliser e-vouchers (March 2025)', c:5},{icon:'coin', v:'US$2.65 bn', l:'saved by removing 13 million ineligible beneficiaries from India’s PM-KISAN, according to a 2025 DPI report', c:3}]},
+      {type:'compare', title:'Where private agritech money went in 2025', items:[{label:'All agrifoodtech venture funding', v:16.2, text:'US$16.2 bn', icon:'chart'},{label:'Upstream: farms and food production', v:9, text:'US$9 bn', icon:'leaf', hl:true},{label:'Climate tech within agrifood', v:3.9, text:'US$3.9 bn', icon:'globe'}], c:[1]}]},
     body:[
       {h:'Why agritech is a governance topic',p:[
         'Farming is where digital public infrastructure meets the largest number of poor people. In Uganda, this month’s focus country, about 65% of people depend on agriculture for their livelihoods [13]. Governments spend heavily on input subsidies, credit and extension, and the main question is how to get that support to genuine farmers. A 2025 report on DPI for agriculture, backed by the Gates Foundation, argues that most agricultural digitalisation so far has produced isolated systems that cannot share data, and that shared registries, payments and data exchange can fix this [3].'

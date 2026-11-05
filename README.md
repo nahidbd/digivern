@@ -53,6 +53,10 @@ Setup (GitHub → Settings → Secrets and variables → Actions):
 - Optional variables: `GEMINI_MODEL` (default `gemini-2.5-pro`) and `OPENAI_MODEL` (default `gpt-5`) to switch models without changing code.
 - Test: Actions → "Collect leads (Gemini and ChatGPT)" → Run workflow.
 
+## Infographics
+
+Every in-depth analysis and Monthly Focus page has an "At a glance" infographic (`infographic` field; block types are documented at the top of `analysis.js`): icons with key figures, step-by-step flows, icon grids for shares, comparison bars and progress meters. They are drawn by the site's code from the page's own verified figures, each with its numbered source, so the numbers are always exact. Image generators are not used for infographics because they can garble text and numbers.
+
 ## Images for news items
 
 Each news item can have one image, shown on the story page, the front page and the News Desk.
