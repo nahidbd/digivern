@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-06",
+  "generated_at": "2026-11-06T03:22:50.452Z",
+  "notice": "UNVERIFIED LEADS from Gemini and ChatGPT. Not for publication as they stand. Open every source_url and publish only what the original source confirms. Never cite Gemini or ChatGPT as a source.",
+  "focus": {
+    "month": "November 2026",
+    "country": "Uganda",
+    "sector": "Agritech"
+  },
+  "providers": {
+    "gemini": {
+      "ok": false,
+      "model": "gemini-2.5-pro",
+      "leads": 0,
+      "error": "GEMINI_API_KEY not set"
+    },
+    "openai": {
+      "ok": false,
+      "model": "gpt-5",
+      "leads": 0,
+      "error": "OPENAI_API_KEY not set"
+    }
+  },
+  "leads": [],
+  "search_results_seen": {
+    "gemini": [],
+    "openai": []
+  },
+  "unparsed": {
+    "gemini": null,
+    "openai": null
+  }
+}
