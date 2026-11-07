@@ -7,8 +7,8 @@
 //      result that passes the same licence checks, is at least 800 px wide and is not about people (portraits, officials,
 //      crowds and similar are skipped by their title, description and categories).
 //   2. Otherwise, unless noAi is set, create an editorial illustration from the prompt and save it, credited as an
-//      AI-generated illustration: first with Cloudflare Workers AI (FLUX.1 schnell, inside Cloudflare's free daily
-//      allowance), then with Gemini if a Gemini key with image access is set.
+//      AI-generated illustration: first through the site's own /api/illustrate function (Cloudflare Workers AI binding,
+//      free daily allowance, no keys needed), then the Cloudflare API or Gemini if those secrets are set.
 //   3. If neither works, mark the entry "failed" with the reason; the site then shows the item without an image.
 // Usage: node tools/process-images.mjs [--site .] [--max 12]
 // Environment: CF_ACCOUNT_ID and CF_AI_TOKEN (Cloudflare Workers AI, free illustrations), GEMINI_API_KEY (optional second choice), GEMINI_IMAGE_MODEL (default gemini-2.5-flash-image), IMAGES_MOCK=1 (offline test).
@@ -96,6 +96,23 @@ async function fromPage(page) {
 }
 
 const STYLE = 'Style: clean, realistic editorial photo look, natural light, muted colours, wide 16:9 composition. No people\'s faces, no recognisable people, no text, letters or numbers, no logos or brand names, no flags, emblems or seals.';
+// Free illustrations through the site's own Cloudflare Pages Function (functions/api/illustrate.js, Workers AI binding).
+// The function only draws prompts already published in images.js, so it waits for the new images.js to go live.
+const SITE_URL = process.env.SITE_URL || 'https://cgtk-sc.pages.dev';
+async function fromSite(id) {
+  if (MOCK) return { kind: 'ai', buf: Buffer.from('jpg'), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
+  let last = '';
+  for (let i = 0; i < 8; i++) {
+    const r = await fetch(`${SITE_URL}/api/illustrate?id=${encodeURIComponent(id)}`, { headers: { 'user-agent': UA } });
+    if (r.ok && /^image\//.test(r.headers.get('content-type') || '')) {
+      return { kind: 'ai', buf: Buffer.from(await r.arrayBuffer()), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
+    }
+    last = `HTTP ${r.status}: ${(await r.text()).slice(0, 120)}`;
+    if (r.status !== 404 && r.status !== 503) break;
+    await new Promise(s => setTimeout(s, 30000)); // the latest images.js may not be deployed yet
+  }
+  throw new Error('site illustration failed: ' + last);
+}
 async function fromCloudflare(prompt) {
   const acc = process.env.CF_ACCOUNT_ID, tok = process.env.CF_AI_TOKEN;
   if ((!acc || !tok) && !MOCK) throw new Error('CF_ACCOUNT_ID or CF_AI_TOKEN not set');
@@ -152,7 +169,8 @@ for (const [id, e] of Object.entries(images)) {
   if (e.commons) { try { got = await fromCommons(e.commons); } catch (err) { tried.push('photo: ' + err.message); } }
   const queries = [].concat(e.commonsQuery || []).filter(Boolean).slice(0, 4);
   for (const q of queries) { if (got) break; try { got = await searchCommons(q); } catch (err) { tried.push('photo search: ' + err.message); } }
-  if (!got && e.prompt && !e.noAi) { try { got = await fromCloudflare(e.prompt); } catch (err) { tried.push('illustration (Cloudflare): ' + err.message); } }
+  if (!got && e.prompt && !e.noAi) { try { got = await fromSite(id); } catch (err) { tried.push('illustration (site): ' + err.message); } }
+  if (!got && e.prompt && !e.noAi && process.env.CF_AI_TOKEN) { try { got = await fromCloudflare(e.prompt); } catch (err) { tried.push('illustration (Cloudflare API): ' + err.message); } }
   if (!got && e.prompt && !e.noAi && process.env.GEMINI_API_KEY) { try { got = await fromGemini(e.prompt); } catch (err) { tried.push('illustration (Gemini): ' + err.message.slice(0, 90)); } }
   if (!got) {
     images[id] = { status: 'failed', alt: e.alt || '', commons: e.commons || '', ...(e.commonsQuery ? { commonsQuery: e.commonsQuery } : {}), prompt: e.prompt || '', noAi: !!e.noAi, reason: tried.join('; ') || 'no photo named and illustrations not allowed', date: today };

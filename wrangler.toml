@@ -7,3 +7,7 @@ compatibility_date = "2026-10-01"
 binding = "DB"
 database_name = "digivern-stats"
 database_id = "993e8e1a-185a-49be-9deb-94437095530a"
+
+# Workers AI, used by functions/api/illustrate.js for free AI illustrations.
+[ai]
+binding = "AI"
