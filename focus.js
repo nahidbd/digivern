@@ -1,5 +1,5 @@
-/* Digivern Monthly Focus.
-   Each month Digivern picks one Country of the Month and one Sector of the Month and covers them in more depth.
+/* CGTK Monthly Focus.
+   Each month CGTK picks one Country of the Month and one Sector of the Month and covers them in more depth.
    MONTHS lists every focus month, newest first. The first entry is the current month; older entries form the archive.
    To start a new month: add a new object at the top of MONTHS with the same shape, and tag that month's news items
    in data.js with the focus country id (field `country`) and the focus sector name (field `sector`).
@@ -15,7 +15,7 @@ const MONTHS = [
   key:'2026-11', label:'November 2026', published:'2 Nov 2026',
   country:{
     id:'uganda', name:'Uganda', iso2:'ug', region:'Africa', capital:'Kampala', lat:0.3476, lon:32.5825, bbox:[29.4,-1.7,35.3,4.4],
-    standfirst:'Uganda has re-registered most of its population for a new national ID, launched a five-year national data strategy and licensed satellite internet this year. It also switched the internet off for four days around its January election, and its flagship World Bank connectivity project has been cut back. This month Digivern follows how the pieces fit together.',
+    standfirst:'Uganda has re-registered most of its population for a new national ID, launched a five-year national data strategy and licensed satellite internet this year. It also switched the internet off for four days around its January election, and its flagship World Bank connectivity project has been cut back. This month CGTK follows how the pieces fit together.',
     facts:[
       ['Capital','Kampala'],
       ['Coordinates of capital','0.35° N, 32.58° E'],
@@ -69,7 +69,7 @@ const MONTHS = [
         'Members of Parliament raised two practical tests at the launch: whether data, much of it reportedly hosted abroad, will be kept safe; and whether people can afford the devices to use digital services at all, given a 10% import duty on entry-level devices [4].'
       ]},
       {h:'Connectivity: a flagship project cut back',p:[
-        'The World Bank-financed Uganda Digital Acceleration Project – GovNet (UDAP) was approved in June 2021 for US$200 million but only became effective in May 2023 [8]. A 2025 review rated implementation moderately unsatisfactory and proposed cutting the project to about US$87 million, removing the national backbone component and almost all of the US$57 million planned for refugee-hosting communities [8]. By June 2025 US$44.2 million had been disbursed [8]. The project was due to close on 30 May 2026 and the government requested a 17-month extension [9]; Digivern has not found a published decision.',
+        'The World Bank-financed Uganda Digital Acceleration Project – GovNet (UDAP) was approved in June 2021 for US$200 million but only became effective in May 2023 [8]. A 2025 review rated implementation moderately unsatisfactory and proposed cutting the project to about US$87 million, removing the national backbone component and almost all of the US$57 million planned for refugee-hosting communities [8]. By June 2025 US$44.2 million had been disbursed [8]. The project was due to close on 30 May 2026 and the government requested a 17-month extension [9]; CGTK has not found a published decision.',
         'Satellite internet is now an alternative for those who can pay. Uganda ordered Starlink to stop operating on 1 January 2026, before the election [14], then granted it a five-year licence in May 2026 with conditions including a national gateway and local staff. Residential service became available on 1 September 2026 [15].'
       ]},
       {h:'Money: mobile money moves more than the economy produces',p:[
@@ -81,7 +81,7 @@ const MONTHS = [
         'The Data Protection and Privacy Act 2019 is now being enforced. The Personal Data Protection Office ruled in July 2025 that Google had failed to register and had transferred data abroad without adequate safeguards, and secured its first criminal conviction against a digital lender the same month [13][12]. Yet the office says only about 14,000 organisations are registered, against an estimated 500,000 that collect personal data [12].',
         'The internet shutdown is the main mark against trust. Civil society groups describe it as deliberate and centrally coordinated: public internet collapsed nationwide on the evening of 13 January, partial service returned on 18 January and full service on 26 January, with social media blocked for eight more days [14]. They call for judicial oversight of any future shutdown and transparency on regulators’ orders [14].'
       ]},
-      {h:'Digivern’s assessment',p:[
+      {h:'CGTK’s assessment',p:[
         'Uganda has many of the right components: a near-universal ID register, an integration hub, a costed data strategy, an active data protection regulator and one of Africa’s deepest mobile money markets. The weak links are delivery and trust. Card collection and new registrations lag, the main connectivity project has been halved, device costs limit access, and the January shutdown showed that digital services can be switched off with little legal check. Whether the 300-platform target is met will depend less on technology than on funding the strategy in annual budgets and on rebuilding confidence that services will stay on.',
         'The link to this month’s sector is direct: about 65% of Ugandans depend on agriculture, and the new agriculture plan includes e-vouchers for inputs and digital extension [18]. Agro-industrialisation is also one of the priority sectors the data strategy is meant to serve [5]. See the Agritech sector page for how other countries are building farmer registries on top of national ID.'
       ]}
@@ -150,7 +150,7 @@ const MONTHS = [
   },
   sector:{
     name:'Agritech', tag:'Agriculture', icon:'agri',
-    standfirst:'Governments are building farmer registries on top of national ID, using AI to give advice in local languages and using satellites to estimate harvests. From 30 December, EU trade rules will require plot-level proof that imported cocoa, coffee and other goods did not come from deforested land. This month Digivern follows agritech as public infrastructure, not only as a start-up market.',
+    standfirst:'Governments are building farmer registries on top of national ID, using AI to give advice in local languages and using satellites to estimate harvests. From 30 December, EU trade rules will require plot-level proof that imported cocoa, coffee and other goods did not come from deforested land. This month CGTK follows agritech as public infrastructure, not only as a start-up market.',
     keynums:[
       {v:'US$16.2 bn',l:'global agrifoodtech venture funding in 2025, flat on 2024, with deals down 12%',c:1},
       {v:'US$9 bn',l:'invested upstream, in farms and food production, in 2025: up 7%',c:1},
@@ -189,7 +189,7 @@ const MONTHS = [
       {h:'Where the money is going',p:[
         'Private investment is flat overall but shifting towards the farm. AgFunder counts US$16.2 billion of agrifoodtech venture funding in 2025, the same as 2024, with deal numbers down 12%. Upstream funding rose 7% to US$9 billion, climate technology within the sector recovered to US$3.9 billion, and deep-technology companies made up 32% of deals [1]. Debt reached 18.2% of funding, its highest share in a decade [1]. The summary does not break out Africa or South Asia, where most smallholders farm.'
       ]},
-      {h:'Digivern’s assessment',p:[
+      {h:'CGTK’s assessment',p:[
         'The strongest returns in agritech for lower-income countries are coming from public infrastructure, not from venture-funded products: ID-linked registries that cut leakage from subsidies, and payments that put support directly into farmers’ accounts. The risks are the familiar DPI risks. Farmers without ID or network coverage can be left out, data collected for subsidies can be reused without consent, and registries built by different agencies can duplicate one another, as Nigeria has found [6]. The EU deadline on 30 December will test whether exporting countries can link farmer, plot and shipment data quickly enough to keep market access.'
       ]}
     ],

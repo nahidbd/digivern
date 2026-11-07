@@ -1,4 +1,4 @@
-# Digivern
+# CGTK — Centre for Governance, Technology and Knowledge
 
 Global intelligence on e-governance, digital public infrastructure (DPI), AI and cybersecurity.
 A knowledge venture of Synapse Consulting.
@@ -27,7 +27,7 @@ Live site: https://digivern.pages.dev (Cloudflare Pages). The old address https:
 
 The repository is linked to Cloudflare Pages (project `digivern`, no build step). Every push to `main` publishes the site automatically within about a minute.
 
-Writeup submissions from the Write for Digivern form are sent to Netlify Forms on digivern.netlify.app (free, unlimited) and reviewed there.
+Writeup submissions from the Write for CGTK form are sent to Netlify Forms on digivern.netlify.app (free, unlimited) and reviewed there.
 
 ## Country profiles
 
@@ -35,7 +35,7 @@ Writeup submissions from the Write for Digivern form are sent to Netlify Forms o
 
 ## Monthly Focus
 
-Each month Digivern covers one country and one sector in more depth. November 2026: **Uganda** and **Agritech**.
+Each month CGTK covers one country and one sector in more depth. November 2026: **Uganda** and **Agritech**.
 
 - The editor chooses the next country and sector and records them in `NEXT` in `focus.js` (or tells Claude in chat).
 - On the first day of the month the daily update adds the new month at the top of `MONTHS`, builds the country profile in `data.js` if it does not exist yet, and sets `NEXT` back to `null`. Past months stay online at `#focus-country-YYYY-MM` and `#focus-sector-YYYY-MM`.
@@ -43,7 +43,7 @@ Each month Digivern covers one country and one sector in more depth. November 20
 
 ## Leads from Gemini and ChatGPT
 
-Every morning at 05:05 Dhaka time a GitHub Actions job asks Gemini (with Google Search) and ChatGPT (with web search) for developments from the last 48 hours in Digivern's themes, the Country of the Month and the Sector of the Month. It saves the answers as **unverified leads** in `leads/latest.json` on the separate `leads` branch (last 30 days kept). Nothing on that branch is published on the site.
+Every morning at 05:05 Dhaka time a GitHub Actions job asks Gemini (with Google Search) and ChatGPT (with web search) for developments from the last 48 hours in CGTK's themes, the Country of the Month and the Sector of the Month. It saves the answers as **unverified leads** in `leads/latest.json` on the separate `leads` branch (last 30 days kept). Nothing on that branch is published on the site.
 
 The daily update reads the leads, opens every source link itself, and publishes only what the original source confirms. Gemini and ChatGPT are never cited as sources.
 
@@ -73,7 +73,7 @@ News outlets' photos are never used: they are copyrighted.
 A scheduled task updates `data.js` every morning:
 
 1. Search approved sources for new developments in the eight themes.
-2. Add new items to `NEWS`, each with a summary in Digivern's own words, a "why it matters" note, a date and source links.
+2. Add new items to `NEWS`, each with a summary in CGTK's own words, a "why it matters" note, a date and source links.
 3. Check every name, number and date against the source before adding it.
 4. Update the Policy Tracker and country profiles when a source shows a change.
 5. Refresh the Weekly Global Brief on Mondays.

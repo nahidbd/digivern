@@ -1,4 +1,4 @@
-/* Digivern content file.
+/* CGTK content file.
    The daily update edits this file only. Keep the structure: arrays of plain objects.
    NEWSORDER lists news ids newest first; UPDATED is the date shown on the site. */
 (function(){

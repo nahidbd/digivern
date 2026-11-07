@@ -1,4 +1,4 @@
-/* Digivern images for news items, keyed by news id. One entry per line.
+/* CGTK images for news items, keyed by news id. One entry per line.
    The daily update ADDS requests; the "Process images" GitHub Actions job turns them into images and fills in the rest.
 
    Request (written by the daily update):

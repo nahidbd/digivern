@@ -1,4 +1,4 @@
-/* Digivern Events and Funding.
+/* CGTK Events and Funding.
    EVENTS: conferences, summits, forums, workshops, seminars, webinars and trainings worldwide on e-governance, DPI, AI, cybersecurity, fintech, health tech and other
    digital topics. Shape:
      {id, type:'Conference'|'Summit'|'Forum'|'Workshop'|'Seminar'|'Webinar'|'Training'|'Expo', title, start:'YYYY-MM-DD' or '' if not set, end:'YYYY-MM-DD' or '', dateText (as the organiser states it),
@@ -14,7 +14,7 @@
    accelerators, calls for proposals, papers or speakers, trainings, jobs, consultancies and internships. Shape:
      {id, title, funder (the organisation offering it), kind: one of KINDS below, amount (as published, or ''),
       duration (as published, or ''), who (eligible applicants), where (eligible countries or duty station, in words),
-      close:'UTC ISO time', closeText (exactly as the organisation states it), summary (Digivern's own words),
+      close:'UTC ISO time', closeText (exactly as the organisation states it), summary (CGTK's own words),
       url (the organisation's official page), theme, sector, checked:'YYYY-MM-DD'}
    KINDS: 'Grant','Fellowship','Scholarship','Award or prize','Incubator or accelerator','Call for proposals',
           'Call for papers or speakers','Training','Job','Consultancy','Internship'

@@ -1,4 +1,4 @@
-/* Digivern in-depth analysis.
+/* CGTK in-depth analysis.
    Each analysis has: key numbers, body sections, charts (bar = one series, group = two series), a timeline,
    an impact assessment, a comparison with similar work around the world, a comparison inside the country,
    what to watch, and numbered sources. "[n]" in any text becomes a link to source n.
@@ -15,7 +15,7 @@
        {type:'compare', title?, items:[{label, v (number for bar length), text, icon?, hl?}], c?:[n], note?}
        {type:'meters', title?, items:[{label, pct, text?}], c?:[n]}
        icons: id phone bank coin qr person people globe shield chip tower leaf health school law data link transfer card server wifi check clock alert map chart.
-       Use only figures that appear in the page's own sources, with their [n]; label own arithmetic as a Digivern calculation. Do not repeat a chart that is already on the page.
+       Use only figures that appear in the page's own sources, with their [n]; label own arithmetic as a CGTK calculation. Do not repeat a chart that is already on the page.
 */
 const ANALYSES = [
 {
@@ -32,7 +32,7 @@ const ANALYSES = [
       {date:'Nov 2026', status:'done', icon:'phone', label:'Person-to-person payments by Bangla QR', c:[19]},
       {date:'Jul 2027', status:'target', icon:'link', label:'All financial institutions interoperable', c:[9]}]},
     {type:'compare', title:'Daily Bangla QR payments rose nearly five-fold after the mandate', items:[{label:'June 2026', v:28, text:'about Tk 28 cr', icon:'qr'},{label:'Late September 2026', v:143.54, text:'Tk 143.54 cr', icon:'qr', hl:true}], c:[18]},
-    {type:'compare', title:'Most it can cost to send Tk 1,000 to another provider', items:[{label:'India · UPI', v:0, text:'Free', icon:'phone'},{label:'Brazil · Pix', v:0, text:'Free', icon:'phone'},{label:'Bangladesh · from a bank account', v:1.5, text:'Tk 1.50', icon:'bank'},{label:'Bangladesh · from a PSP', v:2, text:'Tk 2', icon:'card'},{label:'Bangladesh · from an MFS account', v:8.5, text:'Tk 8.50', icon:'phone', hl:true}], note:'Bangladesh figures are Digivern calculations from the fee caps of 0.15%, 0.2% and 0.85% [7]. UPI and Pix are free for individuals [13][14].'},
+    {type:'compare', title:'Most it can cost to send Tk 1,000 to another provider', items:[{label:'India · UPI', v:0, text:'Free', icon:'phone'},{label:'Brazil · Pix', v:0, text:'Free', icon:'phone'},{label:'Bangladesh · from a bank account', v:1.5, text:'Tk 1.50', icon:'bank'},{label:'Bangladesh · from a PSP', v:2, text:'Tk 2', icon:'card'},{label:'Bangladesh · from an MFS account', v:8.5, text:'Tk 8.50', icon:'phone', hl:true}], note:'Bangladesh figures are CGTK calculations from the fee caps of 0.15%, 0.2% and 0.85% [7]. UPI and Pix are free for individuals [13][14].'},
     {type:'stats', title:'Where the leaders are', items:[{icon:'phone', v:'25.47 bn', l:'UPI payments in India in October 2026', c:1},{icon:'transfer', v:'7.89 bn', l:'Pix payments in Brazil in September 2026', c:2},{icon:'people', v:'38 m', l:'users on West Africa’s PI-SPI a year after launch', c:4}]}]},
   keynums:[
     {v:'25.47 bn',l:'UPI payments in India in October 2026',c:1},
@@ -59,7 +59,7 @@ const ANALYSES = [
       'Use jumped. About 39 lakh merchant points now accept Bangla QR, and daily payments rose from about 1 lakh worth Tk 28 crore in June 2026 to nearly 3.5 lakh worth Tk 143.54 crore by late September [18]. Instant crediting of Bangla QR payments had applied to small and marginal merchants since 15 December 2025 [30]. From 1 October 2026 the central bank extended immediate crediting to all Bangla QR payments, removed the 1% minimum merchant fee and set the interchange fee to zero [17][31]; it also told providers that by 31 October every savings and current account holder must be able to pay by scanning Bangla QR in their app [31]. On 1 November it opened person-to-person transfers by Bangla QR: a user scans another person’s code to send money without typing an account number [19][21]. Fees and limits for these transfers had not been published at launch [19].',
       'The fast take-up has side effects. Some merchants have started letting customers withdraw cash through Bangla QR without buying anything, avoiding MFS cash-out fees and undercutting about 2 million agents; in one case Tk 36.4 lakh moved through two banks’ QR codes in five days [26].'
     ]},
-    {h:'Digivern’s assessment',p:[
+    {h:'CGTK’s assessment',p:[
       'Bangladesh has the ingredients that India and Brazil had: a central bank willing to own the switch, open-source infrastructure (Mojaloop), a payments law since 2024 [22] and a deep mobile money base. Bangla QR has now proved the method: a fixed deadline, penalties and lower merchant costs moved the market in three months where years of voluntary adoption had not [16][18][28]. Two things will decide whether the July 2027 target changes behaviour. First, pricing: while sending money from an MFS account costs up to 0.85% [7] and cash-out up to about 1.85% [24], closed networks keep their advantage, so person-to-person QR transfers need to be free or close to free for small amounts, as the BCEAO now does. Second, controls: cash-out through merchants shows that removing fees without limits creates new channels for unrecorded money, so per-merchant limits and monitoring should come with each step. Publishing monthly interoperability data would let everyone see whether it is working.'
     ]}
   ],
@@ -91,9 +91,9 @@ const ANALYSES = [
     {v:'Tk 100 cr',l:'central bank fund to subsidise merchant fees for small merchants',c:29},
     {v:'Tk 12.90–18.50',l:'MFS cash-out fee per Tk 1,000',c:26}
   ],p:[
-    'Scale. Mobile financial services moved about Tk 2 lakh crore a month by April 2026 [11]. Bangla QR, at Tk 143.54 crore a day [18], is roughly Tk 4,300 crore a month (Digivern calculation), or about 2% of MFS value: fast-growing, but still a small share of digital money flows.',
+    'Scale. Mobile financial services moved about Tk 2 lakh crore a month by April 2026 [11]. Bangla QR, at Tk 143.54 crore a day [18], is roughly Tk 4,300 crore a month (CGTK calculation), or about 2% of MFS value: fast-growing, but still a small share of digital money flows.',
     'Who pays. Under the old 1% minimum merchant fee, a grocery taking Tk 10,000 a day lost about Tk 3,000 a month [27], and consumer groups asked for a cap of 0.25% [25]. Since October the merchant fee floor and interchange are gone; Bangladesh Bank now pays incentives of 0.10% to acquirers and 0.20% to issuers on payments up to Tk 2,000 [17], backed by a Tk 100 crore fund [29]. For users, an MFS-to-MFS transfer of Tk 1,000 costs Tk 8.50 [7], and in an iDEA survey 90.9% of bKash users rated cash-out charges high or very high [24].',
-    'Value for money. Binimoy cost Tk 65 crore and was closed with low use [8]. Bangla QR, with a modest subsidy fund and a mandate, multiplied daily value about five times in three months [18][29]. If wider digital payments cut even a tenth of the Tk 20,000 crore yearly cash-handling cost [10], the saving would be about Tk 2,000 crore a year (Digivern illustration), many times the public money spent so far. The main economic risk is leakage: merchant cash-outs move money outside agent controls and could feed informal hundi channels [26], at a time when remittances are about 6% of GDP [10].'
+    'Value for money. Binimoy cost Tk 65 crore and was closed with low use [8]. Bangla QR, with a modest subsidy fund and a mandate, multiplied daily value about five times in three months [18][29]. If wider digital payments cut even a tenth of the Tk 20,000 crore yearly cash-handling cost [10], the saving would be about Tk 2,000 crore a year (CGTK illustration), many times the public money spent so far. The main economic risk is leakage: merchant cash-outs move money outside agent controls and could feed informal hundi channels [26], at a time when remittances are about 6% of GDP [10].'
   ]},
   charts:[
     {type:'bar',title:'Bangla QR took off once it became compulsory',sub:'Average daily Bangla QR payments, Tk crore',fmt:'dec',
@@ -235,7 +235,7 @@ const ANALYSES = [
       'Bangladesh is not starting from zero. The Directorate General of Health Services piloted a Shared Health Record on the open-source OpenHIE and OpenMRS (Bahmni) stack in Kaliganj from November 2015 and in Gazipur district from 2016 [10]. The Bangladesh Digital Health Strategy 2023–2027 already calls for a health ID linked to the national ID, a health information exchange and electronic health records in all public facilities by 2027 [15]. What has been missing is a single identifier used across public and private providers, and the instruction to use it. The e-health card can supply the identifier; the five-district rollout is meant to link cardholders to electronic referral and patient management systems [3].',
       'The money context matters. About 79% of health spending in Bangladesh is paid by households out of pocket [12], so anything that cuts repeat tests, lost records and unnecessary visits has a direct value for families. But the health ministry has a weak record of spending its development budget, which experts say could limit the gains from the larger allocation [11][12].'
     ]},
-    {h:'Digivern’s assessment',p:[
+    {h:'CGTK’s assessment',p:[
       'The international evidence points to four conditions. First, make the record useful on day one: India’s scan-and-share and England’s prescription ordering drove use because they saved patients time [4][5]. Second, build on what exists: the Shared Health Record pilots, the digital health strategy and the national ID give Bangladesh a head start that a card-first approach could waste [10][15]. Third, link the card to money: as health researchers argue, a card that only stores records changes little for a family paying most costs out of pocket, while a card linked to cashless care or insurance changes behaviour [12][13]. Fourth, protect the data before it is pooled: a database of 200 million health records is a high-value target, as Moldova’s October 2026 e-government breach showed for linked registries [20]. A published budget, a rollout timetable and clear access rules under the 2025 data protection ordinance [19] would turn the 2028 promise into a plan.'
     ]}
   ],
@@ -263,7 +263,7 @@ const ANALYSES = [
     {v:'£14 bn',l:'yearly outpatient spending England aims to reduce with joined-up records and digital advice',c:17}
   ],p:[
     'Funding. Bangladesh’s 2026–27 health budget of Tk 69,409 crore includes a Tk 23,522 crore block allocation in the development budget [11], which could fund the card, but no specific allocation has been published [11][14]. The card is to be delivered through a technical assistance project [2], so its cost and financiers (government, World Bank, other partners) are not yet public.',
-    'Benchmarks. India budgeted Rs 1,600 crore over five years for its digital health mission [16] and has created more than 93 crore health accounts [4], roughly Rs 17 per account (Digivern calculation). England is pairing its single patient record with digital advice to cut into £14 billion a year of outpatient costs [17]. Both show that the core digital layer is cheap compared with the health spending it can make more efficient.',
+    'Benchmarks. India budgeted Rs 1,600 crore over five years for its digital health mission [16] and has created more than 93 crore health accounts [4], roughly Rs 17 per account (CGTK calculation). England is pairing its single patient record with digital advice to cut into £14 billion a year of outpatient costs [17]. Both show that the core digital layer is cheap compared with the health spending it can make more efficient.',
     'Who pays and who gains. With about 79% of spending out of pocket [12], households bear most of the cost of duplicate tests and lost records today, so they would gain most from a working shared record. Researchers argue the card delivers its real economic value only if it is linked to cashless or insured care for poor families [13]. The main fiscal risk is under-spending: experts warn that the ministry’s weak record in using its development budget, and corruption and delays in hospitals, could leave the money unspent or wasted [11][12].'
   ]},
   charts:[

@@ -115,7 +115,7 @@ V.home = () => {
   ${homeEventsFunding()}
   <section class="band" style="padding-bottom:0"><div class="wrap">
     <div class="head-row"><div class="stack" style="gap:6px"><h2>Voices</h2><p class="muted">Writeups by practitioners, reviewed by the editor.</p></div><a href="#voices" style="font-weight:700">All Voices \u2192</a></div>
-    ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.slice(0,3).map(writeupCard).join('')}</div>` : `<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:26px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Write for Digivern</h3><p class="muted">Share your analysis or field experience on e-governance, DPI, AI or cybersecurity. Accepted pieces are published with your profile.</p></div><a class="btn" href="#contribute">Submit your writeup</a></div>`}
+    ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.slice(0,3).map(writeupCard).join('')}</div>` : `<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;background:var(--tint);border-color:transparent;padding:26px"><div class="stack" style="gap:6px;flex:1 1 380px;min-width:0"><h3>Write for CGTK</h3><p class="muted">Share your analysis or field experience on e-governance, DPI, AI or cybersecurity. Accepted pieces are published with your profile.</p></div><a class="btn" href="#contribute">Submit your writeup</a></div>`}
   </div></section>
 
   <section class="band band-alt" style="margin-top:44px"><div class="wrap">
@@ -174,7 +174,7 @@ V.story = id => {
       <p>${esc(n.summary)}</p>
       <div class="why"><b>Why it matters.</b> ${esc(n.why)}</div>
       <div class="how"><span class="eyebrow">How this was made</span>
-        <p>Summary drafted by AI in Digivern's own words from the sources below, and checked against them on ${UPDATED}. ${n.trust==='media'&&n.sources<2?'This item rests on one media report, so details are attributed to it.':''} Published automatically after the source check; the editor reviews items after publication.</p>
+        <p>Summary drafted by AI in CGTK's own words from the sources below, and checked against them on ${UPDATED}. ${n.trust==='media'&&n.sources<2?'This item rests on one media report, so details are attributed to it.':''} Published automatically after the source check; the editor reviews items after publication.</p>
         <p class="mono muted">Scout → Curator → Writer → Fact-checker → Published → Editor review</p></div>
       <div class="stack" style="gap:8px"><h2 style="font-size:1.3rem">Sources</h2>
         <ol style="margin:0;padding-left:20px" class="stack">${n.links.map(l=>`<li>${ext(l[2],esc(l[0]))} <span class="badge ${TRUST[l[3]][1]}">${TRUST[l[3]][0]}</span> <span class="muted">${esc(l[1])}</span></li>`).join('')}</ol></div>
@@ -183,7 +183,7 @@ V.story = id => {
     <aside class="stack">
       ${prof?`<a class="card" href="#country-${prof.id}"><span class="eyebrow">Country profile</span><h3>${esc(prof.name)}</h3><p class="muted">ID, payments, data protection and key institutions.</p></a>`:''}
       <div class="card"><span class="eyebrow">Related</span>${related.length?related.map(r=>`<a href="#story-${r.id}" style="font-weight:600">${esc(r.title)}</a>`).join(''):'<p class="muted">More on this theme soon.</p>'}</div>
-      <div class="card" style="background:var(--accent-soft);border-color:transparent"><h3>Ask about this story</h3><p>Ask Digivern a follow-up question. Answers cite the verified library.</p><a class="btn" href="#ask" style="align-self:flex-start">Ask Digivern</a></div>
+      <div class="card" style="background:var(--accent-soft);border-color:transparent"><h3>Ask about this story</h3><p>Ask CGTK a follow-up question. Answers cite the verified library.</p><a class="btn" href="#ask" style="align-self:flex-start">Ask CGTK</a></div>
     </aside>
   </div></section>`;
 };
@@ -238,9 +238,9 @@ function infographicBlock(ig, key, hash){
     return '';
   };
   return `<figure class="ig" aria-label="${esc(ig.title)}">
-    <div class="ig-top"><span class="ig-kicker">Digivern infographic · At a glance</span><h3>${esc(ig.title)}</h3>${ig.sub?`<p>${esc(ig.sub)}</p>`:''}</div>
+    <div class="ig-top"><span class="ig-kicker">CGTK infographic · At a glance</span><h3>${esc(ig.title)}</h3>${ig.sub?`<p>${esc(ig.sub)}</p>`:''}</div>
     <div class="ig-body">${ig.blocks.map(block).join('')}</div>
-    <figcaption class="ig-cap"><span><b>Digi<i>vern</i></b> · every figure links to a numbered source below</span>${ig.note?`<span>${esc(ig.note)}</span>`:''}</figcaption>
+    <figcaption class="ig-cap"><span><b>CG<i>TK</i></b> · every figure links to a numbered source below</span>${ig.note?`<span>${esc(ig.note)}</span>`:''}</figcaption>
   </figure>`;
 }
 
@@ -273,7 +273,7 @@ V.analysis = id => {
     <span class="eyebrow" style="color:var(--red)">${esc(x.kicker)}</span>
     <h1 style="max-width:30ch">${esc(x.title)}</h1>
     <p class="lead" style="max-width:68ch">${esc(x.standfirst)}</p>
-    <p class="mono muted">DIGIVERN ANALYSIS · ${esc(x.date).toUpperCase()}${x.updated?' · UPDATED '+esc(x.updated).toUpperCase():''} · ${x.readMins} MIN READ · ${x.sources.length} SOURCES</p></div></div>
+    <p class="mono muted">CGTK ANALYSIS · ${esc(x.date).toUpperCase()}${x.updated?' · UPDATED '+esc(x.updated).toUpperCase():''} · ${x.readMins} MIN READ · ${x.sources.length} SOURCES</p></div></div>
   <section class="band" style="padding-bottom:0"><div class="wrap"><div class="keynums">${x.keynums.map(k=>`<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l+' ['+k.c+']',x.id)}</span></div>`).join('')}</div></div></section>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack analysis" style="gap:22px;font-size:1.05rem">
@@ -291,7 +291,7 @@ V.analysis = id => {
       ${x.economics ? `<h2 id="a-econ">${esc(x.economics.title || 'Money and economics')}</h2>${x.economics.figures ? `<div class="keynums">${x.economics.figures.map(k => `<div class="keynum"><b>${esc(k.v)}</b><span>${citeText(k.l + ' [' + k.c + ']', x.id)}</span></div>`).join('')}</div>` : ''}${(x.economics.p || []).map(p => `<p>${citeText(p, x.id)}</p>`).join('')}` : ''}
 
       <h2 id="a-impact">Impact assessment</h2>
-      <p class="muted" style="margin-top:-8px">Who gains, who loses and how much, in Digivern’s assessment.</p>
+      <p class="muted" style="margin-top:-8px">Who gains, who loses and how much, in CGTK’s assessment.</p>
       <div class="impact">${x.impact.map(i=>`<div class="imp ${DIR[i.dir][1]}"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(i.who)}</b><span class="imp-tag"><span aria-hidden="true">${DIR[i.dir][2]}</span> ${DIR[i.dir][0]} · ${esc(i.size)}</span></div><p>${citeText(i.text,x.id)}</p></div>`).join('')}</div>
 
       ${x.voices ? `<h2 id="a-voices">What people say</h2><p class="muted" style="margin-top:-8px">Views from officials, industry, experts, civil society and users, as reported in the sources.</p><div class="impact">${x.voices.map(v => `<figure class="imp ${(VST[v.stance]||VST.mixed)[1]}" style="margin:0"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(v.who)}</b><span class="imp-tag">${esc(v.group)} · ${(VST[v.stance]||VST.mixed)[0]}</span></div><blockquote style="margin:0">${citeText(v.view + ' [' + v.c + ']', x.id)}</blockquote></figure>`).join('')}</div>` : ''}
@@ -307,7 +307,7 @@ V.analysis = id => {
 
       <h2 id="a-sources">Sources</h2>
       <ol class="srclist">${x.sources.map((s,i)=>`<li id="src-${x.id}-${i+1}"><a href="${esc(s[2])}" target="_blank" rel="noopener">${esc(s[0])}</a> <span class="muted">${esc(s[1])}</span></li>`).join('')}</ol>
-      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. Charts and tables use only the figures in those sources; the assessment and impact ratings are Digivern’s own analysis.</p></div>
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. Charts and tables use only the figures in those sources; the assessment and impact ratings are CGTK’s own analysis.</p></div>
     </article>
     <aside class="stack">
       <div class="card toc"><span class="eyebrow">In this analysis</span>${nav.map(n=>`<a href="#analysis-${x.id}" data-act="jump" data-v="${n[0]}">${n[1]}</a>`).join('')}</div>
@@ -320,7 +320,7 @@ V.analysis = id => {
 V.reports = () => pagehead('Analysis &amp; Reports','Analysis &amp; Reports','In-depth analysis with charts, impact and global comparison, plus the Weekly Global Brief, explainers, monthly deep-dives, quarterly regional reports and the annual State of Digital Governance outlook. Every figure is footnoted.') + `
   <section class="band"><div class="wrap stack" style="gap:28px">
     ${ANALYSES.length?`<div><div class="head-row"><div class="stack" style="gap:6px"><h2>In-depth analysis</h2><p class="muted">Charts, impact assessment, and comparison with similar work around the world and inside the country.</p></div></div><div class="grid g2">${ANALYSES.map(analysisCard).join('')}</div></div>`:''}
-    <div><div class="head-row"><div class="stack" style="gap:6px"><h2>Reports and briefs</h2><p class="muted">Everything on Digivern is free for everyone during the beta.</p></div></div><div class="grid g4">${REPORTS.map(reportCard).join('')}</div></div>
+    <div><div class="head-row"><div class="stack" style="gap:6px"><h2>Reports and briefs</h2><p class="muted">Everything on CGTK is free for everyone during the beta.</p></div></div><div class="grid g4">${REPORTS.map(reportCard).join('')}</div></div>
   </div></section>`;
 
 function briefBody(){
@@ -338,7 +338,7 @@ function dpiBody(){
     <ul class="stack" style="margin:0;padding-left:20px;gap:8px"><li>People prove who they are once and use that across many services.</li><li>Payments, such as social transfers, reach people directly and cheaply.</li><li>Agencies share data through standard, secured channels instead of asking citizens for the same documents again.</li></ul>
     <h2>What can go wrong</h2>
     <p>If systems are badly designed or records are wrong, people can be shut out of services they are entitled to. A 2026 report on 11 African countries found exactly this pattern in foundational ID and mandatory digital gateways.<a class="cite" href="#story-n2">1</a> That is why safeguards, redress and inclusion are part of good DPI, not extras.</p>
-    <h2>Examples on Digivern</h2>
+    <h2>Examples on CGTK</h2>
     <ul class="stack" style="margin:0;padding-left:20px;gap:8px"><li><a href="#country-india">India</a>: Aadhaar, UPI and DigiLocker</li><li><a href="#country-estonia">Estonia</a>: eID and the X-Road data exchange</li><li><a href="#country-rwanda">Rwanda</a>: a single digital ID with digitised civil registration</li><li><a href="#country-brazil">Brazil</a>: gov.br and Pix</li></ul>
     <p class="footnote">1. CIPESA, State of Internet Freedom in Africa 2026, reported by Biometric Update, 13 Oct 2026.</p>`;
 }
@@ -352,8 +352,8 @@ V.report = id => {
     <article class="main stack prose" style="gap:18px;font-size:1.05rem">
       ${r.id==='r1' ? briefBody() : r.id==='r7' ? dpiBody() :
       `<p>This ${esc(r.kind.toLowerCase())} is in preparation. It will be built from the verified library, with a numbered footnote on every figure and a named expert reviewer.</p>
-      <div class="lock"><span class="badge b-official">Free during beta</span><h3>Get it when it is published</h3><p class="muted">All reports are free for everyone while Digivern is in beta. Subscribe to hear when this one is released.</p><div class="row"><a class="btn" href="#subscribe">Subscribe free</a><a class="btn btn-line" href="#report-r1">Read the free weekly brief</a></div></div>`}
-      ${live?`<div class="how"><span class="eyebrow">How this was made</span><p>Drafted by Digivern's Writer agent from items in the verified library, checked against their sources, and published automatically.</p></div>`:''}
+      <div class="lock"><span class="badge b-official">Free during beta</span><h3>Get it when it is published</h3><p class="muted">All reports are free for everyone while CGTK is in beta. Subscribe to hear when this one is released.</p><div class="row"><a class="btn" href="#subscribe">Subscribe free</a><a class="btn btn-line" href="#report-r1">Read the free weekly brief</a></div></div>`}
+      ${live?`<div class="how"><span class="eyebrow">How this was made</span><p>Drafted by CGTK's Writer agent from items in the verified library, checked against their sources, and published automatically.</p></div>`:''}
     </article>
     <aside class="stack"><div class="card"><span class="eyebrow">More reports</span>${REPORTS.filter(x=>x.id!==r.id).slice(0,4).map(x=>`<a href="#report-${x.id}" style="font-weight:600">${esc(x.title)}</a>`).join('')}</div></aside>
   </div></section>`;
@@ -366,7 +366,7 @@ V.countries = () => {
   let list = COUNTRIES.filter(c => (st.cRegion==='all' || c.region===st.cRegion) && (!st.cOnly || c.ready) && (!q || c.name.toLowerCase().includes(q)));
   list.sort(st.cSort==='rank' ? (a,b)=>a.egdiRank-b.egdiRank : st.cSort==='profile' ? (a,b)=>(b.ready-a.ready)||a.name.localeCompare(b.name) : (a,b)=>a.name.localeCompare(b.name));
   const live = COUNTRIES.filter(c=>c.ready).length;
-  return pagehead('Countries','Country profiles',`All ${COUNTRIES.length} UN member states. Every country page shows its UN E-Government ranking and Digivern news; full profiles use one template for every country, so they can be compared: digital ID, payments, data exchange, key laws, institutions and sources.`) + `
+  return pagehead('Countries','Country profiles',`All ${COUNTRIES.length} UN member states. Every country page shows its UN E-Government ranking and CGTK news; full profiles use one template for every country, so they can be compared: digital ID, payments, data exchange, key laws, institutions and sources.`) + `
   <section class="band"><div class="wrap stack" style="gap:18px">
     <div class="row" style="gap:12px;align-items:end">
       <div class="field" style="flex:1 1 260px"><label for="cq">Find a country</label><input id="cq" type="search" value="${esc(st.cQ)}" placeholder="Type a country name…" data-input="cQ"></div>
@@ -389,7 +389,7 @@ function egdiBlock(c){
   return `<div class="card"><span class="eyebrow">UN E-Government Development Index 2024</span>
     <div class="row" style="gap:28px;align-items:baseline"><div><b style="font-size:2rem;color:var(--accent)">#${c.egdiRank}</b> <span class="muted">of 193</span></div><div><b style="font-size:1.4rem">${c.egdi.toFixed(4)}</b> <span class="muted">score (0–1)</span></div><div><b style="font-size:1.4rem">${rRank}</b> <span class="muted">of ${peers.length} in ${esc(c.region)}</span></div></div>
     <div class="bars" style="gap:8px">${[[c.name,c.egdi,true],[esc(c.region)+' average',avg],['World average',world]].map(r=>`<div class="brow"><span class="bl">${esc(r[0])}</span><div class="bline">${bar(r[1],r[2])}<span class="bv">${r[1].toFixed(3)}</span></div></div>`).join('')}</div>
-    <p class="footnote">Averages are Digivern calculations from the same dataset (all ${peers.length} ${esc(c.region)} countries and all 193 countries). Source: ${ext(EGDI_SOURCE[1], esc(EGDI_SOURCE[0]))}.</p></div>`;
+    <p class="footnote">Averages are CGTK calculations from the same dataset (all ${peers.length} ${esc(c.region)} countries and all 193 countries). Source: ${ext(EGDI_SOURCE[1], esc(EGDI_SOURCE[0]))}.</p></div>`;
 }
 
 V.country = id => {
@@ -401,7 +401,7 @@ V.country = id => {
   const head = `<div class="pagehead"><div class="wrap"><p class="crumb"><a href="#home">Home</a> / <a href="#countries">Countries</a> / ${esc(c.name)}</p>
     <div class="row" style="justify-content:space-between;align-items:end;gap:16px"><div class="row" style="gap:18px;align-items:center"><img class="flag" src="https://flagcdn.com/w160/${esc(c.iso2)}.png" srcset="https://flagcdn.com/w320/${esc(c.iso2)}.png 2x" width="96" height="64" alt="Flag of ${esc(c.name)}" style="width:96px;height:64px"><div class="stack" style="gap:8px"><span class="eyebrow">${esc(c.region)} · ${p?'Country profile':'Basic country data'}</span><h1>${esc(c.name)}</h1><p class="mono muted">${p?'LAST REVIEWED '+esc(fmtDate(p.reviewed)).toUpperCase():'FULL PROFILE IN PREPARATION'}</p></div></div>
     <div class="row"><a class="btn btn-line" href="#countries">All countries</a>${focusM?`<a class="btn" href="#focus-country${focusM===window.DV_FOCUS.MONTHS[0]?'':'-'+focusM.key}">Country of the Month: ${esc(focusM.label)}</a>`:''}</div></div></div></div>`;
-  const newsCard = `<div class="card"><h3>Digivern news on ${esc(c.name)}</h3>${news.length?news.map(n=>`<div class="row" style="gap:14px;padding:8px 0;border-top:1px solid var(--line)"><span class="mono" style="color:var(--accent);min-width:110px">${esc(n.date).toUpperCase()}</span><a href="#story-${n.id}" style="flex:1 1 300px">${esc(n.title)}</a></div>`).join(''):'<p class="muted">No items yet. News on '+esc(c.name)+' will appear here as it is published.</p>'}</div>`;
+  const newsCard = `<div class="card"><h3>CGTK news on ${esc(c.name)}</h3>${news.length?news.map(n=>`<div class="row" style="gap:14px;padding:8px 0;border-top:1px solid var(--line)"><span class="mono" style="color:var(--accent);min-width:110px">${esc(n.date).toUpperCase()}</span><a href="#story-${n.id}" style="flex:1 1 300px">${esc(n.title)}</a></div>`).join(''):'<p class="muted">No items yet. News on '+esc(c.name)+' will appear here as it is published.</p>'}</div>`;
   if (!p) return head + `<section class="band"><div class="wrap layout-side">
     <div class="main stack" style="gap:20px">
       ${egdiBlock(c)}
@@ -409,7 +409,7 @@ V.country = id => {
       <div class="how"><span class="eyebrow">Full profile coming</span><p>A full profile of ${esc(c.name)} will follow the same template as the live profiles: lead agency, strategy, digital ID, payments, data exchange, civil registration, data protection, AI and cybersecurity, each linked to a source. New profiles are added every day.</p></div>
     </div>
     <aside class="stack"><div class="card"><span class="eyebrow">Full profiles you can read now</span>${COUNTRIES.filter(x=>x.ready).map(x=>`<a href="#country-${x.id}" class="row" style="gap:8px;align-items:center;font-weight:600">${flagSm(x)}${esc(x.name)}</a>`).join('')}</div>
-      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send facts with sources, or submit a writeup for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div></aside>
+      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send facts with sources, or submit a writeup for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for CGTK</a></div></aside>
   </div></section>`;
   return head + `
   <section class="band"><div class="wrap layout-side">
@@ -451,14 +451,14 @@ V.ask = () => {
   const asked = st.askFree || SAMPLE_QS[st.askI];
   const a = ANSWERS[st.askI];
   const srcs = st.askFree ? [] : a.src.map(id => NEWS.find(n=>n.id===id));
-  return pagehead('Ask Digivern','Ask Digivern','Ask in your own language. Answers draw only on Digivern’s verified library and cite every source. Ask Digivern does not search the open web.') + `
+  return pagehead('Ask CGTK','Ask CGTK','Ask in your own language. Answers draw only on CGTK’s verified library and cite every source. Ask CGTK does not search the open web.') + `
   <section class="band"><div class="wrap layout-side">
     <div class="main stack" style="gap:18px">
       <div class="row">${SAMPLE_QS.map((q,i)=>`<button class="chip" data-act="askq" data-v="${i}" aria-pressed="${!st.askFree&&st.askI===i}">${esc(q)}</button>`).join('')}</div>
       <div class="card" style="padding:24px;gap:18px">
         <div class="bubble-q">${esc(asked)}</div>
         <div class="bubble-a">
-          ${st.askFree ? `<p>Ask Digivern is not switched on yet. When it launches, it will answer questions like this from approved library items and list each source. Meanwhile, try the <a href="#news">News Desk search</a>.</p>` :
+          ${st.askFree ? `<p>Ask CGTK is not switched on yet. When it launches, it will answer questions like this from approved library items and list each source. Meanwhile, try the <a href="#news">News Desk search</a>.</p>` :
           a.p.map((t,i)=>`<p>${esc(t)}<a class="cite" href="#story-${a.src[Math.min(i,a.src.length-1)]}">${Math.min(i,a.src.length-1)+1}</a></p>`).join('')}
           <p class="mono muted">${st.askFree?'':'PREVIEW ANSWER FROM '+srcs.length+' VERIFIED ITEM'+(srcs.length>1?'S':'')}</p>
         </div>
@@ -470,7 +470,7 @@ V.ask = () => {
       </form>
     </div>
     <aside class="card" aria-label="Sources for this answer"><h3>Sources for this answer</h3>
-      ${srcs.length?srcs.map((n,i)=>`<div class="stack" style="gap:4px;padding:12px;border:1px solid var(--line);border-radius:8px"><div class="row" style="gap:8px"><b class="mono">[${i+1}]</b>${trustBadge(n)}</div><a href="#story-${n.id}">${esc(n.title)}</a><span class="mono muted">${esc(n.links[0][1]).toUpperCase()} · ${esc(n.date).toUpperCase()}</span></div>`).join(''):'<p class="muted">Sources appear here once Ask Digivern is live.</p>'}
+      ${srcs.length?srcs.map((n,i)=>`<div class="stack" style="gap:4px;padding:12px;border:1px solid var(--line);border-radius:8px"><div class="row" style="gap:8px"><b class="mono">[${i+1}]</b>${trustBadge(n)}</div><a href="#story-${n.id}">${esc(n.title)}</a><span class="mono muted">${esc(n.links[0][1]).toUpperCase()} · ${esc(n.date).toUpperCase()}</span></div>`).join(''):'<p class="muted">Sources appear here once Ask CGTK is live.</p>'}
     </aside>
   </div></section>`;
 };
@@ -532,15 +532,15 @@ V.readiness = () => pagehead('Readiness self-assessment','Readiness self-assessm
     <aside class="card"><h3>About the score</h3><p class="muted">This quick check scores five core questions equally. The full tool will weight a longer question set with an expert panel and produce a written report.</p></aside>
   </div></section>`;
 
-V.premium = () => pagehead('Beta access','Everything is free during the beta','While Digivern is in beta, every feature is open to everyone at no cost: news, in-depth analysis, reports, country profiles, the Policy & Law Tracker, Ask Digivern and the tools.') + `
+V.premium = () => pagehead('Beta access','Everything is free during the beta','While CGTK is in beta, every feature is open to everyone at no cost: news, in-depth analysis, reports, country profiles, the Policy & Law Tracker, Ask CGTK and the tools.') + `
   <section class="band"><div class="wrap stack" style="gap:18px">
     <div class="grid g3">
-      ${[['Read','Daily News Desk, in-depth analysis, Weekly Global Brief, explainers and all reports.'],['Track','Country profiles, Policy & Law Tracker, sector and theme filters.'],['Use','Ask Digivern, readiness self-assessment, Consulting Desk requests and Write for Digivern.']].map(c=>`<div class="card" style="padding:24px"><span class="badge b-official" style="align-self:flex-start">Free</span><h3>${c[0]}</h3><p class="muted">${c[1]}</p></div>`).join('')}
+      ${[['Read','Daily News Desk, in-depth analysis, Weekly Global Brief, explainers and all reports.'],['Track','Country profiles, Policy & Law Tracker, sector and theme filters.'],['Use','Ask CGTK, readiness self-assessment, Consulting Desk requests and Write for CGTK.']].map(c=>`<div class="card" style="padding:24px"><span class="badge b-official" style="align-self:flex-start">Free</span><h3>${c[0]}</h3><p class="muted">${c[1]}</p></div>`).join('')}
     </div>
     <p class="muted">We will announce any change to access well in advance. Feedback during the beta shapes what comes next.</p>
     <div class="row"><a class="btn" href="#subscribe">Subscribe free</a><a class="btn btn-line" href="#reports">Read the analysis</a></div>
   </div></section>`;
-V.subscribe = () => pagehead('Subscribe','Subscribe to Digivern','Choose your themes and regions. We send the Weekly Global Brief and, if you like, daily alerts.') + `
+V.subscribe = () => pagehead('Subscribe','Subscribe to CGTK','Choose your themes and regions. We send the Weekly Global Brief and, if you like, daily alerts.') + `
   <section class="band"><div class="wrap"><form class="card js-sub" style="padding:26px;gap:18px;max-width:760px">
     <div class="field"><label for="s-email">Email address</label><input id="s-email" type="email" required placeholder="you@organisation.org"></div>
     <div class="field"><span class="lab">Themes</span><div class="grid g2" style="gap:4px">${THEMES.map((t,i)=>`<label class="check"><input type="checkbox" id="s-t${i}" ${i<3?'checked':''}>${esc(t.label)}</label>`).join('')}</div></div>
@@ -549,13 +549,13 @@ V.subscribe = () => pagehead('Subscribe','Subscribe to Digivern','Choose your th
     <button class="btn" type="submit" style="align-self:flex-start">Subscribe</button>
   </form></div></section>`;
 
-V.about = () => pagehead('How Digivern works','How Digivern works','Every item is drafted with AI assistance from approved sources and checked against them before it is published. The Editor-in-Chief reviews published items and corrects errors within 24 hours.') + `
+V.about = () => pagehead('How CGTK works','How CGTK works','Every item is drafted with AI assistance from approved sources and checked against them before it is published. The Editor-in-Chief reviews published items and corrects errors within 24 hours.') + `
   <section class="band"><div class="wrap stack" style="gap:36px">
-    <div class="stack prose" style="gap:12px"><h2>Why Digivern exists</h2><p>Information on digital governance is spread across UN agencies, development banks, governments, standards bodies, think tanks and media, in many languages. Most of it is raw news or long reports with no synthesis. DPI, AI, cybersecurity and data protection are covered separately, although governments have to decide on them together. Digivern brings them into one place, sorted by theme, country and use, and covers every country with the same method.</p></div>
+    <div class="stack prose" style="gap:12px"><h2>Why CGTK exists</h2><p>Information on digital governance is spread across UN agencies, development banks, governments, standards bodies, think tanks and media, in many languages. Most of it is raw news or long reports with no synthesis. DPI, AI, cybersecurity and data protection are covered separately, although governments have to decide on them together. CGTK brings them into one place, sorted by theme, country and use, and covers every country with the same method.</p></div>
     <div class="stack" style="gap:14px"><h2>From source to page</h2>${pipeline()}</div>
     <div class="stack" style="gap:14px"><h2>The agents and their human checks</h2>
       <div class="tablebox"><table><thead><tr><th scope="col">Agent</th><th scope="col">Job</th><th scope="col">Human check</th></tr></thead><tbody>
-      ${[['Scout','Monitors approved sources several times a day','Source list reviewed monthly'],['Curator','Removes duplicates, cross-checks, tags by theme, country, sector, type and audience','Daily spot-check'],['Writer','Writes summaries, briefs and report drafts in house style and other languages','Editor reviews after publication'],['Analyst','Builds country profiles, comparisons, scores and charts','Editor review'],['Consultant','Drafts client deliverables from a brief','Senior expert sign-off, always'],['Fact-checker','A second, independent agent checks every claim, number and citation','Flags go to the editor'],['Concierge','Runs Ask Digivern, newsletter personalisation and support','Logged and audited weekly']].map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td class="muted">${r[2]}</td></tr>`).join('')}
+      ${[['Scout','Monitors approved sources several times a day','Source list reviewed monthly'],['Curator','Removes duplicates, cross-checks, tags by theme, country, sector, type and audience','Daily spot-check'],['Writer','Writes summaries, briefs and report drafts in house style and other languages','Editor reviews after publication'],['Analyst','Builds country profiles, comparisons, scores and charts','Editor review'],['Consultant','Drafts client deliverables from a brief','Senior expert sign-off, always'],['Fact-checker','A second, independent agent checks every claim, number and citation','Flags go to the editor'],['Concierge','Runs Ask CGTK, newsletter personalisation and support','Logged and audited weekly']].map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td class="muted">${r[2]}</td></tr>`).join('')}
       </tbody></table></div></div>
     <div class="grid g3">
       <div class="card"><span class="badge b-official" style="align-self:flex-start">Official</span><h3>Tier 1</h3><p class="muted">UN agencies, development banks, governments, regulators, gazettes. Can be published on a single source.</p></div>
@@ -569,21 +569,21 @@ V.about = () => pagehead('How Digivern works','How Digivern works','Every item i
     </div>
   </div></section>`;
 
-V.sources = () => pagehead('Our sources','Our sources','Digivern only collects from approved sources. The list is reviewed every month, and anyone can propose a new source.',`<a class="btn" href="#contact">Propose a source</a>`) + `
+V.sources = () => pagehead('Our sources','Our sources','CGTK only collects from approved sources. The list is reviewed every month, and anyone can propose a new source.',`<a class="btn" href="#contact">Propose a source</a>`) + `
   <section class="band"><div class="wrap grid g3">
     ${Object.entries(SOURCES).map(([k,v])=>`<div class="card"><h3>${k}</h3><ul style="margin:0;padding-left:18px" class="stack">${v.map(s=>`<li style="margin:0">${esc(s)}</li>`).join('')}</ul></div>`).join('')}
-  </div><div class="wrap"><p class="muted" style="margin-top:16px">Digivern respects each site's terms and robots.txt, writes short summaries in its own words, links to the original and never republishes full text.</p></div></section>`;
+  </div><div class="wrap"><p class="muted" style="margin-top:16px">CGTK respects each site's terms and robots.txt, writes short summaries in its own words, links to the original and never republishes full text.</p></div></section>`;
 
-V['ai-policy'] = () => pagehead('AI use policy','AI use policy','How Digivern uses AI, and the limits it works within.') + `
+V['ai-policy'] = () => pagehead('AI use policy','AI use policy','How CGTK uses AI, and the limits it works within.') + `
   <section class="band"><div class="wrap stack prose" style="gap:14px">
-    <p>Digivern uses AI to help collect, summarise and draft content. People stay responsible for what is published.</p>
+    <p>CGTK uses AI to help collect, summarise and draft content. People stay responsible for what is published.</p>
     <ul class="stack" style="margin:0;padding-left:20px;gap:8px">
       <li>AI tools only draw on approved sources and the verified library.</li>
       <li>A separate fact-checking step checks every claim before an item is published.</li>
       <li>Items are published automatically after the source check. The Editor-in-Chief reviews them and corrects errors within 24 hours.</li>
       <li>Every AI-drafted item says so.</li>
-      <li>Ask Digivern answers only from the verified library and cites every source.</li>
-      <li>Digivern collects as little personal data as possible and does not use readers' data to train AI models.</li>
+      <li>Ask CGTK answers only from the verified library and cites every source.</li>
+      <li>CGTK collects as little personal data as possible and does not use readers' data to train AI models.</li>
     </ul>
   </div></section>`;
 
@@ -600,14 +600,14 @@ V.contact = () => pagehead('Contact','Contact the editors','Report a problem, pr
       <div class="field"><label for="k-msg">Message</label><textarea id="k-msg" required placeholder="Include a link to the item or source if relevant."></textarea></div>
       <button class="btn" type="submit" style="align-self:flex-start">Send to the editors</button>
     </form>
-    <aside class="card"><h3>Editorial address</h3><p class="mono" style="user-select:all">[editors@digivern.domain]</p><p class="muted">Corrections are confirmed and logged within 24 hours.</p></aside>
+    <aside class="card"><h3>Editorial address</h3><p class="mono" style="user-select:all">[editors@cgtk.domain]</p><p class="muted">Corrections are confirmed and logged within 24 hours.</p></aside>
   </div></section>`;
 
 function authorLine(w){ return [w.author.role, w.author.org, w.author.country].filter(Boolean).map(esc).join(' \u00b7 '); }
 function writeupCard(w){
   return `<a class="card" href="#writeup-${w.id}"><p class="kicker" style="font-size:.76rem">${esc(T[w.theme] ? T[w.theme].label : 'Voices')}</p><h3>${esc(w.title)}</h3><p class="muted" style="font-size:1rem">${esc(w.summary)}</p><p style="font-size:.95rem"><b>${esc(w.author.name)}</b><br><span class="muted">${authorLine(w)}</span></p></a>`;
 }
-V.voices = () => pagehead('Voices','Voices','Writeups by practitioners, researchers and officials working on digital government. Every piece is reviewed by the editor before it is published.',`<a class="btn" href="#contribute">Write for Digivern</a>`) + `
+V.voices = () => pagehead('Voices','Voices','Writeups by practitioners, researchers and officials working on digital government. Every piece is reviewed by the editor before it is published.',`<a class="btn" href="#contribute">Write for CGTK</a>`) + `
   <section class="band"><div class="wrap stack" style="gap:20px">
     ${WRITEUPS.length ? `<div class="grid g3">${WRITEUPS.map(writeupCard).join('')}</div>` :
     `<div class="empty stack" style="gap:10px"><h3 style="color:var(--ink)">The first Voices pieces are on their way</h3><p>Do you work on e-governance, DPI, AI or cybersecurity? Share your experience with readers in every region.</p><a class="btn" href="#contribute" style="align-self:flex-start">Submit your writeup</a></div>`}
@@ -624,7 +624,7 @@ V.writeup = id => {
     <article class="main stack prose" style="gap:18px;font-size:1.1rem">
       <p style="font-size:1.25rem;color:#2D3A4D">${esc(w.summary)}</p>
       ${w.body.map(p => p.startsWith('## ') ? `<h2 style="font-size:1.5rem;margin-top:8px">${esc(p.slice(3))}</h2>` : `<p>${esc(p)}</p>`).join('')}
-      <p class="footnote" style="border-top:1px solid var(--line);padding-top:14px">Views expressed are the author\u2019s own. Published after review by the Digivern editor.</p>
+      <p class="footnote" style="border-top:1px solid var(--line);padding-top:14px">Views expressed are the author\u2019s own. Published after review by the CGTK editor.</p>
     </article>
     <aside class="stack">
       <div class="card" style="background:var(--tint);border-color:transparent">
@@ -635,17 +635,17 @@ V.writeup = id => {
         <p>${esc(w.author.bio)}</p>
         ${w.author.link ? `<a href="${esc(w.author.link)}" target="_blank" rel="noopener" style="font-weight:700">Profile \u2192</a>` : ''}
       </div>
-      <a class="card" href="#contribute" style="background:var(--accent-soft);border-color:transparent"><h3>Write for Digivern</h3><p>Share your own experience with readers worldwide.</p></a>
+      <a class="card" href="#contribute" style="background:var(--accent-soft);border-color:transparent"><h3>Write for CGTK</h3><p>Share your own experience with readers worldwide.</p></a>
     </aside>
   </div></section>`;
 };
 
-V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share your analysis, field experience or policy view on e-governance, DPI, AI, cybersecurity or digital development. The editor reviews every submission; if it is accepted, it is published in Voices with your name and profile.') + `
+V.contribute = () => pagehead('Write for CGTK','Write for CGTK','Share your analysis, field experience or policy view on e-governance, DPI, AI, cybersecurity or digital development. The editor reviews every submission; if it is accepted, it is published in Voices with your name and profile.') + `
   <section class="band"><div class="wrap layout-side">
     <div class="main stack" style="gap:20px">
       <form class="card js-writeup" id="writeup-form" style="padding:28px;gap:22px" novalidate enctype="multipart/form-data">
         <input type="hidden" name="form-name" value="writeup">
-        <input type="hidden" name="subject" value="New writeup for Digivern (%{submissionId})">
+        <input type="hidden" name="subject" value="New writeup for CGTK (%{submissionId})">
         <p hidden><label>Leave this empty <input name="bot-field"></label></p>
 
         <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:14px">
@@ -672,7 +672,7 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
 
         <div class="stack" style="gap:8px">
           <label class="check"><input type="checkbox" id="w-c1" name="consent_original" value="yes" required>This is my original work, and I have the right to publish it.</label>
-          <label class="check"><input type="checkbox" id="w-c2" name="consent_publish" value="yes" required>Digivern may edit it for length and style and publish it with my name, role, organisation, country, bio and photo. My email stays private.</label>
+          <label class="check"><input type="checkbox" id="w-c2" name="consent_publish" value="yes" required>CGTK may edit it for length and style and publish it with my name, role, organisation, country, bio and photo. My email stays private.</label>
         </div>
         <p id="w-err" class="notice" hidden></p>
         <button class="btn" type="submit" id="w-send" style="align-self:flex-start">Submit for review</button>
@@ -684,7 +684,7 @@ V.contribute = () => pagehead('Write for Digivern','Write for Digivern','Share y
     </div>
     <aside class="stack">
       <div class="card"><span class="eyebrow">What we publish</span>
-        <ul class="stack" style="margin:0;padding-left:18px;gap:8px"><li>Analysis, field lessons and policy views on the eight Digivern themes</li><li>800\u20132,000 words, written for practitioners</li><li>Original work, not published elsewhere</li><li>Claims backed by sources, with links where possible</li></ul></div>
+        <ul class="stack" style="margin:0;padding-left:18px;gap:8px"><li>Analysis, field lessons and policy views on the eight CGTK themes</li><li>800\u20132,000 words, written for practitioners</li><li>Original work, not published elsewhere</li><li>Claims backed by sources, with links where possible</li></ul></div>
       <div class="card"><span class="eyebrow">How review works</span>
         <ol class="stack" style="margin:0;padding-left:18px;gap:8px"><li>You submit the form.</li><li>The editor reads your piece and may suggest edits.</li><li>If accepted, it is published in Voices with your profile.</li></ol>
         <p class="footnote">We do not publish advertising, product promotion or party-political campaigning.</p></div>
@@ -792,7 +792,7 @@ function track(name, param){
   }
   try { navigator.sendBeacon('/api/hit', new Blob([JSON.stringify({ p: path, r, v })], { type: 'application/json' })); } catch (e) {}
 }
-const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for Digivern',ask:'Ask Digivern',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How Digivern works',readiness:'Readiness self-assessment',focus:'Monthly Focus',events:'Events',funding:'Funding'};
+const SECTION = {home:'Home page',news:'News Desk',reports:'Analysis & Reports',countries:'Countries',tracker:'Policy & Law Tracker',voices:'Voices',contribute:'Write for CGTK',ask:'Ask CGTK',consulting:'Consulting Desk',learn:'Learn',subscribe:'Subscribe',premium:'Beta access',about:'About',sources:'Our sources','ai-policy':'How CGTK works',readiness:'Readiness self-assessment',focus:'Monthly Focus',events:'Events',funding:'Funding'};
 function pageInfo(path){
   const m = path.match(/^(story|analysis|report|writeup|country)-(.+)$/);
   if (m) {
@@ -809,7 +809,7 @@ function pageInfo(path){
 }
 const countryName = c => { if (!c) return 'Unknown'; try { return new Intl.DisplayNames(['en'], {type:'region'}).of(c); } catch (e) { return c; } };
 st.statDays = st.statDays || 30;
-V.stats = () => pagehead('Site statistics','Site statistics','How many people visit Digivern, what they read and where they come from. Counted without cookies or personal data.') + `
+V.stats = () => pagehead('Site statistics','Site statistics','How many people visit CGTK, what they read and where they come from. Counted without cookies or personal data.') + `
   <section class="band"><div class="wrap stack" style="gap:22px">
     <div class="row" role="toolbar" aria-label="Period">${[[7,'Last 7 days'],[30,'Last 30 days'],[90,'Last 90 days'],[3650,'All time']].map(d=>`<button class="chip" data-act="statdays" data-v="${d[0]}" aria-pressed="${st.statDays==d[0]}">${d[1]}</button>`).join('')}</div>
     <div id="statbox"><p class="muted">Loading statistics…</p></div>
@@ -877,7 +877,7 @@ V.focus = param => {
   if (mm) return mm[1] === 'country' ? focusCountry(focusMonth(mm[2])) : focusSector(focusMonth(mm[2]));
   const m = FOCUS[0], c = m.country, x = m.sector;
   const cNews = SORTED.filter(n => n.country === c.id), sNews = SORTED.filter(n => n.sector === x.tag);
-  return pagehead('Monthly Focus', 'Monthly Focus · ' + esc(m.label), 'Each month Digivern picks one country and one sector and covers them in more depth: more news, a fuller profile, analysis, what people say and what to watch. The rest of the site keeps its global coverage.') + `
+  return pagehead('Monthly Focus', 'Monthly Focus · ' + esc(m.label), 'Each month CGTK picks one country and one sector and covers them in more depth: more news, a fuller profile, analysis, what people say and what to watch. The rest of the site keeps its global coverage.') + `
   <section class="band"><div class="wrap layout-side">
     <div class="main stack" style="gap:22px">
       <div class="grid g2">
@@ -932,7 +932,7 @@ function focusCountry(m){
 
       ${p?`<h2 id="f-blocks">Digital building blocks</h2><div class="tablebox"><table><thead><tr><th scope="col">Building block</th><th scope="col">System or institution</th><th scope="col">Status</th></tr></thead><tbody>
         ${p.rows.map(r=>`<tr><th scope="row" style="font-weight:600">${esc(r[0])}</th><td data-l="System">${esc(r[1])}</td><td data-l="Status"><span class="badge ${ST[r[2]][1]}">${ST[r[2]][0]}</span></td></tr>`).join('')}</tbody></table></div>
-        <p class="footnote">From the ${ext('#country-'+c.id, esc(c.name)+' country profile')}, which uses the same template as every Digivern profile.</p>`:''}
+        <p class="footnote">From the ${ext('#country-'+c.id, esc(c.name)+' country profile')}, which uses the same template as every CGTK profile.</p>`:''}
 
       <h2 id="f-policy">Policy and legal framework</h2>
       ${tableBlock({cols:['Instrument','Year','What it does','Status'], rows:c.policy.rows}, key).replace(/href="#analysis-[^"]*"/g,`href="#${hash}"`)}
@@ -952,12 +952,12 @@ function focusCountry(m){
 
       <h2 id="f-sources">Sources</h2>
       ${focusSources(c.sources,key)}
-      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source, including ${esc(c.name)}’s own news outlets and official sites. The assessment is Digivern’s own analysis. Corrections are logged within 24 hours.</p></div>
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source, including ${esc(c.name)}’s own news outlets and official sites. The assessment is CGTK’s own analysis. Corrections are logged within 24 hours.</p></div>
     </article>
     <aside class="stack">
       <div class="card toc"><span class="eyebrow">On this page</span>${nav.map(n=>`<a href="#${hash}" data-act="jump" data-v="${n[0]}">${n[1]}</a>`).join('')}</div>
       ${focusArchive(m)}
-      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send a correction with a source, or submit a writeup about ${esc(c.name)} for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div>
+      <div class="card"><h3>Know ${esc(c.name)} well?</h3><p class="muted">Send a correction with a source, or submit a writeup about ${esc(c.name)} for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for CGTK</a></div>
     </aside>
   </div></section>`;
 }
@@ -990,12 +990,12 @@ function focusSector(m){
 
       <h2 id="f-sources">Sources</h2>
       ${focusSources(x.sources,key)}
-      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. The assessment is Digivern’s own analysis. Corrections are logged within 24 hours.</p></div>
+      <div class="how"><span class="eyebrow">How this was made</span><p>Every figure links to a numbered source. The assessment is CGTK’s own analysis. Corrections are logged within 24 hours.</p></div>
     </article>
     <aside class="stack">
       <div class="card toc"><span class="eyebrow">On this page</span>${nav.map(n=>`<a href="#${hash}" data-act="jump" data-v="${n[0]}">${esc(n[1])}</a>`).join('')}</div>
       ${focusArchive(m)}
-      <div class="card"><h3>Working in ${esc(x.name.toLowerCase())}?</h3><p class="muted">Submit a writeup on your project or research for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for Digivern</a></div>
+      <div class="card"><h3>Working in ${esc(x.name.toLowerCase())}?</h3><p class="muted">Submit a writeup on your project or research for the editor to review.</p><a class="btn" href="#contribute" style="align-self:flex-start">Write for CGTK</a></div>
     </aside>
   </div></section>`;
 }
