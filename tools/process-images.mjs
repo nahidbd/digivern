@@ -52,6 +52,7 @@ async function fetchBuf(url) {
   return Buffer.from(await r.arrayBuffer());
 }
 
+const NOT_PHOTO = /\b(diagrams?|charts?|graphs?|maps?|logos?|screenshots?|infographics?|tables?|posters?|slides?|models?|icons?|flags?|seals?|emblems?|coats? of arms|documents?|scans?)\b/i;
 const PEOPLE = /\b(portraits?|headshots?|selfies?|people|persons?|man|men|woman|women|boys?|girls?|child(ren)?|kids?|family|crowds?|minister|president|prime minister|politicians?|senators?|governor|ambassador|secretary|ceo|chairman|chairperson|officials?|delegation|meets|meeting with|speech|speaking|press conference|protests?|rally|wedding|funeral|police|soldiers?|army|military|celebrit(y|ies))\b/i;
 async function fromCommons(title) {
   if (!/^File:/i.test(title)) title = 'File:' + title;
@@ -69,10 +70,12 @@ async function searchCommons(q) {
     const ii = (page.imageinfo || [])[0] || {}; const m = ii.extmetadata || {}; const v = k => strip((m[k] && m[k].value) || '');
     const text = [page.title, v('ImageDescription'), v('ObjectName'), v('Categories')].join(' ');
     if (PEOPLE.test(text)) { why.push('people'); continue; }
+    if (NOT_PHOTO.test(page.title + ' ' + v('ObjectName'))) { why.push('not a photo'); continue; }
     if ((ii.width || 0) < 800) { why.push('too small'); continue; }
     try {
       const got = await fromPage(page);
-      const desc = (v('ObjectName') || v('ImageDescription') || page.title.replace(/^File:/i, '').replace(/\.[a-z0-9]+$/i, '').replace(/[_-]+/g, ' ')).split(/(?<=\.)\s/)[0].slice(0, 140);
+      const raw = v('ObjectName') || v('ImageDescription') || page.title.replace(/^File:/i, '').replace(/\.[a-z0-9]+$/i, '');
+      const desc = raw.replace(/\b(DSC|DSCN|IMG|PXL|P)[_ -]?\d+\b/gi, '').replace(/\b\d{4}[-_]\d{2}([-_]\d{2})?\b/g, '').replace(/\(\d+\)/g, '').replace(/[_]+/g, ' ').replace(/\s+-\s+/g, ', ').replace(/\s*-\s*$|^\s*-\s*/g, '').replace(/\s+/g, ' ').replace(/[ ,]+$/, '').trim().split(/(?<=\.)\s/)[0].slice(0, 140);
       return { ...got, found: true, alt: desc.replace(/\.?$/, '.') };
     } catch (err) { why.push(err.message.slice(0, 40)); }
   }
