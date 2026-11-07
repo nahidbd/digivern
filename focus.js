@@ -74,7 +74,8 @@ const MONTHS = [
       ]},
       {h:'Money: mobile money moves more than the economy produces',p:[
         'Mobile money is Uganda’s most widely used digital public service in practice, even though it is privately run. Transactions worth UGX 365.9 trillion passed through mobile money in 2025, and UGX 263 trillion in the first seven months of 2026 [10]. That is roughly US$99 billion a year at 2026 exchange rates [10], about twice the US$50 billion size of the economy cited in the national plan [5]. Active customers reached 38 million in July 2026, with 1.3 million agents [10].',
-        'This dependence raised the cost of the January shutdown. Unwanted Witness, citing industry estimates of about UGX 357 billion in digital payments a day, put the value of stalled transactions over the four-day blackout at about UGX 1.4 trillion; agents reported withdrawals collapsing [14].'
+        'This dependence raised the cost of the January shutdown. Unwanted Witness, citing industry estimates of about UGX 357 billion in digital payments a day, put the value of stalled transactions over the four-day blackout at about UGX 1.4 trillion; agents reported withdrawals collapsing [14].',
+        'Cross-border payments are next. On 3 November 2026 the Minister for EAC Affairs told Parliament that the East African Community is building an integrated payment and settlement system so that people and businesses can pay between partner states in local currencies through bank accounts, mobile money wallets or other authorised channels, under a masterplan adopted in 2025. Today’s East African Payment System links the RTGS systems of Uganda, Kenya, Tanzania and Rwanda; no dates or budget were given for the wider system [20].'
       ]},
       {h:'Rights and trust: enforcement starts, the shutdown lingers',p:[
         'The Data Protection and Privacy Act 2019 is now being enforced. The Personal Data Protection Office ruled in July 2025 that Google had failed to register and had transferred data abroad without adequate safeguards, and secured its first criminal conviction against a digital lender the same month [13][12]. Yet the office says only about 14,000 organisations are registered, against an estimated 500,000 that collect personal data [12].',
@@ -100,7 +101,9 @@ const MONTHS = [
       ['UDAP-GovNet connectivity project','Closing 30 May 2026','delayed','Cut from US$200 m to about US$87 m; 17-month extension requested [8][9]'],
       ['UGhub integration','300 platforms by 2030/31','not started','Baseline 135 platforms; strategy launched October 2026 [5]'],
       ['Data controller registration','All data handlers','delayed','About 14,000 registered against 500,000+ estimated [12]'],
-      ['Satellite internet licensing','2026','done','Starlink licensed May 2026; residential service from 1 Sep 2026 [15]']
+      ['Satellite internet licensing','2026','done','Starlink licensed May 2026; residential service from 1 Sep 2026 [15]'],
+      ['Business registration on mobile (URSB Connect app)','Launched 5 Nov 2026','done','Company and business-name registration, searches, annual returns and trademarks on Android and iOS, alongside the eRegistry [19]'],
+      ['EAC cross-border payment and settlement system','No date set','unclear','Masterplan adopted 2025; current EAPS links four RTGS systems; no dates or budget announced [20]']
     ]},
     voices:[
       {who:'Dr Aminah Zawedde, Permanent Secretary, Ministry of ICT and National Guidance',group:'Government',stance:'support',view:'Reliable data lets government decide, for example, whether a community needs a health facility and of what level.',c:4},
@@ -119,7 +122,8 @@ const MONTHS = [
       'Whether the National Data Strategy is funded in the 2027/28 budget, and progress from 135 towards 300 integrated platforms [5].',
       'Publication of the national AI strategy [5].',
       'Any review of the import duty on entry-level devices [4].',
-      'Legal safeguards on internet shutdowns, as demanded by civil society [14].'
+      'Legal safeguards on internet shutdowns, as demanded by civil society [14].',
+      'Whether the EAC sets dates and funding for its regional payment system, and whether mobile money wallets are connected to it [20].'
     ],
     sources:[
       ['Uganda country data','UN E-Government Knowledgebase, UN DESA','https://publicadministration.un.org/egovkb/en-us/Data/Country-Information/id/179-Uganda'],
@@ -139,7 +143,9 @@ const MONTHS = [
       ['Starlink is now live in Uganda','Space in Africa, 1 Sep 2026','https://spaceinafrica.com/2026/09/01/starlink-is-now-live-in-uganda/'],
       ['A call for inclusivity, trust and accountability in reforming Uganda’s national ID system','Unwanted Witness, 10 Jun 2024','https://www.unwantedwitness.org/a-call-for-inclusivity-trust-and-accountability-in-reforming-ugandas-national-id-system/'],
       ['Uganda and South Korea explore AI and digital transformation partnership','TechAfrica News, 15 Oct 2026','https://techafricanews.com/2026/10/15/uganda-south-korea-ai-digital-transformation-partnership/'],
-      ['MAAIF unveils strategic blueprints to transform Uganda’s agriculture by 2030','Publicist East Africa, 5 Jan 2026','https://publicisteastafrica.com/maaif-unveils-strategic-blueprints-to-transform-ugandas-agriculture-by-2030/']
+      ['MAAIF unveils strategic blueprints to transform Uganda’s agriculture by 2030','Publicist East Africa, 5 Jan 2026','https://publicisteastafrica.com/maaif-unveils-strategic-blueprints-to-transform-ugandas-agriculture-by-2030/'],
+      ['New URSB mobile App aims to end long queues, boost business formalisation','Daily Monitor, 5 Nov 2026','https://www.monitor.co.ug/uganda/news/national/new-ursb-mobile-app-aims-to-end-long-queues-boost-business-formalisation-5659420'],
+      ['EAC member states plot to reduce dollar dependence','Parliament of Uganda (via APO Group), 3 Nov 2026','https://www.africa-newsroom.com/press/uganda-east-african-community-affairs-eac-member-states-plot-to-reduce-dollar-dependence?lang=en']
     ]
   },
   sector:{
