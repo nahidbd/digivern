@@ -1,6 +1,6 @@
 # Turns image requests in images.js into images (licensed Wikimedia Commons photos, or AI-generated illustrations as a fallback).
 # Runs whenever images.js changes on main, and can be started by hand. Commits the images and the updated images.js back to main.
-# Uses the same GEMINI_API_KEY secret as the leads job (only needed for illustrations). Optional variable GEMINI_IMAGE_MODEL.
+# Illustrations: Cloudflare Workers AI (secrets CF_ACCOUNT_ID and CF_AI_TOKEN, free daily allowance), then Gemini (GEMINI_API_KEY) if it has image access.
 name: Process images
 
 on:
@@ -29,6 +29,8 @@ jobs:
         run: npm install --no-save --no-package-lock sharp@0.33.5
       - name: Fetch photos and create illustrations
         env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_AI_TOKEN: ${{ secrets.CF_AI_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
         run: node tools/process-images.mjs --site . --max 12

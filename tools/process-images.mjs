@@ -6,11 +6,12 @@
 //   1b. If no named file works, search Commons with each phrase in commonsQuery (a string or a list) and take the first
 //      result that passes the same licence checks, is at least 800 px wide and is not about people (portraits, officials,
 //      crowds and similar are skipped by their title, description and categories).
-//   2. Otherwise, unless noAi is set, ask Gemini for an editorial illustration from the prompt and save it,
-//      credited as an AI-generated illustration.
+//   2. Otherwise, unless noAi is set, create an editorial illustration from the prompt and save it, credited as an
+//      AI-generated illustration: first with Cloudflare Workers AI (FLUX.1 schnell, inside Cloudflare's free daily
+//      allowance), then with Gemini if a Gemini key with image access is set.
 //   3. If neither works, mark the entry "failed" with the reason; the site then shows the item without an image.
 // Usage: node tools/process-images.mjs [--site .] [--max 12]
-// Environment: GEMINI_API_KEY (needed for illustrations), GEMINI_IMAGE_MODEL (default gemini-2.5-flash-image), IMAGES_MOCK=1 (offline test).
+// Environment: CF_ACCOUNT_ID and CF_AI_TOKEN (Cloudflare Workers AI, free illustrations), GEMINI_API_KEY (optional second choice), GEMINI_IMAGE_MODEL (default gemini-2.5-flash-image), IMAGES_MOCK=1 (offline test).
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
@@ -94,6 +95,24 @@ async function fromPage(page) {
   return { kind: 'photo', buf, credit: credit.slice(0, 160), license: licence, licenseUrl: strip(v('LicenseUrl')) || '', sourceUrl: ii.descriptionurl || '' };
 }
 
+const STYLE = 'Style: clean, realistic editorial photo look, natural light, muted colours, wide 16:9 composition. No people\'s faces, no recognisable people, no text, letters or numbers, no logos or brand names, no flags, emblems or seals.';
+async function fromCloudflare(prompt) {
+  const acc = process.env.CF_ACCOUNT_ID, tok = process.env.CF_AI_TOKEN;
+  if ((!acc || !tok) && !MOCK) throw new Error('CF_ACCOUNT_ID or CF_AI_TOKEN not set');
+  const j = MOCK ? { result: { image: Buffer.from('jpg').toString('base64') } } : await (async () => {
+    const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/run/@cf/black-forest-labs/flux-1-schnell`, {
+      method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + tok },
+      body: JSON.stringify({ prompt: (`Editorial illustration for a news website about digital government and technology. ${prompt} ${STYLE}`).slice(0, 2000), steps: 8 })
+    });
+    const b = await r.json().catch(() => ({}));
+    if (!r.ok || b.success === false) throw new Error(`Cloudflare AI HTTP ${r.status}: ${((b.errors || [])[0] || {}).message || ''}`.slice(0, 200));
+    return b;
+  })();
+  const img = j.result && j.result.image;
+  if (!img) throw new Error('Cloudflare AI returned no image');
+  return { kind: 'ai', buf: Buffer.from(img, 'base64'), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
+}
+
 async function fromGemini(prompt) {
   const key = process.env.GEMINI_API_KEY;
   if (!key && !MOCK) throw new Error('GEMINI_API_KEY not set');
@@ -133,7 +152,8 @@ for (const [id, e] of Object.entries(images)) {
   if (e.commons) { try { got = await fromCommons(e.commons); } catch (err) { tried.push('photo: ' + err.message); } }
   const queries = [].concat(e.commonsQuery || []).filter(Boolean).slice(0, 4);
   for (const q of queries) { if (got) break; try { got = await searchCommons(q); } catch (err) { tried.push('photo search: ' + err.message); } }
-  if (!got && e.prompt && !e.noAi) { try { got = await fromGemini(e.prompt); } catch (err) { tried.push('illustration: ' + err.message); } }
+  if (!got && e.prompt && !e.noAi) { try { got = await fromCloudflare(e.prompt); } catch (err) { tried.push('illustration (Cloudflare): ' + err.message); } }
+  if (!got && e.prompt && !e.noAi && process.env.GEMINI_API_KEY) { try { got = await fromGemini(e.prompt); } catch (err) { tried.push('illustration (Gemini): ' + err.message.slice(0, 90)); } }
   if (!got) {
     images[id] = { status: 'failed', alt: e.alt || '', commons: e.commons || '', ...(e.commonsQuery ? { commonsQuery: e.commonsQuery } : {}), prompt: e.prompt || '', noAi: !!e.noAi, reason: tried.join('; ') || 'no photo named and illustrations not allowed', date: today };
     failed++; console.log(`${id}: failed – ${images[id].reason}`); continue;
