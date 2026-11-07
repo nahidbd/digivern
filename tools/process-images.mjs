@@ -3,6 +3,9 @@
 //   1. If a Wikimedia Commons file is named, read its licence from the Commons API and accept it only if it is
 //      public domain, CC0, CC BY or CC BY-SA with no extra restrictions (personality rights, trademarks).
 //      Download a 1600 px version and save it as img/<id>.webp with the author credit and licence.
+//   1b. If no named file works, search Commons with each phrase in commonsQuery (a string or a list) and take the first
+//      result that passes the same licence checks, is at least 800 px wide and is not about people (portraits, officials,
+//      crowds and similar are skipped by their title, description and categories).
 //   2. Otherwise, unless noAi is set, ask Gemini for an editorial illustration from the prompt and save it,
 //      credited as an AI-generated illustration.
 //   3. If neither works, mark the entry "failed" with the reason; the site then shows the item without an image.
@@ -49,11 +52,33 @@ async function fetchBuf(url) {
   return Buffer.from(await r.arrayBuffer());
 }
 
+const PEOPLE = /\b(portraits?|headshots?|selfies?|people|persons?|man|men|woman|women|boys?|girls?|child(ren)?|kids?|family|crowds?|minister|president|prime minister|politicians?|senators?|governor|ambassador|secretary|ceo|chairman|chairperson|officials?|delegation|meets|meeting with|speech|speaking|press conference|protests?|rally|wedding|funeral|police|soldiers?|army|military|celebrit(y|ies))\b/i;
 async function fromCommons(title) {
   if (!/^File:/i.test(title)) title = 'File:' + title;
   const info = MOCK ? mockCommons(title) : await fetchJson('https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&prop=imageinfo&iiprop=url|extmetadata|mime|size&iiurlwidth=1600&titles=' + encodeURIComponent(title));
   const page = (info.query && info.query.pages || [])[0];
   if (!page || page.missing) throw new Error('file not found on Commons');
+  return fromPage(page);
+}
+async function searchCommons(q) {
+  const j = MOCK ? mockSearch(q) : await fetchJson('https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=20&gsrsearch=' + encodeURIComponent(q + ' filetype:bitmap') + '&prop=imageinfo&iiprop=url|extmetadata|mime|size&iiurlwidth=1600');
+  const pages = ((j.query && j.query.pages) || []).sort((a, b) => (a.index || 0) - (b.index || 0));
+  if (!pages.length) throw new Error('no Commons results for "' + q + '"');
+  const why = [];
+  for (const page of pages) {
+    const ii = (page.imageinfo || [])[0] || {}; const m = ii.extmetadata || {}; const v = k => strip((m[k] && m[k].value) || '');
+    const text = [page.title, v('ImageDescription'), v('ObjectName'), v('Categories')].join(' ');
+    if (PEOPLE.test(text)) { why.push('people'); continue; }
+    if ((ii.width || 0) < 800) { why.push('too small'); continue; }
+    try {
+      const got = await fromPage(page);
+      const desc = (v('ObjectName') || v('ImageDescription') || page.title.replace(/^File:/i, '').replace(/\.[a-z0-9]+$/i, '').replace(/[_-]+/g, ' ')).split(/(?<=\.)\s/)[0].slice(0, 140);
+      return { ...got, found: true, alt: desc.replace(/\.?$/, '.') };
+    } catch (err) { why.push(err.message.slice(0, 40)); }
+  }
+  throw new Error(`no usable Commons result for "${q}" (${pages.length} checked)`);
+}
+async function fromPage(page) {
   const ii = (page.imageinfo || [])[0]; if (!ii) throw new Error('no image info');
   if (!/^image\/(jpeg|png|webp|tiff)$/.test(ii.mime || '')) throw new Error('not a photo file (' + ii.mime + ')');
   const m = ii.extmetadata || {}; const v = k => (m[k] && m[k].value) || '';
@@ -103,14 +128,16 @@ for (const [id, e] of Object.entries(images)) {
   const tried = [];
   let got = null;
   if (e.commons) { try { got = await fromCommons(e.commons); } catch (err) { tried.push('photo: ' + err.message); } }
+  const queries = [].concat(e.commonsQuery || []).filter(Boolean).slice(0, 4);
+  for (const q of queries) { if (got) break; try { got = await searchCommons(q); } catch (err) { tried.push('photo search: ' + err.message); } }
   if (!got && e.prompt && !e.noAi) { try { got = await fromGemini(e.prompt); } catch (err) { tried.push('illustration: ' + err.message); } }
   if (!got) {
-    images[id] = { status: 'failed', alt: e.alt || '', commons: e.commons || '', prompt: e.prompt || '', noAi: !!e.noAi, reason: tried.join('; ') || 'no photo named and illustrations not allowed', date: today };
+    images[id] = { status: 'failed', alt: e.alt || '', commons: e.commons || '', ...(e.commonsQuery ? { commonsQuery: e.commonsQuery } : {}), prompt: e.prompt || '', noAi: !!e.noAi, reason: tried.join('; ') || 'no photo named and illustrations not allowed', date: today };
     failed++; console.log(`${id}: failed – ${images[id].reason}`); continue;
   }
   const rel = `img/${id}.webp`;
   const { w, h } = await toWebp(got.buf, path.join(SITE, rel));
-  images[id] = { status: 'done', kind: got.kind, src: rel, w, h, alt: e.alt || '', credit: got.credit, license: got.license, licenseUrl: got.licenseUrl, sourceUrl: got.sourceUrl, date: today, ...(tried.length ? { note: tried.join('; ') } : {}) };
+  images[id] = { status: 'done', kind: got.kind, src: rel, w, h, alt: (got.found && got.alt) || e.alt || '', credit: got.credit, license: got.license, licenseUrl: got.licenseUrl, sourceUrl: got.sourceUrl, date: today, ...(tried.length ? { note: tried.join('; ') } : {}) };
   done++; console.log(`${id}: ${got.kind} saved (${got.kind === 'photo' ? got.license + ', ' + got.credit : 'AI illustration'})`);
 }
 save(header, images);
@@ -120,5 +147,10 @@ console.log(`Images: ${done} added, ${failed} failed.`);
 function mockCommons(title) {
   if (/Bad/.test(title)) return { query: { pages: [{ title, imageinfo: [{ mime: 'image/jpeg', url: 'u', extmetadata: { LicenseShortName: { value: 'CC BY-NC 4.0' } } }] }] } };
   return { query: { pages: [{ title, imageinfo: [{ mime: 'image/jpeg', url: 'https://upload.wikimedia.org/x.jpg', descriptionurl: 'https://commons.wikimedia.org/wiki/' + title, extmetadata: { LicenseShortName: { value: 'CC BY-SA 4.0' }, LicenseUrl: { value: 'https://creativecommons.org/licenses/by-sa/4.0' }, Artist: { value: '<a href="x">Jane Example</a>' } } }] }] } };
+}
+function mockSearch(q) {
+  const ok = mockCommons('File:Example skyline.jpg').query.pages[0]; ok.imageinfo[0].width = 1600;
+  const person = { title: 'File:Portrait of a minister.jpg', index: 1, imageinfo: [{ width: 2000, mime: 'image/jpeg', extmetadata: {} }] };
+  return { query: { pages: [person, { ...ok, index: 2 }] } };
 }
 function mockGemini() { return { candidates: [{ content: { parts: [{ inlineData: { mimeType: 'image/png', data: Buffer.from('png').toString('base64') } }] } }] }; }
