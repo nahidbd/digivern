@@ -102,13 +102,15 @@ const SITE_URL = process.env.SITE_URL || 'https://cgtk-sc.pages.dev';
 async function fromSite(id) {
   if (MOCK) return { kind: 'ai', buf: Buffer.from('jpg'), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
   let last = '';
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 10; i++) {
     const r = await fetch(`${SITE_URL}/api/illustrate?id=${encodeURIComponent(id)}`, { headers: { 'user-agent': UA } });
     if (r.ok && /^image\//.test(r.headers.get('content-type') || '')) {
       return { kind: 'ai', buf: Buffer.from(await r.arrayBuffer()), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
     }
-    last = `HTTP ${r.status}: ${(await r.text()).slice(0, 120)}`;
-    if (r.status !== 404 && r.status !== 503) break;
+    const body = (await r.text()).slice(0, 120);
+    last = `HTTP ${r.status}: ${body}`;
+    const notLiveYet = r.status === 404 || r.status === 503 || (r.ok && /<html/i.test(body)); // older deployment without the function
+    if (!notLiveYet) break;
     await new Promise(s => setTimeout(s, 30000)); // the latest images.js may not be deployed yet
   }
   throw new Error('site illustration failed: ' + last);
