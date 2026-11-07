@@ -17,7 +17,7 @@ const SITE = arg('site', '.');
 const MAX = +arg('max', '12');
 const MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
 const MOCK = process.env.IMAGES_MOCK === '1';
-const UA = 'DigivernImageBot/1.0 (https://digivern.pages.dev)';
+const UA = 'CGTKImageBot/1.0 (https://cgtk-sc.pages.dev)';
 const FILE = path.join(SITE, 'images.js');
 const OUTDIR = path.join(SITE, 'img');
 
