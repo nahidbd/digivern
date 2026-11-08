@@ -148,6 +148,22 @@ const EVENTS = [
    city:'Geneva', country:'Switzerland', region:'Europe', format:'In person', organiser:'International Telecommunication Union (ITU)',
    theme:'pol', sector:'Telecom', cost:'Not stated', note:'Information session ahead of the 2027 World Radiocommunication Conference (WRC-27), which revises the global treaty on radio-frequency spectrum use.',
    url:'https://www.itu.int/en/events/Pages/Upcoming-Workshops-and-Seminars.aspx', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/Pages/Upcoming-Workshops-and-Seminars.aspx'], checked:'2026-11-07'},
+  {id:'e32', type:'Workshop', title:'bdNOG22 Conference and Technical Workshops', start:'2026-11-11', end:'2026-11-14', dateText:'Workshops 11–13 November 2026; Conference 14 November 2026',
+   city:'Cox’s Bazar', country:'Bangladesh', region:'Asia-Pacific', format:'In person', organiser:'Bangladesh Network Operators Group (bdNOG)',
+   theme:'cyb', sector:'Telecom', cost:'Not stated', note:'Workshops on advanced routing and on information security for enterprises and network operators (train-the-trainer). Venue: Long Beach Hotel. Registration at rego.bdnog.org; call for papers open.',
+   url:'https://www.bdnog.org/conferences/bdnog22', source:['bdNOG22 Conference & Technical Workshops','bdNOG, official site','https://www.bdnog.org/conferences/bdnog22'], checked:'2026-11-08'},
+  {id:'e33', type:'Forum', title:'Asia-Pacific Statistics Week 2026: Building Trust in Official Statistics', start:'2026-11-30', end:'2026-12-04', dateText:'30 November to 4 December 2026',
+   city:'Bangkok', country:'Thailand', region:'Asia-Pacific', format:'In person', organiser:'UN ESCAP Statistics Division',
+   theme:'pol', sector:'Government', cost:'Not stated', note:'Intergovernmental meetings, by invitation: SIAP Governing Council (30 Nov–1 Dec), Management Seminar for Heads of National Statistical Offices (1 Dec) and the 10th session of the Committee on Statistics (2–4 Dec). Venue: UN Conference Centre.',
+   url:'https://indico.un.org/event/1023597/', source:['Asia-Pacific Statistics Week 2026','UN ESCAP, Indico.UN event page','https://indico.un.org/event/1023597/'], checked:'2026-11-08'},
+  {id:'e34', type:'Conference', title:'7th International Conference on Electrical Engineering and Information & Communication Technology (ICEEICT 2027)', start:'2027-01-28', end:'2027-01-30', dateText:'28–30 January 2027',
+   city:'Dhaka', country:'Bangladesh', region:'Asia-Pacific', format:'In person', organiser:'Department of EECE, Military Institute of Science and Technology (MIST)',
+   theme:'enb', sector:'Telecom', cost:'Registration BDT 7,000–12,000 (local) or US$120–200 (international), by IEEE and student status', note:'Tracks include AI and data analytics, communications and network security. Camera-ready papers and registration due 20 December 2026; paper submission closed.',
+   url:'https://iceeict.mist.ac.bd/static/pdf/CFP%202026.pdf', source:['ICEEICT call for papers','MIST','https://iceeict.mist.ac.bd/static/pdf/CFP%202026.pdf'], checked:'2026-11-08'},
+  {id:'e35', type:'Conference', title:'Second International Conference on ICT & Photonics (ICTP 2027)', start:'2027-04-09', end:'2027-04-11', dateText:'April 9-11, 2027',
+   city:'Kathmandu', country:'Nepal', region:'Asia-Pacific', format:'In person', organiser:'Research and Innovation Center of Nepal (RICON) and Madan Bhandari University of Science and Technology',
+   theme:'enb', sector:'Telecom', cost:'Not stated', note:'Includes a special workshop on the low-altitude economy. Venue: The Soaltee Kathmandu.',
+   url:'https://riconictp.org/', source:['ICTP 2027','RICON, official conference site','https://riconictp.org/'], checked:'2026-11-08'},
 ];
 
 const FUNDING = [
@@ -286,9 +302,29 @@ const FUNDING = [
    close:'2026-12-31T22:59:00Z', closeText:'Application deadline (Midnight Geneva Time): 31 December 2026',
    summary:'ITU is building a roster of consultants it can call on for its child online protection work with member states.',
    url:'https://jobs.itu.int/job/Home-Based-Child-Online-Protection-Consultant-Roster/957375555/', theme:'cyb', sector:'Telecom', checked:'2026-11-07'},
+  {id:'f27', title:'Government Analytics Fellowship 2027', funder:'World Bank', kind:'Fellowship',
+   amount:'For applicants from ODA-eligible countries, the World Bank covers travel, lodging and subsistence for the Washington DC stay', duration:'6 months, including a 2-week stay in Washington DC in March 2027 (online and regional-hub tracks also offered)', who:'Mid-level managers and senior analysts in central government organisations, nominated by their organisation with an analytics project; up to 2 per organisation, 40 fellows in total', where:'Governments worldwide',
+   close:'2026-11-16T23:59:00Z', closeText:'Call for applications close on November 16',
+   summary:'A six-month World Bank programme for public officials on using government data and analytics to improve public administration, built around an analytics project endorsed by each fellow’s organisation.',
+   url:'https://www.worldbank.org/en/publication/government-analytics/brief/government-analytics-fellowship', theme:'egov', sector:'Government', checked:'2026-11-08'},
+  {id:'f28', title:'12th International Digital Public Health Conference (DPH 2027): call for papers and abstracts', funder:'UCL Centre for Digital Public Health in Emergencies (WHO Collaborating Centre)', kind:'Call for papers or speakers',
+   amount:'', duration:'Conference 15–17 June 2027, student day 14 June', who:'Researchers and practitioners in digital public health; full papers (4–8 pages), extended abstracts, student track, posters and demos', where:'London, United Kingdom (open to submissions worldwide)',
+   close:'2026-11-18T23:59:00Z', closeText:'18 November 2026 - Main Track Submission',
+   summary:'Call for research on digital tools, data and AI in public health. The conference submission system lists 25 November for the main track; posters, demos and the student track close later (9 December on the conference site).',
+   url:'https://dphconf.org/calls-for-papers-and-prizes-2/call-for-main-track-papers-and-abstracts/', theme:'sec', sector:'Health', checked:'2026-11-08'},
+  {id:'f29', title:'AI Economy Institute Open Call 4: AI and Jobs — designing for augmented work', funder:'Microsoft Research AI Economy Institute', kind:'Grant',
+   amount:'$75,000 research gift per proposal, plus a travel allowance ($7,500 for the US, Canada or Mexico; $20,000 for other countries)', duration:'Research January–June 2027; programme about 12 months', who:'Researchers at accredited universities or research institutions with a PhD or equivalent; up to 2 principal investigators per proposal', where:'Worldwide',
+   close:'2026-12-01T02:00:00Z', closeText:'November 30, 2026 (6:00 PM Pacific)',
+   summary:'Research funding on how AI changes work: delegation and accountability, augmentation of roles, organisational design, entry-level career paths and AI-mediated markets.',
+   url:'https://www.microsoft.com/en-us/research/group/aiei/aiei-open-call-4/', theme:'ai', sector:'Trade & business', checked:'2026-11-08'},
+  {id:'f30', title:'Data Engineer – SSIS', funder:'BRAC IT Services Ltd (BRAC)', kind:'Job',
+   amount:'Not stated', duration:'Full-time', who:'Data engineers with 5+ years’ experience in SSIS, T-SQL and the Azure data platform', where:'On-site, Gulshan, Dhaka, Bangladesh',
+   close:'2026-11-30T17:59:00Z', closeText:'30 Nov 2026',
+   summary:'BRAC’s IT company is hiring an experienced data engineer to work with SSIS, T-SQL and Azure data tools. Apply through the form linked on the BRAC IT page; no fee is mentioned.',
+   url:'https://www.bracits.com/jobs/data-engineer-ssis/', theme:'enb', sector:'Trade & business', checked:'2026-11-08'},
 ];
 
-const FUNDNEWS = ['n64','n59','n3','n4','n8','n34'];
+const FUNDNEWS = ['n66','n64','n59','n3','n4','n8','n34'];
 
 window.DV_EVENTS = EVENTS;
 window.DV_FUNDING = FUNDING;
