@@ -86,8 +86,8 @@ const EVENTS = [
    url:'https://www.itu.int/en/events/pages/Event-Details.aspx?eventid=24968', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/pages/upcoming-workshops-and-seminars.aspx'], checked:'2026-11-07'},
   {id:'e16', type:'Seminar', title:'ITU Policy and Economic Colloquium (IPEC-26)', start:'2026-12-07', end:'2026-12-11', dateText:'7–11 December 2026',
    city:'Guatemala City', country:'Guatemala', region:'Americas', format:'In person', organiser:'International Telecommunication Union (ITU)',
-   theme:'pol', sector:'Telecom', cost:'Not stated', note:'',
-   url:'https://www.itu.int/en/events/pages/Event-Details.aspx?eventid=24545', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/pages/upcoming-workshops-and-seminars.aspx'], checked:'2026-11-07'},
+   theme:'pol', sector:'Telecom', cost:'Not stated', note:'Venue: Hotel Vista Quince, Zona 15, Guatemala City. Registration closes 3 December 2026.',
+   url:'https://www.itu.int/en/ITU-D/Regional-Presence/Americas/Pages/EVENTS/2026/IPEC-2026.aspx', source:['Upcoming workshops, seminars, fora and symposia','ITU events listing','https://www.itu.int/en/events/pages/upcoming-workshops-and-seminars.aspx'], checked:'2026-11-09'},
   {id:'e17', type:'Forum', title:'2026 ITU Cybersecurity Forum and CyberDrill for Europe', start:'2026-12-09', end:'2026-12-11', dateText:'9–11 December 2026',
    city:'Skopje', country:'North Macedonia', region:'Europe', format:'In person', organiser:'ITU Development Sector (ITU-D)',
    theme:'cyb', sector:'Government', cost:'Not stated', note:'Includes a cyber drill (incident-response exercise) for national CERTs/CSIRTs.',
@@ -164,6 +164,18 @@ const EVENTS = [
    city:'Kathmandu', country:'Nepal', region:'Asia-Pacific', format:'In person', organiser:'Research and Innovation Center of Nepal (RICON) and Madan Bhandari University of Science and Technology',
    theme:'enb', sector:'Telecom', cost:'Not stated', note:'Includes a special workshop on the low-altitude economy. Venue: The Soaltee Kathmandu.',
    url:'https://riconictp.org/', source:['ICTP 2027','RICON, official conference site','https://riconictp.org/'], checked:'2026-11-08'},
+  {id:'e36', type:'Conference', title:'ITU Regional Hands-on Conference “Accelerating Innovation in Digital Public Services”', start:'2026-11-30', end:'2026-12-01', dateText:'30 November – 1 December 2026',
+   city:'Minsk', country:'Belarus', region:'Europe', format:'In person', organiser:'ITU with the National Centre for Electronic Services of Belarus',
+   theme:'egov', sector:'Government', cost:'Not stated', note:'Registration is mandatory and open until 25 November. For telecom administrations, e-government operators and international organisations; topics include GovTech, benchmarking against the UN E-Government Development Index and AI in public administration, with hands-on AI training. Sessions in Russian, with English interpretation for some.',
+   url:'https://www.itu.int/en/ITU-D/Regional-Presence/CIS/Pages/Events/2026/12_DS-Conference/Main.aspx', source:['Invitation letter BDT/DM/040: Regional hands-on conference on digital public services','ITU, 26 Oct 2026','https://www.itu.int/en/ITU-D/Regional-Presence/CIS/Documents/Events/2026/RegConf%20DigServices%20Minsk/BDT_DM_040E_DIR_CIS.pdf'], checked:'2026-11-09'},
+  {id:'e37', type:'Workshop', title:'ITU Workshop on Optical Systems for Fibre Access Networks', start:'2026-12-03', end:'2026-12-03', dateText:'3 December 2026, 10:30–15:30 CET',
+   city:'Online', country:'Online', region:'Online', format:'Online', organiser:'International Telecommunication Union (ITU-T Study Group 15)',
+   theme:'enb', sector:'Telecom', cost:'Free of charge', note:'Fully virtual; registration required on the ITU page.',
+   url:'https://itu.int/en/ITU-T/Workshops-and-Seminars/2026/1203', source:['ITU Workshop on Optical systems for fibre Access Networks','ITU, workshop page','https://itu.int/en/ITU-T/Workshops-and-Seminars/2026/1203'], checked:'2026-11-09'},
+  {id:'e38', type:'Summit', title:'DCtSUMMIT 2026: 7th Data Center Technology Summit', start:'2026-11-28', end:'2026-11-28', dateText:'Saturday, 28 November 2026',
+   city:'Dhaka', country:'Bangladesh', region:'Asia-Pacific', format:'In person', organiser:'DCiCON',
+   theme:'enb', sector:'Telecom', cost:'Not stated', note:'Venue: InterContinental Dhaka. Industry summit on data-centre infrastructure and making Bangladesh a data-centre hub; registration through the event site.',
+   url:'https://dctsummit.com', source:['DCtSUMMIT 2026','DCiCON, official event site','https://dctsummit.com'], checked:'2026-11-09'},
 ];
 
 const FUNDING = [
@@ -322,9 +334,24 @@ const FUNDING = [
    close:'2026-11-30T17:59:00Z', closeText:'30 Nov 2026',
    summary:'BRAC’s IT company is hiring an experienced data engineer to work with SSIS, T-SQL and Azure data tools. Apply through the form linked on the BRAC IT page; no fee is mentioned.',
    url:'https://www.bracits.com/jobs/data-engineer-ssis/', theme:'enb', sector:'Trade & business', checked:'2026-11-08'},
+  {id:'f31', title:'Regional Initiative Accelerator: call for project ideas', funder:'International Telecommunication Union (ITU), Telecommunication Development Bureau', kind:'Call for proposals',
+   amount:'No grant; selected teams receive training, a co-design workshop and help with resource mobilisation (workshop sponsorship subject to available funds, with priority for LDCs, LLDCs and SIDS)', duration:'2027', who:'ITU Member States, through national teams', where:'All ITU Member States',
+   close:'2026-11-15T23:59:00Z', closeText:'by 15 November 2026',
+   summary:'Governments propose project ideas linked to an ITU regional initiative on digital innovation. Selected national teams get online methodology training, a co-design workshop and support to mobilise resources in 2027.',
+   url:'https://www.itu.int/en/ITU-D/Innovation/Pages/RIA/Regional-Initiative-Accelerator.aspx', theme:'dpi', sector:'Telecom', checked:'2026-11-09'},
+  {id:'f32', title:'Roster: Senior CIRT Technical and Operations Consultant (vacancy 2240)', funder:'International Telecommunication Union (ITU)', kind:'Consultancy',
+   amount:'USD 280–450 per working day', duration:'Roster; assignments as needed', who:'Cybersecurity specialists with at least 7 years in security operations or incident response, including at least 3 years internationally', where:'Home-based (remote)',
+   close:'2026-12-31T22:59:00Z', closeText:'31 December 2026, midnight Geneva time',
+   summary:'ITU is building a roster of experts to help countries set up national computer incident response teams: technical architecture, deploying tools such as MISP, Wazuh and Elastic, training staff and handing over operations.',
+   url:'https://jobs.itu.int/job/Home-Based-Roster-Senior-CIRT-Technical-and-Operations-Consultant/1335794555/', theme:'cyb', sector:'Government', checked:'2026-11-09'},
+  {id:'f33', title:'Roster: Senior ICT/Digital Policy, Regulatory, Economic and Market Consultant for Africa (vacancy 1818)', funder:'International Telecommunication Union (ITU), Regional Office for Africa', kind:'Consultancy',
+   amount:'USD 230–430 per working day', duration:'Roster; assignments as needed', who:'Experts with at least 5 years’ experience and knowledge of the ICT environment in Africa; English and/or French', where:'Home-based (remote)',
+   close:'2026-12-31T22:59:00Z', closeText:'31 December 2026, midnight Geneva time',
+   summary:'A roster of consultants for policy, regulatory, economic and market analysis, training and research for ITU’s work with African governments and regulators.',
+   url:'https://jobs.itu.int/job/Home-Based-Roster-Consultant-for-Senior-ICTDigital-Policy-Regulatory-Economic-and-Market-for-Africa/993610255', theme:'pol', sector:'Telecom', checked:'2026-11-09'},
 ];
 
-const FUNDNEWS = ['n66','n64','n59','n3','n4','n8','n34'];
+const FUNDNEWS = ['n73','n66','n64','n59','n3','n4','n8','n34'];
 
 window.DV_EVENTS = EVENTS;
 window.DV_FUNDING = FUNDING;

@@ -201,7 +201,7 @@ const ANALYSES = [
   related:['n25','n19']
 },
 {
-  id:'a2', theme:'sec', sector:'Health', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', readMins:14,
+  id:'a2', theme:'sec', sector:'Health', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'9 Nov 2026', readMins:14,
   kicker:'Health tech · Bangladesh in global context',
   title:'A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore',
   standfirst:'Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting hospitals to use them, paying for it and protecting the data take years.',
@@ -224,7 +224,7 @@ const ANALYSES = [
   ],
   body:[
     {h:'The short version',p:[
-      'On 18 October 2026, State Minister for Health Dr M A Muhit set out plans for a universal e-health card and a national health database for nearly 200 million people, linking consultations, prescriptions, medicine purchases and test results [1]. The government’s stated target is a card for every citizen by 2028 [2], starting in five districts: Khulna, Noakhali, Bogura, Sirajganj and Narsingdi [3]. The health budget for 2026–27 nearly doubled to Tk 69,409 crore, crossing 1% of GDP for the first time [11], but no budget line or rollout schedule for the card has been published [1][11].'
+      'On 18 October 2026, State Minister for Health Dr M A Muhit set out plans for a universal e-health card and a national health database for nearly 200 million people, linking consultations, prescriptions, medicine purchases and test results [1]. The government’s stated target is a card for every citizen by 2028 [2], starting in five districts: Khulna, Noakhali, Bogura, Sirajganj and Narsingdi [3]. The health budget for 2026–27 nearly doubled to Tk 69,409 crore, crossing 1% of GDP for the first time [11], but no budget line or rollout schedule for the card has been published [1][11]. A revised project proposal now before the Planning Commission puts the pilot at Tk 493.88 crore, nearly three times the earlier Tk 168.16 crore, and adds a sixth district, Jhalakathi, for July 2026 to December 2028 [21].'
     ]},
     {h:'What others did',p:[
       'India built a health ID first and records later. The Ayushman Bharat Digital Mission was approved in February 2022 with Rs 1,600 crore for five years [16]; it now has more than 93 crore ABHA accounts and over 104 crore linked health records, and its “scan and share” queue service issued over 23 crore tokens and cut hospital registration waits from about an hour to a few minutes [4]. The scale came from linking the ID to services people already used.',
@@ -243,7 +243,7 @@ const ANALYSES = [
     ['Bangladesh Digital Health Strategy 2023–2027','2023','Six pillars; health ID linked to the national ID; health information exchange; EHRs in all public facilities and telehealth in 80% of upazilas by 2027 [15]','In effect until 2027 [15]'],
     ['Personal Data Protection Ordinance 2025','2025','National personal data protection law (Ordinance No. 61 of 2025), relevant to who may access pooled health records [19]','Issued 2025 [19]'],
     ['Health Protection Act','2014 draft','Draft health protection law from 2014, never enacted; commentators urge it be revisited alongside the card [14]','Draft [14]'],
-    ['e-Health Card programme','2026','Cards for all citizens by 2028 through a technical assistance project, starting in five districts [2][3]','Project proposal awaiting approval (Apr 2026) [3]'],
+    ['e-Health Card programme','2026','Cards for all citizens by 2028 through a technical assistance project, starting in five districts [2][3]','Revised proposal of Tk 493.88 crore for six districts under Planning Commission review (Nov 2026) [3][21]'],
     ['India: Ayushman Bharat Digital Mission','2022','National health ID and record-linking system run by the National Health Authority; Rs 1,600 crore for five years [16]','Operating [4]'],
     ['UK: NHS Modernisation Bill','2026','Statutory duty to share patient information; single patient record in the NHS App [17]','Before Parliament [6][17]'],
     ['African Union: Continental Health Data Governance Framework','2026','Common rules and federated cross-border health data sharing [9]','Validated Oct 2026; AU process in 2027 [9]']
@@ -251,18 +251,20 @@ const ANALYSES = [
   implementation:{intro:'Planning is ahead of delivery: the card has slipped from its first target date and no rollout has been reported.',rows:[
     ['Shared Health Record pilot','Nov 2015','done','Kaliganj sub-district [10]'],
     ['Shared Health Record extended','Mar 2016','done','Gazipur district [10]'],
-    ['e-Health Card in five districts','June 2026 target','delayed','June rollout was planned [13]; project still awaiting approval and no timetable published [1][3]'],
+    ['e-Health Card in five districts','June 2026 target','delayed','June rollout was planned [13]; project still awaiting approval and no timetable published [1][3]; revised proposal for July 2026–December 2028 under Planning Commission review in November 2026 [21]'],
     ['National health database, app booking and medicine tracking','Unveiled 18 Oct 2026','not started','Plans announced; no budget or timetable [1]'],
     ['EHRs in all public facilities','2027','unclear','Strategy target [15]; no progress report found'],
     ['e-Health Card for every citizen','2028','not started','Government target [2]']
   ]},
   economics:{figures:[
+    {v:'Tk 493.88 cr',l:'revised cost of the six-district e-health pilot, up from Tk 168.16 cr',c:21},
+    {v:'Tk 165.15 cr',l:'proposed ADB loan; the government would pay Tk 328.73 cr',c:21},
     {v:'Tk 69,409 cr',l:'total health budget 2026–27, 1.01% of GDP',c:11},
     {v:'Tk 23,522 cr',l:'block allocation in the health development budget',c:11},
     {v:'Rs 1,600 cr',l:'India’s five-year budget for its digital health mission',c:16},
     {v:'£14 bn',l:'yearly outpatient spending England aims to reduce with joined-up records and digital advice',c:17}
   ],p:[
-    'Funding. Bangladesh’s 2026–27 health budget of Tk 69,409 crore includes a Tk 23,522 crore block allocation in the development budget [11], which could fund the card, but no specific allocation has been published [11][14]. The card is to be delivered through a technical assistance project [2], so its cost and financiers (government, World Bank, other partners) are not yet public.',
+    'Funding. Bangladesh’s 2026–27 health budget of Tk 69,409 crore includes a Tk 23,522 crore block allocation in the development budget [11], which could fund the card, but no specific allocation has been published [11][14]. The card is to be delivered through a technical assistance project [2]. A revised proposal before the Planning Commission puts the pilot at Tk 493.88 crore: Tk 328.73 crore from the government and an ADB loan of Tk 165.15 crore, to equip 881 facilities and 9,040 field workers in six districts; DGHS says it would reach 1.64 crore citizens [21]. That is about Tk 301 per targeted citizen (CGTK calculation). The cost nearly tripled from Tk 168.16 crore when the pilot grew from Khulna alone to six districts, and the Planning Commission has asked for the card’s unit cost, distribution cost and sustainability [21].',
     'Benchmarks. India budgeted Rs 1,600 crore over five years for its digital health mission [16] and has created more than 93 crore health accounts [4], roughly Rs 17 per account (CGTK calculation). England is pairing its single patient record with digital advice to cut into £14 billion a year of outpatient costs [17]. Both show that the core digital layer is cheap compared with the health spending it can make more efficient.',
     'Who pays and who gains. With about 79% of spending out of pocket [12], households bear most of the cost of duplicate tests and lost records today, so they would gain most from a working shared record. Researchers argue the card delivers its real economic value only if it is linked to cashless or insured care for poor families [13]. The main fiscal risk is under-spending: experts warn that the ministry’s weak record in using its development budget, and corruption and delays in hospitals, could leave the money unspent or wasted [11][12].'
   ]},
@@ -293,6 +295,7 @@ const ANALYSES = [
     {who:'People without phones or IDs',dir:'−',size:'Medium',text:'App-based booking can exclude the poorest unless assisted channels remain [1].'}
   ],
   voices:[
+    {who:'Prof Foara Tasmim, Additional Director General (Planning and Development), DGHS',group:'Government',stance:'support',view:'Said the cost rose because the pilot grew from one district to six, “not a higher budget for any single component”.',c:21},
     {who:'Dr M A Muhit, State Minister for Health and Family Welfare',group:'Government',stance:'support',view:'Unveiled a universal e-health card and a national database linking consultations, prescriptions, medicine purchases and tests.',c:1},
     {who:'Sardar Md Sakhawat Husain, Health and Family Welfare Minister',group:'Government',stance:'support',view:'Told Parliament the target is e-health cards for all citizens by 2028 through a technical assistance project.',c:2},
     {who:'Dr Imrul Mohammad Sifat, Bangladesh Health Watch and BRAC JPGSPH',group:'Expert',stance:'mixed',view:'The card should not be a “digital flash drive for medical records” but should guarantee cashless care for poor families.',c:13},
@@ -316,12 +319,12 @@ const ANALYSES = [
     rows:[
       ['Shared Health Record pilot','DGHS, with Thoughtworks','2015–2016 onwards','OpenHIE/OpenMRS record piloted in Kaliganj and Gazipur [10]'],
       ['Bangladesh Digital Health Strategy','Ministry of Health and Family Welfare','2023–2027','Health ID, information exchange, EHRs in all public facilities by 2027 [15]'],
-      ['e-Health Card, five districts','Government 180-day programme','Announced Apr 2026','Khulna, Noakhali, Bogura, Sirajganj, Narsingdi; project awaiting approval [3]'],
+      ['e-Health Card, five districts','Government 180-day programme','Announced Apr 2026','Khulna, Noakhali, Bogura, Sirajganj, Narsingdi; project awaiting approval [3]; the revised plan adds Jhalakathi (Nov 2026) [21]'],
       ['e-Health Card for all','Ministry of Health and Family Welfare','Target 2028','Through a technical assistance project [2]'],
       ['National health database and app','Ministry of Health, with WHO','Unveiled Oct 2026','Links consultations, prescriptions, purchases and tests [1]']
     ]},
   watch:[
-    'Approval of the five-district project proposal, its budget and its financiers.',
+    'Approval of the revised six-district proposal (Tk 493.88 crore, part-financed by an ADB loan) by the Planning Commission and ECNEC [21].',
     'Whether the card is linked to cashless or insured care for poor families, as researchers propose [13].',
     'Whether private hospitals, diagnostic centres and pharmacies are required to connect.',
     'Rules on who can access records under the Personal Data Protection Ordinance 2025 [19].',
@@ -347,7 +350,8 @@ const ANALYSES = [
     ['NHS Modernisation Bill promises single patient record by 2028','Computer Weekly','https://www.computerweekly.com/news/366643138/NHS-Modernisation-Bill-promises-single-patient-record-by-2028'],
     ['AU member states validate African Continental Health Data Governance Framework','allAfrica, 23 Oct 2026','https://allafrica.com/stories/202610230017.html'],
     ['Personal Data Protection Ordinance 2025 (Ordinance No. 61 of 2025)','Digital Policy Alert','https://digitalpolicyalert.org/change/18756-personal-data-protection-ordinance-2025-ordinance-no-61-of-2025'],
-    ['Moldova investigates possible foreign involvement in cyberattacks','The Record, Oct 2026','https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks']
+    ['Moldova investigates possible foreign involvement in cyberattacks','The Record, Oct 2026','https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks'],
+    ['Digital healthcare project cost nearly triples to Tk494cr as DGHS expands pilot to six districts','The Business Standard, 1 Nov 2026','https://www.tbsnews.net/bangladesh/health/digital-healthcare-project-cost-nearly-triples-tk494cr-dghs-expands-pilot-six'],
   ],
   related:['n21','n20']
 }
