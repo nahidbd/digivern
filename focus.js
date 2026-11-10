@@ -184,7 +184,8 @@ const MONTHS = [
         'On 24 October 2026 NASA and the US Department of Agriculture signed an agreement to apply Earth observation data and geospatial analytics to crop monitoring, acreage and yield estimates and drought assessment, as part of USDA’s data modernisation plan [9]. Better official crop statistics matter well beyond the United States, because they move global prices and food security planning.'
       ]},
       {h:'Trade rules force traceability',p:[
-        'The EU Deforestation Regulation requires proof that products such as cocoa, coffee, palm oil, soy, cattle, rubber and wood were not grown on land deforested after 2020. After two postponements it applies from 30 December 2026 to large and medium operators and from 30 June 2027 to most micro and small operators [11]. Non-EU suppliers acting as operators must still supply plot-level geolocation, while small EU primary operators may use a postal address instead [10]. Nigeria’s ministry links its farmer registry partly to this pressure, so that exports such as cocoa, sesame and cashew are not rejected at port [6].'
+        'The EU Deforestation Regulation requires proof that products such as cocoa, coffee, palm oil, soy, cattle, rubber and wood were not grown on land deforested after 2020. After two postponements it applies from 30 December 2026 to large and medium operators and from 30 June 2027 to most micro and small operators [11]. Non-EU suppliers acting as operators must still supply plot-level geolocation, while small EU primary operators may use a postal address instead [10]. Nigeria’s ministry links its farmer registry partly to this pressure, so that exports such as cocoa, sesame and cashew are not rejected at port [6].',
+        'Uganda, this month’s focus country, sends more than 60% of its coffee exports to the EU, and in the year to March 2025 exported 6.87 million bags worth US$1.84 billion, according to agriculture ministry data reported by Nile Post [18]. It has been registering coffee farmers and mapping their plots for the regulation: by August 2026 more than 1.6 million farmers were registered against a target of 1.2 million, an agricultural officer for Greater Masaka told the Daily Monitor in October [16]. The same report quotes farmers in Masaka and Kyotera who said many villages had never seen an enumerator, that some people were registered without their consent and that some registration cards were rejected [16]. A digital platform built by the Uganda Coffee Farmers Alliance with the National Coffee Research Institute aims to trace each coffee lot back to individual farms; the alliance says farmers’ rights under Uganda’s Data Protection and Privacy Act 2019 apply to the data [17].'
       ]},
       {h:'Where the money is going',p:[
         'Private investment is flat overall but shifting towards the farm. AgFunder counts US$16.2 billion of agrifoodtech venture funding in 2025, the same as 2024, with deal numbers down 12%. Upstream funding rose 7% to US$9 billion, climate technology within the sector recovered to US$3.9 billion, and deep-technology companies made up 32% of deals [1]. Debt reached 18.2% of funding, its highest share in a decade [1]. The summary does not break out Africa or South Asia, where most smallholders farm.'
@@ -204,10 +205,12 @@ const MONTHS = [
       ['Ethiopia','Digital Agriculture Roadmap 2025–2033','22 use cases using the Fayda ID [3]','Planned'],
       ['Uganda','E-vouchers and e-extension in the Agriculture Strategic Plan','Part of a UGX 17 trillion plan, 2025/26–2029/30 [13]','Planned'],
       ['United States','NASA–USDA Earth observation agreement','Crop acreage, yield and drought data [9]','Signed 24 Oct 2026'],
+      ['Uganda','Coffee farmer registration and plot mapping for EU traceability','1.6 million+ farmers registered by Aug 2026 against a 1.2 million target; farmers report gaps [16]','Under way'],
       ['European Union','Deforestation Regulation traceability','Large and medium operators from 30 Dec 2026 [11]','Upcoming']
     ]},
     watch:[
       'The EU Deforestation Regulation taking effect on 30 December 2026, and whether exporters’ traceability systems are ready [11].',
+      'Whether Uganda’s small-scale coffee farmers are registered before their deadline of 30 June 2027, and how consent complaints are handled [16].',
       'Whether Nigeria publishes a single registry standard and first registration numbers [6].',
       'How many languages Bharat-VISTAAR supports and how many farmers use it [4].',
       'First products from the NASA–USDA agreement in official crop estimates [9].',
@@ -228,7 +231,10 @@ const MONTHS = [
       ['1,000 initiatives and beyond: how FAO’s AgriTech Observatory helps navigate digital agriculture','FAO, 2 Jun 2026','https://www.fao.org/europe/news/detail/1-000-initiatives-and-beyond--how-fao-s-agritech-observatory-helps-navigate-digital-agriculture/en'],
       ['MAAIF unveils strategic blueprints to transform Uganda’s agriculture by 2030','Publicist East Africa, 5 Jan 2026','https://publicisteastafrica.com/maaif-unveils-strategic-blueprints-to-transform-ugandas-agriculture-by-2030/'],
       ['Government to stay live on mobile: Shivraj Singh Chouhan launches new portal for farmers','Press Information Bureau, Government of India, 19 Oct 2026','https://www.pib.gov.in/PressReleasePage.aspx?PRID=2325129&reg=48&lang=2'],
-      ['FCMB and Mastercard launch AgroPass to expand finance access for Nigerian farmers','TechAfrica News, 2 Nov 2026','https://techafricanews.com/2026/11/02/fcmb-mastercard-launch-agropass-expand-finance-access-nigerian-farmers']
+      ['FCMB and Mastercard launch AgroPass to expand finance access for Nigerian farmers','TechAfrica News, 2 Nov 2026','https://techafricanews.com/2026/11/02/fcmb-mastercard-launch-agropass-expand-finance-access-nigerian-farmers'],
+      ['Slow registration worries coffee farmers as second deadline draws closer','Daily Monitor, 5 Oct 2026','https://www.monitor.co.ug/uganda/news/national/slow-registration-worries-coffee-farmers-as-second-deadline-draws-closer-5620446'],
+      ['Uganda rolls out digital system to boost coffee traceability and meet EU regulations','The Cooperator News, 10 Apr 2026','https://thecooperator.news/uganda-rolls-out-digital-system-to-boost-coffee-traceability-and-meet-eu-regulations/'],
+      ['Uganda races to register 2.8 million coffee farmers ahead of EU deforestation law','Nile Post, 28 May 2025','https://nilepost.co.ug/agriculture/261211/uganda-races-to-register-2-8-million-coffee-farmers-ahead-of-eu-deforestation-law']
     ]
   }
 }
