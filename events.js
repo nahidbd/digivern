@@ -59,7 +59,7 @@ const EVENTS = [
   {id:'e9', type:'Forum', title:'6th UN World Data Forum', start:'', end:'', dateText:'Postponed from 9–12 Nov 2026 to 2027; new dates to be announced',
    city:'Riyadh', country:'Saudi Arabia', region:'Middle East', format:'Hybrid', organiser:'United Nations Statistics Division and the Kingdom of Saudi Arabia (GASTAT)',
    theme:'pol', sector:'Government', cost:'Not stated', note:'Postponed by joint decision of the UN Secretariat and Saudi Arabia.',
-   url:'https://www.fao.org/statistics/events/events-detail/6th-united-nations-world-data-forum/en', source:['United Nations World Data Forum 2026 (postponed)','FAO Statistics events','https://www.fao.org/statistics/events/events-detail/6th-united-nations-world-data-forum/en'], checked:'2026-11-10'},
+   url:'https://www.fao.org/statistics/events/events-detail/6th-united-nations-world-data-forum/en', source:['United Nations World Data Forum 2026 (postponed)','FAO Statistics events','https://www.fao.org/statistics/events/events-detail/6th-united-nations-world-data-forum/en'], checked:'2026-11-11'},
   {id:'e10', type:'Summit', title:'Geneva AI Summit 2027', start:'2027-06-21', end:'2027-06-22', dateText:'21–22 June 2027',
    city:'Geneva', country:'Switzerland', region:'Europe', format:'In person', organiser:'Government of Switzerland',
    theme:'ai', sector:'Government', cost:'Not stated', note:'Follows the Paris (2025) and New Delhi (2026) AI summits. ITU’s AI for Good Global Summit 2027 follows in Geneva on 21–24 June 2027 (Palexpo), per ITU circular S26-SG-CIR-0044.',
@@ -191,7 +191,19 @@ const EVENTS = [
   {id:'e42', type:'Conference', title:'9th IEOM Bangladesh International Conference on Industrial Engineering and Operations Management', start:'2026-12-26', end:'2026-12-27', dateText:'December 26–27, 2026',
    city:'Dhaka', country:'Bangladesh', region:'Asia-Pacific', format:'Hybrid', organiser:'IEOM Society International, hosted by BGMEA University of Fashion & Technology (BUFT)',
    theme:'ai', sector:'Trade & business', cost:'Bangladeshi residents Tk 10,000 (professional), Tk 5,000 (student); international delegates US$225–450 depending on category and mode', note:'Venue: BUFT campus, Nishatnagar, Turag, Dhaka. Tracks include AI and data science, digital manufacturing, Industry 4.0 and IoT. Abstracts and papers due 30 Nov 2026; registration by 10 Dec 2026.',
-   url:'https://ieomsociety.org/bangladesh2026/', source:['Bangladesh 2026','IEOM Society','https://ieomsociety.org/bangladesh2026/'], checked:'2026-11-10'}
+   url:'https://ieomsociety.org/bangladesh2026/', source:['Bangladesh 2026','IEOM Society','https://ieomsociety.org/bangladesh2026/'], checked:'2026-11-10'},
+  {id:'e43', type:'Conference', title:'APRICOT 2027 (Asia Pacific Regional Internet Conference on Operational Technologies), with APNIC 63', start:'2027-02-24', end:'2027-03-04', dateText:'24 February to 4 March 2027 (training 24–26 Feb, conference 1–3 Mar, APNIC AGM 4 Mar)',
+   city:'Hong Kong', country:'China (Hong Kong SAR)', region:'Asia-Pacific', format:'In person', organiser:'APNIC and APRICOT',
+   theme:'enb', sector:'Telecom', cost:'Training USD 300–500; conference USD 300–700 depending on membership and registration period; APNIC AGM free', note:'Early-bird registration ends 15 Nov 2026; call for presentations closes 25 Jan 2027; training registration closes 12 Feb 2027.',
+   url:'https://blog.apnic.net/2026/11/02/apricot-2027-registration-is-now-open-with-discounts-for-apnic-members', source:['APRICOT 2027 registration is now open, with discounts for APNIC Members','APNIC Blog, 2 Nov 2026','https://blog.apnic.net/2026/11/02/apricot-2027-registration-is-now-open-with-discounts-for-apnic-members'], checked:'2026-11-11'},
+  {id:'e44', type:'Expo', title:'Convergence India 2027 Expo (telecom, digital infrastructure and smart cities)', start:'2027-03-23', end:'2027-03-25', dateText:'23-25 March 2027',
+   city:'New Delhi', country:'India', region:'Asia-Pacific', format:'In person', organiser:'India Trade Promotion Organisation (ITPO) and Exhibitions India Group',
+   theme:'enb', sector:'Telecom', cost:'Not stated', note:'Venue: Bharat Mandapam. Visitor registration online.',
+   url:'https://convergenceindia.org/exhibition-venue-and-dates.aspx', source:['Expo venue: Bharat Mandapam, New Delhi','Convergence India / Exhibitions India Group','https://convergenceindia.org/exhibition-venue-and-dates.aspx'], checked:'2026-11-11'},
+  {id:'e45', type:'Expo', title:'GITEX Africa 2027', start:'2027-04-26', end:'2027-04-28', dateText:'26-28 April 2027',
+   city:'Marrakech', country:'Morocco', region:'Africa', format:'In person', organiser:'GITEX Africa',
+   theme:'enb', sector:'Trade & business', cost:'Not stated', note:'Pre-registration for visitors and exhibitor enquiries open.',
+   url:'https://gitexafrica.com/', source:['GITEX AFRICA | 26-28 April 2027, Marrakech','gitexafrica.com','https://gitexafrica.com/'], checked:'2026-11-11'}
 ];
 
 const FUNDING = [
@@ -389,7 +401,27 @@ const FUNDING = [
    amount:'Unpaid (intern covers insurance, travel and living costs)', duration:'6 months', who:'Students or recent graduates (within six months) under 30, from ITU Member States, in ICT, emergency telecommunications, regulation or related fields; advanced English', where:'Geneva, Switzerland',
    close:'2026-12-10T22:59:00Z', closeText:'10 December 2026 (Midnight Geneva Time)',
    summary:'Supports ITU’s work on warning dissemination under the Early Warnings for All initiative, including national emergency telecommunication plans, emergency connectivity and research on ICTs for disaster risk reduction.',
-   url:'https://jobs.itu.int/job/Geneva-Unpaid-internship-Emergency-Telecommunications-Intern/1367950855/', theme:'enb', sector:'Telecom', checked:'2026-11-10'}
+   url:'https://jobs.itu.int/job/Geneva-Unpaid-internship-Emergency-Telecommunications-Intern/1367950855/', theme:'enb', sector:'Telecom', checked:'2026-11-10'},
+  {id:'f39', title:'GSMA Innovation Fund for AI-Enabled Financial Health', funder:'GSMA (Mobile for Development)', kind:'Grant',
+   amount:'GBP 100,000 to GBP 250,000 per grant; applicants must match at least 25% of the grant', duration:'15 to 18 months (implementation from October 2027)', who:'For-profit small and growing enterprises (up to 250 staff) registered and operating in the country of implementation, with active users, commercial revenue and at least one year of audited accounts; governments, NGOs, UN agencies, mobile operators, universities and accelerators are not eligible', where:'One or two ODA-eligible low- and middle-income countries (see the fund’s FAQs for the list)',
+   close:'2026-12-17T23:59:00Z', closeText:'17 December 2026 at 23:59 UTC (UK time)',
+   summary:'Grants for AI-enabled digital financial services that improve the financial resilience, agency and long-term security of underserved people, especially women, girls and persons with disabilities.',
+   url:'https://www.gsma.com/solutions-and-impact/connectivity-for-good/mobile-for-development/wp-content/uploads/2026/10/GSMA-Innovation-Fund-for-AI-Enabled-Financial-Health-TCs.pdf', theme:'sec', sector:'Fintech & payments', checked:'2026-11-11'},
+  {id:'f40', title:'Tarbell Fellowship 2027 (AI journalism)', funder:'Tarbell Center for AI Journalism', kind:'Fellowship',
+   amount:'Fellows US$75,000–120,000 and senior fellows US$115,000–135,000, depending on experience and location', duration:'12 months, full time (remote training from 7 June 2027, newsroom placement September 2027 – May 2028)', who:'Anyone aged 18 or over by 7 June 2027; no degree required; senior fellows need 7+ years of experience; mainly for people with the right to work where partner newsrooms are', where:'Placements in the United States, United Kingdom and Hong Kong; training remote',
+   close:'2026-11-22T23:59:00Z', closeText:'Applications close on Nov. 22, 2026',
+   summary:'Trains journalists to report on artificial intelligence and places them in major newsrooms for nine months.',
+   url:'https://www.tarbellcenter.org/fellowship', theme:'ai', sector:'Government', checked:'2026-11-11'},
+  {id:'f41', title:'Digital Impact Officer (Information and Communication Technology Officer), NO-2, fixed term 2 years', funder:'UNICEF Türkiye', kind:'Job',
+   amount:'Not published', duration:'Fixed term, 2 years', who:'Bachelor’s degree and 2+ years of IT management experience; fluent English and Turkish (national officer post)', where:'Istanbul, Türkiye',
+   close:'2026-11-15T21:55:00Z', closeText:'Closing at: 15 Nov 2026 - 23:55 EET',
+   summary:'Runs ICT infrastructure, security, systems and user support for the UNICEF office in Türkiye and supports digital innovation in its programmes.',
+   url:'https://jobs.unicef.org/cw/en-us/job/596833/digital-impact-officer-information-comm-technology-officer-no2-fixed-term-2-years-00135741-istanbul-türkiye-ecar', theme:'enb', sector:'Government', checked:'2026-11-11'},
+  {id:'f42', title:'IndiaAI Fellowship 2026–27 (undergraduate, postgraduate and PhD)', funder:'IndiaAI Mission, Ministry of Electronics and Information Technology (MeitY), Government of India', kind:'Fellowship',
+   amount:'Up to ₹1 lakh (undergraduate) or ₹2 lakh (postgraduate), plus up to ₹1 lakh travel support for papers at top AI conferences; PhD track ₹70,000–80,000 a month plus up to ₹2 lakh a year in research grants', duration:'Academic year 2026–27; PhD track up to 5 years', who:'Indian nationals in full-time study; undergraduate and postgraduate applicants need at least 3 AI courses and a CGPA of 7.0 or more; PhD applicants must be newly enrolled first-year students', where:'India',
+   close:'2026-11-30T23:59:00Z', closeText:'November 30, 2026',
+   summary:'Government fellowship for Indian students whose projects centre on AI, across disciplines from engineering to law and the liberal arts.',
+   url:'https://fellowship.indiaai.gov.in/', theme:'ai', sector:'Education', checked:'2026-11-11'}
 ];
 
 const FUNDNEWS = ['n73','n66','n64','n59','n3','n4','n8','n34'];
