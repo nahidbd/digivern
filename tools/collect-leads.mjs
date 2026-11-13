@@ -15,6 +15,8 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > -1 
 const SITE = arg('site', '.');
 const OUT = arg('out', 'leads-out');
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro-preview';
+// Tried in order if a model is unavailable (404) or has no quota on this key (429), e.g. Pro models on the free tier.
+const GEMINI_FALLBACKS = [GEMINI_MODEL, ...(process.env.GEMINI_FALLBACK_MODELS || 'gemini-3-flash-preview,gemini-2.5-flash').split(',').map(x => x.trim()).filter(Boolean)].filter((m, i, a) => a.indexOf(m) === i);
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5';
 const MOCK = process.env.LEADS_MOCK === '1';
 
@@ -117,15 +119,26 @@ async function withRetry(fn, tries = 3) {
 async function gemini() {
   const key = process.env.GEMINI_API_KEY;
   if (!key && !MOCK) return { ok: false, skipped: true, error: 'GEMINI_API_KEY not set' };
-  const j = MOCK ? mockGemini() : await withRetry(() => post(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent`,
-    { 'x-goog-api-key': key },
-    { contents: [{ role: 'user', parts: [{ text: PROMPT }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.2 } }));
+  let j, model = GEMINI_MODEL; const errs = [];
+  if (MOCK) j = mockGemini();
+  else for (const m of GEMINI_FALLBACKS) {
+    try {
+      j = await withRetry(() => post(
+        `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(m)}:generateContent`,
+        { 'x-goog-api-key': key },
+        { contents: [{ role: 'user', parts: [{ text: PROMPT }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.2 } }), 2);
+      model = m; break;
+    } catch (e) {
+      errs.push(`${m}: ${String(e.message).slice(0, 200)}`);
+      if (!/HTTP (404|429)/.test(e.message)) throw new Error(errs.join(' | '));
+    }
+  }
+  if (!j) throw new Error(errs.join(' | '));
   const cand = (j.candidates || [])[0] || {};
   const text = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');
   const grounding = ((cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || []).map(c => c.web).filter(Boolean).map(w => ({ title: w.title || '', url: w.uri || '' }));
   const leads = clean(parseJsonArray(text), 'gemini');
-  return { ok: true, model: GEMINI_MODEL, leads, search_results_seen: grounding, raw_if_unparsed: leads.length ? undefined : text.slice(0, 4000) };
+  return { ok: true, model, leads, search_results_seen: grounding, raw_if_unparsed: leads.length ? undefined : text.slice(0, 4000) };
 }
 
 async function openai() {
