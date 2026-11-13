@@ -1,6 +1,6 @@
 {
   "date": "2026-11-13",
-  "generated_at": "2026-11-13T02:03:45.307Z",
+  "generated_at": "2026-11-13T02:05:58.716Z",
   "notice": "UNVERIFIED LEADS from Gemini and ChatGPT. Not for publication as they stand. Open every source_url and publish only what the original source confirms. Never cite Gemini or ChatGPT as a source.",
   "focus": {
     "month": "November 2026",
@@ -12,7 +12,7 @@
       "ok": false,
       "model": "gemini-3.1-pro-preview",
       "leads": 0,
-      "error": "gemini: gemini-3.1-pro-preview: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren | gemini-3-flash-preview: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren | gemini-2.5-flash: HTTP 404: This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to u"
+      "error": "gemini: gemini-3.1-pro-preview: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro, description: Generate content requests per day limit exceeded on Free Tier. See https://aistudio.google.com/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_reque | gemini-3.8-flash: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.  | gemini-3-flash-preview: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
     },
     "openai": {
       "ok": false,
