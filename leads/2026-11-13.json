@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-13",
+  "generated_at": "2026-11-13T02:00:53.245Z",
+  "notice": "UNVERIFIED LEADS from Gemini and ChatGPT. Not for publication as they stand. Open every source_url and publish only what the original source confirms. Never cite Gemini or ChatGPT as a source.",
+  "focus": {
+    "month": "November 2026",
+    "country": "Uganda",
+    "sector": "Agritech"
+  },
+  "providers": {
+    "gemini": {
+      "ok": false,
+      "model": "gemini-3.1-pro-preview",
+      "leads": 0,
+      "error": "gemini: HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro, description: Generate content input tokens per day limit exceeded on Free Tier. See https://aistudio.google.com/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro, description: Generate content input tokens per minute limit exceeded on Free Tier. See https://aistudio.google.com/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro, description: Generate content requests per minute limit exceeded on Free Tier. See https://aistudio.google.com/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro, description: Generate content requests per day limit exceeded on Free Tier. See https://aistudio.google.com/docs/rate-limits.\nPlease retry in 5h59m21.80000631s."
+    },
+    "openai": {
+      "ok": false,
+      "model": "gpt-5",
+      "leads": 0,
+      "error": "OPENAI_API_KEY not set"
+    }
+  },
+  "leads": [],
+  "search_results_seen": {
+    "gemini": [],
+    "openai": []
+  },
+  "unparsed": {
+    "gemini": null,
+    "openai": null
+  }
+}
