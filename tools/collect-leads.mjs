@@ -14,7 +14,7 @@ import vm from 'node:vm';
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > -1 ? process.argv[i + 1] : d; };
 const SITE = arg('site', '.');
 const OUT = arg('out', 'leads-out');
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-pro';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro-preview';
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5';
 const MOCK = process.env.LEADS_MOCK === '1';
 
