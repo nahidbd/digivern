@@ -16,7 +16,7 @@ const SITE = arg('site', '.');
 const OUT = arg('out', 'leads-out');
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro-preview';
 // Tried in order if a model is unavailable (404) or has no quota on this key (429), e.g. Pro models on the free tier.
-const GEMINI_FALLBACKS = [GEMINI_MODEL, ...(process.env.GEMINI_FALLBACK_MODELS || 'gemini-3-flash-preview,gemini-2.5-flash').split(',').map(x => x.trim()).filter(Boolean)].filter((m, i, a) => a.indexOf(m) === i);
+const GEMINI_FALLBACKS = [GEMINI_MODEL, ...(process.env.GEMINI_FALLBACK_MODELS || 'gemini-3.8-flash,gemini-3-flash-preview').split(',').map(x => x.trim()).filter(Boolean)].filter((m, i, a) => a.indexOf(m) === i);
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5';
 const MOCK = process.env.LEADS_MOCK === '1';
 
@@ -129,7 +129,7 @@ async function gemini() {
         { contents: [{ role: 'user', parts: [{ text: PROMPT }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.2 } }), 2);
       model = m; break;
     } catch (e) {
-      errs.push(`${m}: ${String(e.message).slice(0, 200)}`);
+      errs.push(`${m}: ${String(e.message).slice(0, 600)}`);
       if (!/HTTP (404|429)/.test(e.message)) throw new Error(errs.join(' | '));
     }
   }
