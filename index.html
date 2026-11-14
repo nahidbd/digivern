@@ -387,6 +387,11 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 .notice{background:var(--red-soft);color:var(--red);border-radius:6px;padding:12px 16px;font-weight:700}
 @media (prefers-reduced-motion:no-preference){main{animation:fade .25s ease}}
 @keyframes fade{from{opacity:.4}to{opacity:1}}
+.mt-note{background:#FFF7E0;color:#3A2E00;border-bottom:1px solid #E8D9A8;font-size:.85rem;padding:6px 16px;text-align:center}
+.mt-note a{color:inherit;font-weight:700}
+.skiptranslate iframe,.goog-te-banner-frame,#goog-gt-tt,.goog-te-balloon-frame,.VIpgJd-ZVi9od-ORHb-OEVmcd,.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none!important}
+body{top:0!important}
+font font{background:none!important;box-shadow:none!important}
 </style>
 </head>
 <body>
@@ -406,7 +411,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 </div>
 <header class="mast">
   <div class="wrap">
-    <a class="brand" href="#home" aria-label="CGTK, Centre for Governance, Technology and Knowledge, home"><b>CG<i>TK</i></b><span class="brand-full">Centre for Governance,<br>Technology and Knowledge</span></a>
+    <a class="brand notranslate" translate="no" href="#home" aria-label="CGTK, Centre for Governance, Technology and Knowledge, home"><b>CG<i>TK</i></b><span class="brand-full">Centre for Governance,<br>Technology and Knowledge</span></a>
     <p class="tagline">Global intelligence on e-governance, DPI, AI and cybersecurity</p>
     <button class="btn btn-ghost-dark menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main" data-open="false">
@@ -462,6 +467,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 <script src="events.js"></script>
 <script src="focus.js"></script>
 <script src="app.js"></script>
+<script src="lang.js"></script>
 
 </body>
 </html>
