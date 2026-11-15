@@ -622,7 +622,7 @@ V.writeup = id => {
     <p class="muted" style="font-size:1.1rem">By <b style="color:var(--ink)">${esc(w.author.name)}</b> \u00b7 ${esc(w.date)}</p></div></div>
   <section class="band"><div class="wrap layout-side">
     <article class="main stack prose" style="gap:18px;font-size:1.1rem">
-      <p style="font-size:1.25rem;color:#2D3A4D">${esc(w.summary)}</p>
+      <p class="standfirst-lg" style="font-size:1.25rem">${esc(w.summary)}</p>
       ${w.body.map(p => p.startsWith('## ') ? `<h2 style="font-size:1.5rem;margin-top:8px">${esc(p.slice(3))}</h2>` : `<p>${esc(p)}</p>`).join('')}
       <p class="footnote" style="border-top:1px solid var(--line);padding-top:14px">Views expressed are the author\u2019s own. Published after review by the CGTK editor.</p>
     </article>

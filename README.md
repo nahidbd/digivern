@@ -9,7 +9,8 @@ Live site: https://cgtk-sc.pages.dev (Cloudflare Pages project cgtk-sc). The pre
 
 | File | What it holds |
 |---|---|
-| `index.html` | Page layout and styles |
+| `index.html` | Page layout and base styles |
+| `theme.css` | CGTK brand theme (Nov 2026): logo lockup, navy masthead and footer, cyber-blue #00D2FF, amber #E2B83C / gold #FFD700, platinum #F8FAFC. Loaded after the base styles, so colours are changed here. Logo files: `img/emblem.webp`, `img/emblem-512.png`, `img/favicon-64.png`, `img/apple-touch-icon.png`, `img/og-cgtk.jpg` |
 | `app.js` | How pages are drawn (routing, filters, forms) |
 | `data.js` | All content: news, reports, country profiles, tracker, glossary, sources |
 | `focus.js` | Monthly Focus: the Country of the Month and Sector of the Month pages (`#focus`, `#focus-country`, `#focus-sector`), with key numbers, map, facts, analysis, people's views and numbered sources. Older months stay in the archive. |

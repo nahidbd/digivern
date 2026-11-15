@@ -6,7 +6,10 @@
 <meta name="description" content="CGTK, the Centre for Governance, Technology and Knowledge: global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. Source-linked and checked against its sources.">
 <meta property="og:title" content="CGTK — Centre for Governance, Technology and Knowledge">
 <meta property="og:description" content="Global intelligence on digital governance.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B5E3A'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-weight='700' font-size='19' text-anchor='middle' fill='%23FFFFFF'%3ED%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:image" content="https://cgtk-sc.pages.dev/img/og-cgtk.jpg">
+<meta name="theme-color" content="#06162A">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
 /* events and funding */
 .evcard{display:grid;grid-template-columns:76px 1fr;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
@@ -177,7 +180,7 @@
 </style>
 <title>CGTK — Centre for Governance, Technology and Knowledge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@600;700;800&display=swap">
 <style>
 /* Layout: editorial front page. Centred masthead over a 1240px column; lead story beside the Weekly Brief, then a row of stories, then tracker and country boxes. Brand: Deep Green, Deep Red, Cambria. */
 :root{
@@ -393,6 +396,7 @@ footer .brand b{font-size:2rem;color:var(--accent)}
 body{top:0!important}
 font font{background:none!important;box-shadow:none!important}
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <div class="util">
@@ -411,7 +415,7 @@ font font{background:none!important;box-shadow:none!important}
 </div>
 <header class="mast">
   <div class="wrap">
-    <a class="brand notranslate" translate="no" href="#home" aria-label="CGTK, Centre for Governance, Technology and Knowledge, home"><b>CG<i>TK</i></b><span class="brand-full">Centre for Governance,<br>Technology and Knowledge</span></a>
+    <a class="brand notranslate" translate="no" href="#home" aria-label="CGTK, Centre for Governance, Technology and Knowledge, home"><img class="brand-mark" src="img/emblem.webp" width="256" height="256" alt=""><span class="brand-words"><b>CG<i>TK</i></b><span class="brand-full"><span class="bf1">Centre for Governance,</span><br><span class="bf2">Technology and Knowledge</span></span></span></a>
     <p class="tagline">Global intelligence on e-governance, DPI, AI and cybersecurity</p>
     <button class="btn btn-ghost-dark menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main" data-open="false">
@@ -436,9 +440,9 @@ font font{background:none!important;box-shadow:none!important}
 <footer>
   <div class="wrap">
     <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:10px;max-width:440px">
-      <span class="brand"><b>CG<i>TK</i></b><span class="brand-full">Centre for Governance,<br>Technology and Knowledge</span></span>
-      <p>Global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. A knowledge venture of <a href="https://synapseconsulting.services" target="_blank" rel="noopener" style="color:#1B5E3A;font-weight:700;text-decoration:underline">Synapse Consulting</a>.</p>
-      <p class="synapse-tag" aria-label="Think. Connect. Transform."><span style="color:#1B5E3A">Think.</span> <span style="color:#8B1A1A">Connect.</span> <span style="color:#1B5E3A">Transform.</span></p>
+      <span class="brand notranslate" translate="no"><img class="brand-mark" src="img/emblem.webp" width="256" height="256" alt=""><span class="brand-words"><b>CG<i>TK</i></b><span class="brand-full"><span class="bf1">Centre for Governance,</span><br><span class="bf2">Technology and Knowledge</span></span></span></span>
+      <p>Global intelligence on e-governance, digital public infrastructure, AI and cybersecurity. A knowledge venture of <a href="https://synapseconsulting.services" target="_blank" rel="noopener" class="syn-link">Synapse Consulting</a>.</p>
+      <p class="synapse-tag" aria-label="Think. Connect. Transform."><span class="t1">Think.</span> <span class="t2">Connect.</span> <span class="t1">Transform.</span></p>
       <p style="font-size:.92rem">CGTK, the Centre for Governance, Technology and Knowledge, is in beta. Content, features and design may change.</p>
     </div>
     <div class="cols">
