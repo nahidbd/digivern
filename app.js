@@ -58,7 +58,7 @@ V.home = () => {
   const spotP = PROFILES[spotId];
   const kick = n => `${esc(T[n.theme].label)} · ${esc(n.region)}`;
   const statusColor = s => s.startsWith('In force') || s.startsWith('Adopted') ? 'var(--accent)' : 'var(--red)';
-  return `
+  return heroStrip() + `
   <div class="wrap front">
     <div class="front-top">
       <article class="lead">
@@ -137,6 +137,21 @@ function pipeline(){
   return `<ol class="pipeline pipeline-wrap">${s.map((x,i)=>`<li><span class="st">${String(i+1).padStart(2,'0')} ${x[0]}</span><b>${x[1]}</b><span class="muted">${x[2]}</span></li>`).join('')}</ol>`;
 }
 
+/* Home-page brand strip: tagline and the five core themes as live links (artwork: img/hero-globe.webp). */
+function heroStrip(){
+  const ico = {
+    egov:'<path d="M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18M12 3 3 8h18z"/>',
+    dpi:'<path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>',
+    pol:'<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h7"/><path d="M14 3v5h5M14 3l5 5v4"/><path d="M8 9h4M8 13h5M8 17h3"/><path d="m15.5 15.5 3-3 3 3-3 3zM17 17l-3 3.5"/>',
+    ai:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/><path d="m9 15 1.5-6h1L13 15M9.6 13h2.8M15 9v6"/>',
+    cyb:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9.5a2 2 0 0 1 4 0V11"/>'
+  };
+  const items = [['egov','E-Governance'],['dpi','Digital Public Infrastructure'],['pol','Public Policy'],['ai','Artificial Intelligence'],['cyb','Cybersecurity']];
+  return `<section class="hero-strip" aria-label="What CGTK covers"><div class="wrap">
+    <p class="hero-tag">Global Intelligence for Digital Governance and Public Value</p>
+    <ul class="hero-themes">${items.map(([id,l]) => `<li><a href="#news" data-act="gotheme" data-v="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ico[id]}</svg><span>${l}</span></a></li>`).join('')}</ul>
+  </div></section>`;
+}
 V.news = () => {
   let items = SORTED.filter(n => (st.newsTheme==='all'||n.theme===st.newsTheme) && (st.sector==='all'||n.sector===st.sector) && (st.region==='all'||n.region===st.region) && (!st.official||n.trust==='official') && (!st.confirmed||n.sources>=2));
   if (st.q) { const q = st.q.toLowerCase(); items = items.filter(n => (n.title+' '+n.summary+' '+T[n.theme].label+' '+n.region+' '+n.sector).toLowerCase().includes(q)); }
