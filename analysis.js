@@ -19,6 +19,239 @@
 */
 const ANALYSES = [
 {
+  id:"a4",
+  theme:"cyb",
+  sector:"Government",
+  region:"Europe",
+  country:"poland",
+  date:"16 Nov 2026",
+  readMins:16,
+  kicker:"Cybersecurity · Poland in European context",
+  title:"When the front door goes dark: what Poland’s ePUAP attack says about securing shared e-government platforms",
+  standfirst:"On 10 November Poland detected a cyberattack on ePUAP, the platform behind official e-mailboxes and Trusted Profile signatures, and took it offline as a precaution. Four days later it was still down, and the minister said the attackers had been preparing to paralyse public administration in December. What the incident shows about single shared platforms, how Poland’s laws and money stack up, and what Albania, Costa Rica, the Netherlands, Belgium, Moldova, Estonia and Ukraine learned.",
+  infographic:{"title": "The ePUAP outage at a glance", "sub": "A precautionary shutdown of a shared platform used by millions, with no restoration date announced.", "blocks": [
+    {"type": "flow", "title": "Ten days in November", "steps": [
+      {"date": "10 Nov, ~21:00", "status": "done", "icon": "alert", "label": "Attack on ePUAP detected and stopped, minister announces on X", "c": [2]},
+      {"date": "10–11 Nov", "status": "done", "icon": "shield", "label": "ePUAP disconnected as a precaution; Internal Security Agency (ABW) joins", "note": "Ministry: no restoration date can be given", "c": [4, 1]},
+      {"date": "12 Nov", "status": "done", "icon": "globe", "label": "Minister: attack came from abroad; logs point to a planned December operation", "c": [7]},
+      {"date": "13 Nov", "status": "delayed", "icon": "clock", "label": "Platform still unavailable to citizens and public offices", "c": [11]},
+      {"date": "14–15 Nov", "status": "done", "icon": "id", "label": "Overnight maintenance on Trusted Profile, national login node and signature services", "c": [12, 14]},
+      {"date": "16 Nov", "status": "unclear", "icon": "server", "label": "No announcement of full restoration found by CGTK", "c": [13]}
+    ]},
+    {"type": "stats", "title": "How many people depend on the state’s digital front door", "items": [
+      {"icon": "id", "v": "16 m", "l": "people using the Trusted Profile (Profil Zaufany), April 2023", "c": 17},
+      {"icon": "phone", "v": "13.5 m", "l": "mObywatel app users, October 2026", "c": 18},
+      {"icon": "link", "v": "4.6 m", "l": "addresses in the e-delivery (e-Doręczenia) address database, August 2026", "c": 20},
+      {"icon": "transfer", "v": "100 m+", "l": "e-delivery shipments to date, over 50 m of them in 2026", "c": 20}
+    ]},
+    {"type": "compare", "title": "Downtime allowed per year by the availability level in the contract", "items": [
+      {"label": "ePUAP contract (98%)", "v": 7.3, "text": "up to 7.3 days a year", "icon": "server", "hl": true},
+      {"label": "Trusted Profile contract (99%)", "v": 3.6, "text": "up to 3.6 days a year", "icon": "id"},
+      {"label": "Level NIK recommended (about 99.9%)", "v": 0.4, "text": "about 0.4 days (8.8 hours) a year — CGTK calculation", "icon": "check"}
+    ], "c": [15], "note": "Contract levels and the 99.9% benchmark from the Supreme Audit Office (NIK), 2021. ePUAP was unavailable from the evening of 10 Nov to at least the morning of 14 Nov — about 3.5 days, roughly half the yearly allowance (CGTK calculation) [2][12]."}
+  ]},
+  keynums:[
+    {"v": "3.5+ days", "l": "ePUAP mailboxes unavailable, 10 Nov evening to at least 14 Nov morning (CGTK calculation)", "c": 12},
+    {"v": "272,941", "l": "incidents handled by Poland’s national CSIRTs in 2025, up 144.4% on 2024", "c": 28},
+    {"v": "13.5 m", "l": "mObywatel users in October 2026; 16 m Trusted Profile users in 2023", "c": 18},
+    {"v": "~4 bn zł", "l": "total yearly cybersecurity spending; over 3.1 bn zł of it civilian (2025)", "c": 30},
+    {"v": "38.2%", "l": "share of EU cyber incidents that targeted public administration, Jul 2024–Jun 2025", "c": 37},
+    {"v": "98%", "l": "availability ePUAP’s operator was contracted to deliver — up to 7.3 days of downtime a year", "c": 15}
+  ],
+  body:[
+    {"h": "The short version", "p": [
+      "Shortly before 21:00 on Tuesday 10 November 2026, Deputy Prime Minister and Minister of Digital Affairs Krzysztof Gawkowski announced that a cyberattack on ePUAP, Poland’s Electronic Platform of Public Administration Services, had been “detected and stopped” [1][2][3]. The platform’s electronic mailboxes became unavailable to citizens and public offices, and users trying to log in saw a maintenance notice [2][10]. The ministry’s communications director, Marek Gieorgica, said: “We simply disabled it as a precautionary measure,” adding that the system had not been compromised or disrupted by the attack [1].",
+      "Two days later Gawkowski said the attack had come from abroad and that logs showed preparation for a coordinated operation meant to paralyse government administration in December — “some kind of administrative bomb” [7][9]. The Internal Security Agency (ABW) is investigating [7]. On 14 November ePUAP was still unavailable, and gov.pl warned that the Trusted Profile (Profil Zaufany), the national login node and signature services might be unavailable from 18:00 that day to 07:00 on 15 November [12][13]. By the morning of 16 November CGTK had found no announcement that ePUAP was fully restored.",
+      "The lesson reaches beyond Poland. Login, signature and official mail are shared “front door” services: when they stop, many unrelated services stop with them. Europe’s cyber agency counts public administration as the most targeted sector in the EU, with 38.2% of incidents [37]. Poland has new law and record budgets; what the ePUAP episode tests is whether it has enough redundancy, fallback channels and openness when the front door has to be shut."
+    ]},
+    {"h": "What is known — and what is not", "p": [
+      "Known: the attack was detected on the evening of 10 November [2]; the platform was taken offline as a precaution, not because it failed [1][4]; the Central IT Centre (Centralny Ośrodek Informatyki, COI), which runs ePUAP, says its infrastructure is secure [2][11]; ABW was brought in under standard procedures [7]; and full restoration will come only after the COI team confirms there is no threat, with no date given [4][13].",
+      "Not known: how the attack was carried out, who was behind it, and whether attackers reached any data [1][11]. Specialist outlets suggested a denial-of-service (DDoS) attack [4], but the minister’s description of logs showing “preparatory activity” for a later operation [7] points to something more than a flood of traffic. The two official messages — “not compromised” [1] and “preparation for a specific time” [7] — have not yet been reconciled publicly. Gieorgica also said ePUAP does not collect information about citizens [6].",
+      "The context is a run of incidents. A week or two earlier the ministry had preventively shut some Public Information Bulletin (BIP) sites after a vulnerability was found in PHP code [6]. In late 2025 attackers tried to disrupt the power grid, which Gawkowski said pointed to Russian sabotage [33]. In August 2026 data on almost 19 million people was taken from the medical platform MyDr, which Gawkowski called one of the largest incidents in Poland’s history [34]."
+    ]},
+    {"h": "Background", "p": [
+      "ePUAP was conceived in 2001 as a flagship way for citizens to contact offices [16]. For years it struggled: upkeep cost up to about 19 million zł a year, and its improved version, ePUAP2, cost almost 50 million zł [16]. The Trusted Profile — a free online identity used to log in and sign documents — took off only later: from nearly 655,000 profiles in 2016 to over 7.2 million in the first half of 2020 [15], over 10 million in March 2021 [16] and 16 million in April 2023 [17]. The mObywatel app, which shares the same identity layer, had 13.5 million users in October 2026 [18], and users logged in an average of 1.5 million times a day in 2025 [19].",
+      "Outages are not new. Spider’s Web counted failures before a corporate filing deadline in March 2019, a nationwide outage of ePUAP, the Trusted Profile and the PESEL register on 22 January 2020, and Trusted Profile failures when COVID-19 vaccination booking opened in April 2021 [16]. In June 2023 the then minister reported “another DDoS attack” on ePUAP, with services available but disrupted [35]. The Supreme Audit Office (NIK) found in 2021 that ePUAP was often unstable, that contracts set availability at only 98% for ePUAP and 99% for the Trusted Profile, and that the operator had not fully implemented ISO/IEC 27001 or full security tests [15].",
+      "Since 2025 ePUAP has been shrinking in role. The Act on Electronic Delivery of 18 November 2020 made e-Doręczenia (e-delivery) the legal channel, phased in from 1 January 2025 [22]. At the end of 2025 ePUAP lost its equivalence with e-delivery, so general letters moved to e-Doręczenia [21]. ePUAP is still needed for correspondence between offices and with administrative courts [5]. That is why the outage hit offices hardest — and why it is still serious even though citizens now have another route."
+    ]},
+    {"h": "What other countries did", "p": [
+      "Albania (2022) is the warning about dwell time. Iranian state actors were inside the Albanian government network for about 14 months before ransomware and wiper attacks made websites and services unavailable, according to the US agencies CISA and FBI [38]. After the attack of 15 July 2022 Albania cut diplomatic ties with Iran [39]. Gawkowski’s description of logs showing groundwork for a later strike [7] echoes that pattern.",
+      "Costa Rica (2022) is the warning about cost. The Conti ransomware group hit the Finance Ministry and other agencies, taking customs and tax platforms down; the new president declared a national emergency, and an exporters’ group estimated about US$200 million in losses [40]. The Netherlands (2025) shows that a single login is a single target: a large DDoS attack left DigiD, the national login used by the tax office, municipalities and benefit agencies, unreachable for more than five hours [41]. Belgium (October 2026) took its MyMinfin tax portal offline as a precaution just before a 31 October filing deadline and promised extra time to file [42][43].",
+      "Moldova (October 2026) shows what attackers do with interconnected systems: they exploited services that needed no login, then pulled data tied to about 750,000 identification numbers from linked registers; the government disconnected more than 30 systems [44]. Estonia built for the worst case: a “data embassy” in a Tier 4 data centre in Luxembourg holds backups and can run the most critical services [45], and its X-Road exchange layer signs and encrypts outgoing data and logs incoming data [46]. Ukraine moved state registers to the cloud in the first days of the 2022 invasion; minister Mykhailo Fedorov said “Russian missiles can’t destroy the cloud” [47]. Even so, a December 2024 attack forced the Justice Ministry to suspend state registers and disrupted five Diia services, with recovery expected to take up to two weeks [48]."
+    ]},
+    {"h": "Where Poland stands", "p": [
+      "Law: the amended National Cybersecurity System Act, which transposes the EU’s NIS2 directive, was passed on 23 January 2026, signed on 19 February, published on 2 March and entered into force on 3 April 2026 [23]. It covers public entities, lets the minister designate high-risk ICT suppliers, and sets fines of up to €10 million or 2% of revenue for key entities — most of them only from 3 April 2028 [23]. Entities have 6 months to register and 12 months to put risk-management measures in place [24]. A new Cybersecurity Strategy to 2029 was adopted on 10 March 2026 [25]. Under the EU’s eIDAS 2.0 regulation, in force since 20 May 2024, Poland must offer a European Digital Identity Wallet by the end of 2026 [26]; the ministry plans an interim mObywatel Europa app by then [18].",
+      "Threat level: national CSIRTs handled 272,941 incidents in 2025, up 144.4%; CSIRT NASK alone handled 260,783 [28]. In 2024 the total was 111.66 thousand, and Gawkowski said Russia and Belarus were behind the largest number of attacks [27]; he has also called Poland the most attacked country in Europe [30]. CERT Polska, the NASK team founded in 1996, described 2024 as a record year on practically all its statistics [51], and its 2025 report has a chapter on observed APT group activity [52]. The ABW’s CSIRT GOV, which covers government, received over 23,000 reports in 2025 and classified about 5,000 as incidents, 13 of them serious; it points to sustained activity by Russia- and Belarus-linked groups, including DDoS [29].",
+      "Money: Poland spends about 4 billion zł a year on cybersecurity, over 3.1 billion of it civilian [30]. The 2025 civilian plan included 355 million zł from the Cybersecurity Fund, 860 million zł from the National Recovery Plan (KPO) including the “Cyberbezpieczny Rząd” programme, and 1.8 billion zł from the European Funds for Digital Development, including “Cyberbezpieczny Samorząd” [31]. That local-government programme is worth 1.5 billion zł, with up to 850,000 zł per unit, for over 2,000 local governments [32].",
+      "Gaps: in early February 2026 more than half of the public entities obliged to have an e-delivery address still had none [5]. NIK’s 2021 audit found 98% availability in the ePUAP contract and recommended about 99.9% [15]; there is no public evidence the target has since been raised. The ministry has promised updates [4] but had not, by the time of writing, said what happened or how the platform was hardened."
+    ]},
+    {"h": "CGTK’s assessment", "p": [
+      "CGTK’s view: taking ePUAP offline was defensible. When logs suggest attackers are preparing a later strike, as in Albania [38][7], shutting the door and checking the house is safer than keeping it open. Belgium did the same with its tax portal [42]. The cost of caution is measurable: about 3.5 days of unavailability by 14 November — roughly half of the 7.3 days a year the ePUAP contract allowed, and about nine times what a 99.9% target would allow (CGTK calculation) [15][12].",
+      "The bigger issue is architecture. ePUAP, the Trusted Profile, the national node and signature services are linked, so maintenance on one touches patient accounts and logins elsewhere [14]. Poland’s move to e-Doręczenia has spread risk, and citizens had another channel this time [21]. But offices and administrative courts still rely on ePUAP [5], and we found no public fallback plan for them during the outage. Estonia’s data embassy [45] and Ukraine’s cloud backups [47] show that “where do we run if the primary site is out?” needs an answer before an incident.",
+      "Communication is the third weakness. Saying both that the system was not compromised [1] and that attackers prepared an “administrative bomb” [7] confuses the public. Poland has the legal tools (NIS2), the incident teams and record budgets [23][28][30]. What it lacks is a published standard for how long a shared front-door service may be down, and a post-incident report. We would add three things: a 99.9% availability target with independent audit, as NIK proposed [15]; a tested fallback for inter-office and court correspondence; and a public post-incident report within weeks, not months. About 85% of the itemised 2025 civilian cyber plan comes from EU programmes (CGTK calculation) [31]; resilience for core platforms should also be paid for from the regular national budget."
+    ]}
+  ],
+  policy:{"intro": "Poland’s framework is now largely in place on paper; most obligations and penalties phase in from 2026 to 2028.", "rows": [
+    ["Act on the National Cybersecurity System (KSC)", "2018", "Created the national cybersecurity system and its CSIRTs (Dz.U. 2018 poz. 1560) [23]", "In force, amended 2026"],
+    ["KSC amendment transposing NIS2 (Dz.U. 2026 poz. 252)", "2026", "Covers public entities and 18 sectors; self-registration; high-risk supplier decisions; fines up to €10 m or 2% of revenue [23][24]", "In force 3 Apr 2026; fines from 2028"],
+    ["Act on Electronic Delivery (e-Doręczenia)", "2020", "Makes e-delivery the legal channel for official correspondence, phased in from 1 Jan 2025 [22]", "In force; amendment drafted Jul 2026 [20]"],
+    ["End of ePUAP’s equivalence with e-delivery", "2025", "From end-2025 general letters go via e-Doręczenia; ePUAP valid only where laws say so [21]", "Done"],
+    ["Cybersecurity Strategy of Poland to 2029", "2026", "Strengthens the national system, domestic technologies and action against cybercrime [25]", "Adopted 10 Mar 2026"],
+    ["eIDAS 2.0, Regulation (EU) 2024/1183", "2024", "Each member state must offer a European Digital Identity Wallet by the end of 2026 [26]", "Interim mObywatel Europa planned for end-2026 [18]"],
+    ["Cyberbezpieczny Samorząd (EU funds)", "2024", "1.5 bn zł, up to 850,000 zł per local government, for over 2,000 units [32]", "Under way"],
+    ["Cyberbezpieczny Rząd and other KPO projects", "2025", "860 m zł from the National Recovery Plan, including government and water-sector security [31]", "Under way"]
+  ]},
+  implementation:{"intro": "The legal milestones were met; operational ones — e-delivery uptake in offices, availability standards and restoration of ePUAP — lag.", "rows": [
+    ["e-delivery compulsory for public bodies and new firms", "1 Jan 2025", "done", "Rules in force from 1 Jan 2025 [22]"],
+    ["ePUAP loses equivalence with e-delivery", "End-2025", "done", "Transition period ended [21]"],
+    ["Every public entity has an e-delivery address", "Jan 2026", "delayed", "More than half still had none in early Feb 2026 [5]"],
+    ["Cybersecurity Strategy adopted", "Mar 2026", "done", "Adopted 10 Mar 2026 [25]"],
+    ["NIS2 amendment in force", "3 Apr 2026", "done", "Published 2 Mar, in force 3 Apr 2026 [23]"],
+    ["Entities register under the new KSC", "6 months after entry into force", "unclear", "No registration figures published [24]"],
+    ["Risk-management measures in place", "12 months after entry into force", "on track", "Deadline not yet reached [24]"],
+    ["Most NIS2 fines can be imposed", "3 Apr 2028", "not started", "Penalties deferred [23]"],
+    ["European Digital Identity Wallet offered", "End-2026", "unclear", "Interim mObywatel Europa planned [18][26]"],
+    ["ePUAP fully restored after the attack", "No date given", "delayed", "Still unavailable on 14 Nov [12][13]"],
+    ["Availability raised to about 99.9%, as NIK recommended", "Recommended 2021", "unclear", "No public evidence of a new target [15]"]
+  ]},
+  economics:{"figures": [
+    {"v": "~4 bn zł", "l": "total yearly cybersecurity spending, 2025", "c": 30},
+    {"v": "1.8 bn zł", "l": "from the European Funds for Digital Development, incl. Cyberbezpieczny Samorząd", "c": 31},
+    {"v": "860 m zł", "l": "from the National Recovery Plan (KPO), incl. Cyberbezpieczny Rząd", "c": 31},
+    {"v": "1.5 bn zł", "l": "Cyberbezpieczny Samorząd, up to 850,000 zł per local government", "c": 32},
+    {"v": "~19 m zł", "l": "yearly upkeep of ePUAP reported in 2021", "c": 16},
+    {"v": "US$200 m", "l": "estimated losses from Costa Rica’s 2022 ransomware outages", "c": 40}
+  ], "p": [
+    "Who pays: the 2025 civilian cybersecurity plan of over 3.1 billion zł was built from targeted grants (90 million zł), the national CSIRT at NASK (40 million zł), the Cybersecurity Fund (355 million zł), the National Recovery Plan (860 million zł) and the European Funds for Digital Development (1.8 billion zł) [31]. The two EU-funded lines make up about 2.66 billion zł, or roughly 85% of the 3.15 billion zł itemised (CGTK calculation) [31]. In 2024 the Cybersecurity Fund signed 112 support agreements worth 331.5 million zł [27].",
+    "What platforms cost: ePUAP’s upkeep was up to about 19 million zł a year and ePUAP2 cost almost 50 million zł, according to a 2021 review [16]; NIK found that an annex to the ePUAP and Trusted Profile contracts raised the operator’s maximum pay by nearly 70 million zł, without the ministry verifying the cost calculations [15]. These are small sums next to the national cyber budget, which suggests that higher availability standards are affordable.",
+    "What outages cost: Poland has not published an estimate for the ePUAP outage. Elsewhere the bill was large: Costa Rican exporters estimated about US$200 million in losses from the 2022 ransomware bottlenecks [40]. Belgium extended tax deadlines after its October 2026 portal shutdown [43] — a cost borne in delayed revenue and administrative work rather than cash."
+  ]},
+  charts:[
+    {"type": "group", "title": "Incidents handled by Poland’s national CSIRTs more than doubled in 2025", "sub": "Incidents handled, thousands", "fmt": "dec", "series": ["2024", "2025"], "rows": [["CSIRT NASK", [103.45, 260.783]], ["CSIRT MON (defence)", [4.22, 7.125]], ["CSIRT GOV (government, ABW)", [3.99, 5.033]]], "c": [27, 28]},
+    {"type": "bar", "title": "The Trusted Profile went from niche to mass identity in seven years", "sub": "Trusted Profile (Profil Zaufany) users, millions", "fmt": "dec", "rows": [["2016", 0.655, ""], ["Feb 2020", 5, ""], ["H1 2020", 7.2, ""], ["Mar 2021", 10, ""], ["Apr 2023", 16, "hl"]], "c": [15, 16, 17]}
+  ],
+  timeline:{"title": "ePUAP and Poland’s cyber defences", "items": [
+    ["2001", "ePUAP conceived as a single platform for contact with offices", 16],
+    ["2018", "Act on the National Cybersecurity System", 23],
+    ["22 Jan 2020", "ePUAP, Trusted Profile and PESEL register down nationwide for hours", 16],
+    ["18 Nov 2020", "Act on Electronic Delivery adopted", 22],
+    ["1 Apr 2021", "Trusted Profile down about 24 hours as vaccine booking opens", 16],
+    ["7 May 2021", "NIK audit: ePUAP often unstable, 98% availability in contract", 15],
+    ["13 Jun 2023", "Minister reports “another DDoS attack” on ePUAP", 35],
+    ["1 Jan 2025", "e-delivery becomes compulsory for public bodies", 22],
+    ["Late Dec 2025", "Attack on Poland’s power grid repelled; minister points to Russia", 33],
+    ["End-2025", "ePUAP loses equivalence with e-delivery", 21],
+    ["10 Mar 2026", "Cybersecurity Strategy to 2029 adopted", 25],
+    ["3 Apr 2026", "NIS2 amendment of the KSC Act enters into force", 23],
+    ["Aug 2026", "Data on almost 19 m people taken from medical platform MyDr", 34],
+    ["10 Nov 2026", "Attack on ePUAP detected; platform taken offline", 2],
+    ["12 Nov 2026", "Minister: attack from abroad, December operation planned", 7],
+    ["14–15 Nov 2026", "Overnight maintenance on Trusted Profile and national node", 12]
+  ]},
+  impact:[
+    {"who": "Public offices", "dir": "−", "size": "High", "text": "Lost the channel still used for inter-office correspondence; no restoration date [5][4]."},
+    {"who": "Administrative courts and litigants", "dir": "−", "size": "Medium", "text": "ePUAP remains the route for contacts with administrative courts [5]."},
+    {"who": "Citizens and businesses", "dir": "−", "size": "Low", "text": "e-Doręczenia is now the main channel, but logins and signatures were hit during maintenance [21][12]."},
+    {"who": "Patients", "dir": "−", "size": "Low", "text": "The Internet Patient Account could be harder to use during the overnight work [14]."},
+    {"who": "COI and ministry", "dir": "±", "size": "Medium", "text": "Fast containment and ABW involvement, but scrutiny over communication and availability standards [1][7][15]."},
+    {"who": "Local governments", "dir": "±", "size": "Medium", "text": "Exposed to the same threats; 1.5 bn zł programme helps them harden systems [32]."},
+    {"who": "e-delivery (e-Doręczenia)", "dir": "+", "size": "Medium", "text": "Outage underlines its role as the legal alternative; 100 m+ shipments to date [20]."},
+    {"who": "Trust in the digital state", "dir": "−", "size": "Medium", "text": "Mixed messages and repeat outages since 2019 risk eroding confidence [16][1][7]."}
+  ],
+  voices:[
+    {"who": "Krzysztof Gawkowski, Deputy Prime Minister and Minister of Digital Affairs", "group": "Government", "stance": "support", "view": "Says the attack came from abroad and was preparation for “some kind of administrative bomb” in December; citizens are not at risk but the threat was large.", "c": 7},
+    {"who": "Marek Gieorgica, communications director, Ministry of Digital Affairs", "group": "Government", "stance": "support", "view": "“We simply disabled it as a precautionary measure”; says the system was not compromised and restoration waits for COI checks.", "c": 1},
+    {"who": "Supreme Audit Office (NIK)", "group": "Government", "stance": "concern", "view": "Found ePUAP frequently unstable, a too-narrow definition of critical incidents, and recommended availability of about 99.9% instead of 98%.", "c": 15},
+    {"who": "Radosław Maćkiewicz, Director, Centralny Ośrodek Informatyki (COI)", "group": "Government", "stance": "support", "view": "Says e-Doręczenia will be the main means of electronic communication and that an address is set up very quickly.", "c": 21},
+    {"who": "Magdalena Gaj, President, Poczta Polska", "group": "Industry", "stance": "support", "view": "Calls the hybrid e-delivery service a bridge between the digital state and citizens who still need paper.", "c": 20},
+    {"who": "Check Point Software Technologies", "group": "Industry", "stance": "concern", "view": "On earlier DDoS attacks on ePUAP in 2023, said the method was typical of pro-Russian hacker groups.", "c": 36},
+    {"who": "Juhan Lepassaar, Executive Director, ENISA", "group": "Expert", "stance": "concern", "view": "Warns that systems people rely on are “intertwined”, so a disruption in one area can spread through the supply chain.", "c": 37},
+    {"who": "Instytut Sobieski (think tank)", "group": "Civil society", "stance": "concern", "view": "Argues Poland responds to incidents reactively and needs a layered strategy of “resilience, not firefighting”.", "c": 49},
+    {"who": "Marcin Wiącek, Commissioner for Human Rights, relaying citizens’ complaints", "group": "Users", "stance": "concern", "view": "Questioned officials being required to use private Trusted Profile or mObywatel accounts for work tasks in e-Doręczenia, citing privacy.", "c": 50}
+  ],
+  world:{"title": "When shared e-government platforms were hit elsewhere", "cols": ["Country", "Platform / incident", "What happened", "Response or lesson"], "rows": [
+    ["Albania", "Government network, July 2022", "Iranian state actors inside for about 14 months; ransomware and wiper made services unavailable [38]", "Cut diplomatic ties with Iran on 7 Sep 2022 [39]"],
+    ["Costa Rica", "Finance Ministry and agencies, April–May 2022", "Conti ransomware took tax and customs platforms down; ~US$200 m losses estimated [40]", "National emergency declared; refused to pay [40]"],
+    ["Netherlands", "DigiD national login, January 2025", "DDoS left DigiD unreachable for more than five hours [41]", "Shows a single login is a single target [41]"],
+    ["Belgium", "MyMinfin tax portal, October 2026", "Taken offline as a precaution before a 31 Oct deadline; no sign of data theft [42][43]", "Filing deadlines extended [43]"],
+    ["Moldova", "Government e-services, October 2026", "Unauthenticated services abused; data tied to ~750,000 ID numbers extracted [44]", "More than 30 systems disconnected and restored after checks [44]"],
+    ["Estonia", "Data embassy and X-Road", "Backups and critical services in a Tier 4 data centre in Luxembourg [45]; X-Road signs, encrypts and logs data [46]", "Continuity planned before any incident [45]"],
+    ["Ukraine", "State registers and Diia", "Registers moved to the cloud in 2022 [47]; Dec 2024 attack suspended registers and five Diia services [48]", "Cloud backups; recovery took up to two weeks [48]"]
+  ]},
+  home:{"title": "Inside Poland: earlier and parallel efforts", "cols": ["Initiative", "Lead", "Period", "What happened"], "rows": [
+    ["ePUAP and ePUAP2", "Ministry of Digital Affairs, COI", "2001 onwards", "Long delays; upkeep up to ~19 m zł a year; frequent outages [16][15]"],
+    ["Trusted Profile", "Ministry of Digital Affairs, COI", "2016–2023", "From ~655,000 to 16 m users [15][17]"],
+    ["mObywatel app", "Ministry of Digital Affairs, COI", "To Oct 2026", "13.5 m users; 1.5 m logins a day in 2025 [18][19]"],
+    ["e-Doręczenia", "Ministry, COI, Poczta Polska", "2025–2029", "4.6 m addresses, 100 m+ shipments by Aug 2026 [20][21]"],
+    ["National CSIRTs", "NASK, ABW, Ministry of Defence", "Ongoing", "272,941 incidents handled in 2025 [28]"],
+    ["Cyberbezpieczny Samorząd", "Ministry of Digital Affairs", "2024 onwards", "1.5 bn zł for over 2,000 local governments [32]"],
+    ["BIP sites shutdown", "Ministry of Digital Affairs", "Late Oct–early Nov 2026", "Sites shut preventively after a PHP vulnerability [6]"]
+  ]},
+  watch:[
+    "When ePUAP is fully restored, and whether the ministry publishes what the attack was and how the platform was hardened [4][13].",
+    "Whether the attack the minister says was planned for December materialises, and whether ABW names a perpetrator [7][8].",
+    "Whether availability targets for ePUAP and the Trusted Profile are raised towards the 99.9% NIK recommended [15].",
+    "Registration and compliance figures under the NIS2 amendment of the KSC Act [23][24].",
+    "Whether Poland meets the end-2026 deadline for a European Digital Identity Wallet [26][18].",
+    "Progress on e-delivery addresses for public bodies and the draft amendment to the e-delivery law [5][20]."
+  ],
+  sources:[
+    ["Poland shuts down government services platform ePUAP following cyberattack", "The Record, 11 Nov 2026", "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack"],
+    ["Cyberatak na system ePUAP. „Infrastruktura jest bezpieczna”", "CyberDefence24, 10 Nov 2026", "https://cyberdefence24.pl/cyberbezpieczenstwo/cyberataki/cyberatak-na-system-epuap-infrastruktura-jest-bezpieczna"],
+    ["Gawkowski: Wykryto i zatrzymano cyberatak na państwowy system ePUAP", "Rzeczpospolita (PAP), 10 Nov 2026", "https://www.rp.pl/przestepczosc/art45473901-gawkowski-wykryto-i-zatrzymano-cyberatak-na-system-epuap"],
+    ["ePUAP odłączony po cyberataku. Kiedy system znów zacznie działać?", "Filary Biznesu (PAP), 11 Nov 2026", "https://filarybiznesu.pl/innowacje/cyberbezpieczenstwo/epuap-odlaczony-po-cyberataku-kiedy-system-znow-zacznie-dzialac/a31088"],
+    ["Cyberatak na ePUAP. System odzyskuje pełną funkcjonalność", "Dobreprogramy, 11 Nov 2026", "https://www.dobreprogramy.pl/cyberatak-na-epuap-system-odzyskuje-pelna-funkcjonalnosc,7349832783374784a"],
+    ["Cyberatak na ePUAP. System został czasowo wyłączony", "Radio Szczecin (IAR), 11 Nov 2026", "https://radioszczecin.pl/6,513605,cyberatak-na-epuap-system-zostal-czasowo-wylaczo"],
+    ["Atak na ePUAP miał sparaliżować polską administrację. Gawkowski: przyszedł z zagranicy", "CyberDefence24 (PAP), 12 Nov 2026", "https://cyberdefence24.pl/cyberbezpieczenstwo/cyberataki/atak-na-epuap-mial-sparalizowac-polska-administracje-gawkowski-przyszedl-z-zagranicy"],
+    ["„Chcieli zrobić Polsce krzywdę”. Próba cyberataku na system ePUAP", "TVN24 Biznes, 12 Nov 2026", "https://tvn24.pl/biznes/z-kraju/chcieli-zrobic-polsce-krzywde-proba-cyberataku-na-system-epuap-st9336000"],
+    ["Cyberatak na ePUAP. Gawkowski ujawnia: plan był szerszy", "Money.pl (PAP), 12 Nov 2026", "https://www.money.pl/gospodarka/cyberatak-na-epuap-gawkowski-ujawnia-plan-byl-szerszy-7350150021425632a.html"],
+    ["Udaremniono cyberatak na ePUAP. Trwa przerwa w dostępie do systemu", "PAP Serwis Samorządowy, 12 Nov 2026", "https://samorzad.pap.pl/kategoria/e-urzad/udaremniono-cyberatak-na-epuap-trwa-przerwa-w-dostepie-do-systemu"],
+    ["Poland’s ePUAP platform remains offline after cyberattack, with Trusted Profile downtime planned", "ID Tech, 13 Nov 2026", "https://idtechwire.com/polands-epuap-platform-remains-offline-after-cyberattack-with-trusted-profile-downtime-planned/"],
+    ["Przerwa w dostępie do ePUAP", "WNP.pl (PAP), 14 Nov 2026", "https://www.wnp.pl/tech/przerwa-w-dostepie-do-epuap,1119830.html"],
+    ["W weekend dostęp do ePUAP jest ograniczony", "Prawo.pl (PAP), 14 Nov 2026", "https://www.prawo.pl/prawo/w-weekend-dostep-do-epuap-jest-ograniczony,1557538.html"],
+    ["Weekendowe problemy z systemem ePUAP. Prace zostały przedłużone", "Telepolis, 14 Nov 2026", "https://www.telepolis.pl/tech/weekendowe-problemy-z-systemem-epuap-wydano-pilny-komunikat"],
+    ["NIK about public services for citizens provided via electronic platform ePUAP", "Supreme Audit Office (NIK), 7 May 2021", "https://nik.gov.pl/en/news/nik-about-public-services-for-citizens-provided-via-electronic-platform-epuap.html"],
+    ["E-tam państwo vol. 3: kryzys cyfrowego urodzaju (ePUAP, profil zaufany, NIK)", "Spider’s Web, 5 May 2021", "https://spidersweb.pl/plus/2021/05/e-tam-panstwo-vol-3-kryzys-cyfrowego-urodzaju-epuap-profil-zaufany-nik"],
+    ["Profil Zaufany ma 16 milionów użytkowników", "Infor.pl, 17 Apr 2023", "https://www.infor.pl/prawo/nowosci-prawne/5725197,profil-zaufany-ma-16-milionow-uzytkownikow.html"],
+    ["mObywatel nie jest skończony. Zapowiedziano, czego jeszcze można się spodziewać", "Tabletowo, 23 Oct 2026", "https://www.tabletowo.pl/mobywatel-nowe-funkcje-zapowiedz-10-2026/"],
+    ["mObywatel: statystyki za 2025 rok", "Android.com.pl, 28 Jan 2026", "https://android.com.pl/tech/1013840-mobywatel-statystyki-2025-rok/"],
+    ["100 mln przesyłek w e-Doręczeniach. Cyfrowa korespondencja z urzędami stała się standardem", "Poczta Polska, 5 Aug 2026", "https://media.poczta-polska.pl/releases/100-mln-przesylek-w-e-doreczeniach-cyfrowa-korespondencja-z-urzedami-stala-sie-standardem"],
+    ["E-Doręczenia stają się podstawowym kanałem kontaktu z urzędami", "Polska-IE (Newseria), 5 Jan 2026", "https://www.polska-ie.com/e-doreczenia-staja-sie-podstawowym-kanalem-kontaktu-z-urzedami-konczy-sie-okres-przejsciowy-we-wdrazaniu-tej-uslugi/"],
+    ["Obowiązek stosowania e-Doręczeń", "KPMG Poland, 3 Mar 2025", "https://kpmg.com/pl/pl/wiedza/podatki/obowiazek-stosowania-e-doreczen.html"],
+    ["NIS2 w Polsce: ustawa o KSC", "Lome Legal, 31 Oct 2026", "https://lome.legal/nis2-ustawa-o-ksc/"],
+    ["NIS2 i UKSC. Nowelizacja opublikowana w Dzienniku Ustaw", "Grant Thornton Poland, 19 Feb 2026", "https://grantthornton.pl/publikacja/nis2-i-uksc-jest-podpis-prezydenta-terminy-obowiazki-i-kogo-dotycza-zmiany/"],
+    ["Nowa strategia cyberbezpieczeństwa. Polska wzmacnia ochronę przed cyberatakami", "Podatki.biz, 11 Mar 2026", "https://www.podatki.biz/artykuly/nowa-strategia-cyberbezpieczenstwa-polska-wzmacnia-ochrone-przed-cyberatakami_16_61484.htm"],
+    ["The legal and technical road to EU Digital Identity Wallets", "European Commission, 2 Feb 2026", "https://ec.europa.eu/digital-building-blocks/sites/spaces/EUDIGITALIDENTITYWALLET/pages/915931903/The%2Blegal%2Band%2Btechnical%2Broad%2Bto%2BEU%2BDigital%2BIdentity%2BWallets"],
+    ["Raport o stanie cyberbezpieczeństwa Polski: rekordowa liczba ataków w 2024 r.", "Rzeczpospolita, 16 Apr 2025", "https://www.rp.pl/biznes/art42131381-raport-o-stanie-cyberbezpieczenstwa-polski-rekordowa-liczba-atakow-w-2024-r"],
+    ["Sprawozdanie ws. cyberbezpieczeństwa w roku 2025 w Polsce", "Podatki.biz, 17 Apr 2026", "https://www.podatki.biz/artykuly/sprawozdanie-ws-cyberbezpieczenstwa-w-roku-2025-w-polsce_16_61842.htm"],
+    ["Polska pod cyberostrzałem: raport ABW o stanie bezpieczeństwa cyberprzestrzeni w 2025 roku", "Spider’s Web, 3 Sep 2026", "https://spidersweb.pl/2026/09/polska-cyberataki-abw-raport.html"],
+    ["Wicepremier Krzysztof Gawkowski o rekordowych wydatkach na cyberobronę Polski", "Bank.pl, 25 Nov 2025", "https://bank.pl/wicepremier-krzysztof-gawkowski-o-rekordowych-wydatkach-na-cyberobrone-polski/"],
+    ["Polska inwestuje w cyberbezpieczeństwo. Pójdą na to miliardy złotych", "Telepolis, 11 Aug 2025", "https://www.telepolis.pl/wiadomosci/ministerstwo-cyfryzacji-cyberbezpieczenstwo-inwestycje-3-1-mld-zl"],
+    ["Rząd ma dla Polaków nową tarczę. Budżet wynosi 1,5 mld zł", "Telepolis, 27 Feb 2024", "https://www.telepolis.pl/wiadomosci/rzad-tarcza-cyberbezpieczny-samorzad-warunki"],
+    ["Poland suffers major cyberattack on power grid, says Russia likely responsible", "Notes from Poland, 14 Jan 2026", "https://notesfrompoland.com/2026/01/14/poland-suffers-major-cyberattack-on-power-grid-says-russia-likely-responsible/"],
+    ["Poland hit by theft of 19 million patients’ data from medical platform", "Notes from Poland, 13 Aug 2026", "https://notesfrompoland.com/2026/08/13/poland-hit-by-theft-of-19-million-patients-data-from-medical-platform/"],
+    ["Atak na ePUAP. Wykorzystano metodę DDoS", "Telepolis, 13 Jun 2023", "https://www.telepolis.pl/wiadomosci/epuap-atak-ddos-rzad-cyfryzacja"],
+    ["Hakerzy zaatakowali ważny polski portal. Eksperci wskazują winnych", "Benchmark.pl, 14 Jun 2023", "https://www.benchmark.pl/aktualnosci/atak-hakerow-na-wazny-polski-portal-i-strony-rzadowe.html"],
+    ["EU consistently targeted by diverse yet convergent threat groups", "ENISA, 1 Oct 2025", "https://www.enisa.europa.eu/news/eu-consistently-targeted-by-diverse-yet-convergent-threat-groups"],
+    ["Iranian State Actors Conduct Cyber Operations Against the Government of Albania", "CISA, 21 Sep 2022", "https://cisa.gov/news-events/alerts/2022/09/21/iranian-state-actors-conduct-cyber-operations-against-government"],
+    ["Albania cuts diplomatic ties with Iran over cyberattack", "Al Jazeera, 7 Sep 2022", "https://www.aljazeera.com/news/2022/9/7/albania-cuts-diplomatic-ties-with-iran-over-cyberattack"],
+    ["Costa Rica’s new president declares state of emergency after Conti ransomware attack", "The Record, 9 May 2022", "https://therecord.media/costa-ricas-new-president-declares-state-of-emergency-after-conti-ransomware-attack/"],
+    ["Government login service DigiD frozen in large-scale cyberattack", "DutchNews, 15 Jan 2025", "https://www.dutchnews.nl/2025/01/government-login-service-digid-frozen-in-large-scale-cyberattack"],
+    ["Belgium’s finance and tax agency hit by cyberattack", "Euronews, 28 Oct 2026", "https://www.euronews.com/2026/10/28/belgiums-finance-and-tax-agency-hit-by-cyberattack"],
+    ["Cyberattack disrupts Belgian tax services before deadline", "The Record, 29 Oct 2026", "https://therecord.media/cyberattack-disrupts-belgian-tax-services-before-deadline"],
+    ["Moldova investigates possible foreign involvement in cyberattacks", "The Record, 28 Oct 2026", "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks"],
+    ["Data Embassy", "e-Estonia, accessed 16 Nov 2026", "https://e-estonia.com/service/e-governance/data-embassy/"],
+    ["X-Road", "e-Estonia, accessed 16 Nov 2026", "https://e-estonia.com/solutions/interoperability-services/x-road/"],
+    ["Ukraine tech chief: cloud migration ‘saved Ukrainian government and economy’", "Nextgov, 1 Dec 2022", "https://nextgov.com/cxo-briefing/2022/12/ukraine-tech-chief-cloud-migration-saved-ukrainian-government-and-economy/380328"],
+    ["Russian one of the largest cyberattack disrupts Ukraine’s digital government services", "Euromaidan Press, 20 Dec 2024", "https://euromaidanpress.com/2024/12/20/russian-one-of-the-largest-cyberattack-disrupts-ukraines-digital-government-services/"],
+    ["Rok sabotażu: czego uczą nas ataki na infrastrukturę Polski w latach 2023–2025", "Instytut Sobieski, n.d.", "https://new.sobieski.org.pl/rok-sabotazu-czego-ucza-nas-ataki-na-infrastrukture-polski-w-latach-2023-2025-i-dlaczego-potrzebujemy-strategii-odpornosci-a-nie-gaszenia-pozarow/?pdf=24102"],
+    ["Prywatne konta do zadań służbowych w systemie e-Doręczeń. Odpowiedź Ministra Cyfryzacji", "Podatki.biz, 11 Jul 2025", "https://www.podatki.biz/artykuly/prywatne-konta-do-zadan-sluzbowych-w-systemie-e-doreczen-odpowiedz-ministra-cyfryzacji_16_59262.htm"],
+    ["Raport roczny z działalności CERT Polska w 2024 roku", "CERT Polska, 3 Apr 2025", "https://cert.pl/posts/2025/04/raport-roczny-2024/"],
+    ["Raport roczny z działalności CERT Polska w 2025 roku", "CERT Polska, 8 Apr 2026", "https://cert.pl/posts/2026/04/raport-roczny-2025/"]
+  ],
+  related:["n103"]
+},
+{
   id:"a3",
   theme:"dpi",
   sector:"Fintech & payments",
