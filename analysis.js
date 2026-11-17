@@ -279,7 +279,7 @@ const ANALYSES = [
   related:["n98", "n69", "n97"]
 },
 {
-  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'4 Nov 2026', readMins:16,
+  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'17 Nov 2026', readMins:16,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
   standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and the central bank aims for full interoperability by July 2027. What the laws, the money, the people and the comparisons show.',
@@ -331,7 +331,7 @@ const ANALYSES = [
     ['Bangla QR instant settlement circular','Nov 2025','Payments to small and marginal merchants credited instantly from 15 Dec 2025; other merchants on terms set by providers [30]','In force; widened to all Bangla QR payments from 1 Oct 2026 [31]'],
     ['Bangla QR directive','Apr 2026','All providers to replace proprietary merchant QR codes by 30 June 2026; penalties up to Tk 30 lakh [20]','Complied; mandatory from 1 Jul 2026 [16]'],
     ['Bangla QR pricing and settlement directive','Sep 2026','From 1 Oct: 1% minimum merchant fee removed, interchange set to zero, all Bangla QR payments credited immediately, incentives for payments up to Tk 2,000; by 31 Oct, QR payment from every account holder’s app [17][31]','In force [17]'],
-    ['Local Government Division trade licence directive','2026','Retail businesses and merchants applying for or renewing a trade licence must display a Bangla QR code, which enrols them in the Bangla QR network; city corporations and other local authorities enforce it [32]','Directive issued; effective date not stated in the report [32]'],['National interoperability target','Nov 2025','All banks, MFS providers, insurers and other institutions on an interoperable system [9]','Target July 2027 [9]']
+    ['Local Government Division trade licence directive','Sep 2026','Retail businesses and merchants must have a Bangla QR payment facility as a condition for the issue and renewal of trade licences, which enrols them in the Bangla QR network; addressed to city corporations, municipalities and deputy commissioners [32][33][34]','Letter of 9 Sep 2026 following a Bangladesh Bank communication of 1 Sep; effective date not stated [33][34]'],['National interoperability target','Nov 2025','All banks, MFS providers, insurers and other institutions on an interoperable system [9]','Target July 2027 [9]']
   ]},
   implementation:{intro:'Most 2025–26 milestones were met on time. The gaps are data and the final, all-institution target.',rows:[
     ['Bangla QR pilot','18 Jan 2023','done','Pilot launched in Motijheel, Dhaka [28]'],
@@ -456,7 +456,9 @@ const ANALYSES = [
     ['Mandatory Bangla QR code marks new phase in Bangladesh’s digital payments','Prothom Alo, 3 Jul 2026','https://en.prothomalo.com/business/local/h5dlqaen8x'],
     ['BB sets Tk100cr to boost Bangla QR use','The New Nation, 9 Aug 2026','https://dailynewnation.com/news/848095'],
     ['BB asks to ensure instant settlement for Bangla QR code-based transactions','BSS, 24 Nov 2025','https://www.bssnews.net/business/335351'],
-    ['Bangla QR payments to reach merchants instantly from Oct 1','The Daily Star, 18 Sep 2026','https://www.thedailystar.net/business/economy/news/bangla-qr-payments-reach-merchants-instantly-oct-1-4275841'],['Mandatory Bangla QR required for trade licences','Dhaka Tribune, 6 Sep 2026','https://www.dhakatribune.com/business/419203/mandatory-bangla-qr-required-for-trade-licences']
+    ['Bangla QR payments to reach merchants instantly from Oct 1','The Daily Star, 18 Sep 2026','https://www.thedailystar.net/business/economy/news/bangla-qr-payments-reach-merchants-instantly-oct-1-4275841'],['Mandatory Bangla QR required for trade licences','Dhaka Tribune, 6 Sep 2026','https://www.dhakatribune.com/business/419203/mandatory-bangla-qr-required-for-trade-licences'],
+    ['Bangla QR made mandatory for retail business licence issuance, renewal','The Financial Express, 8 Oct 2026','https://thefinancialexpress.com.bd/home/bangla-qr-made-mandatory-for-retail-business-licence-issuance-renewal'],
+    ['Bangla QR made mandatory for retail business licences','The Business Standard, 8 Oct 2026','https://www.tbsnews.net/economy/banking/bangla-qr-made-mandatory-retail-business-licences-1566651']
   ],
   related:['n25','n19']
 },
