@@ -1,4 +1,4 @@
-/* CGTK site language: machine translation of the whole page with Google's website translator.
+/* GovTec site language: machine translation of the whole page with Google's website translator.
    The Google script is loaded only after a visitor picks a language other than English. */
 (function(){
   var LANGS = {'English':'en','Français':'fr','Español':'es','العربية':'ar'};
@@ -68,7 +68,7 @@
     if (code !== 'en' && !LANGS[label(code)]) code = 'en';
     wire(); syncSelects(code);
     if (code !== 'en') apply(code); else setCookie('');
-    // the Ask CGTK page is drawn later by app.js; wire its selector when it appears
+    // the Ask GovTec page is drawn later by app.js; wire its selector when it appears
     new MutationObserver(wire).observe(document.getElementById('app') || document.body, {childList:true, subtree:true});
   });
 })();

@@ -1,4 +1,4 @@
-/* ===== CGTK brand: shared (logo lockup + brand palette) ===== */
+/* ===== GovTec brand: shared (logo lockup + brand palette) ===== */
 :root{
   --navy-950:#06162A; --navy-900:#0A1F38; --navy-800:#10294A; --navy-line:#1F3D5E;
   --cyan:#00D2FF; --cyan-text:#0071A1; --amber:#E2B83C; --gold:#FFD700; --amber-text:#8A6400; --platinum:#F8FAFC;
@@ -65,7 +65,7 @@ footer .brand b i{color:transparent}
 footer .brand-full .bf1{color:var(--cyan)}footer .brand-full .bf2{color:var(--platinum)}
 .syn-link{color:var(--cyan)}
 .synapse-tag .t1{color:var(--cyan)}.synapse-tag .t2{color:var(--amber)}
-/* ===== Home-page brand strip (artwork from the CGTK banner) ===== */
+/* ===== Home-page brand strip (artwork from the GovTec banner) ===== */
 .hero-strip{position:relative;color:var(--platinum);background:linear-gradient(to bottom,var(--navy-950) 0,var(--navy-950) calc(100% - 150px),rgba(6,22,42,0) calc(100% - 95px)) no-repeat,url(img/hero-globe.webp) center bottom/max(100%,1150px) auto no-repeat,var(--navy-950);border-bottom:3px solid var(--cyan);overflow:hidden}
 .hero-strip .wrap{display:flex;flex-direction:column;align-items:center;gap:20px;padding-block:24px 118px;text-align:center}
 .hero-themes a span{text-shadow:0 1px 6px rgba(6,22,42,.9)}
