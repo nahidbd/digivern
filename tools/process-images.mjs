@@ -21,7 +21,7 @@ const SITE = arg('site', '.');
 const MAX = +arg('max', '12');
 const MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
 const MOCK = process.env.IMAGES_MOCK === '1';
-const UA = 'GovTecImageBot/1.0 (https://cgtk-sc.pages.dev)';
+const UA = 'GovTecImageBot/1.0 (https://govtec.org)';
 const FILE = path.join(SITE, 'images.js');
 const OUTDIR = path.join(SITE, 'img');
 
@@ -98,7 +98,7 @@ async function fromPage(page) {
 const STYLE = 'Style: clean, realistic editorial photo look, natural light, muted colours, wide 16:9 composition. No people\'s faces, no recognisable people, no text, letters or numbers, no logos or brand names, no flags, emblems or seals.';
 // Free illustrations through the site's own Cloudflare Pages Function (functions/api/illustrate.js, Workers AI binding).
 // The function only draws prompts already published in images.js, so it waits for the new images.js to go live.
-const SITE_URL = process.env.SITE_URL || 'https://cgtk-sc.pages.dev';
+const SITE_URL = process.env.SITE_URL || 'https://govtec.org';
 async function fromSite(id) {
   if (MOCK) return { kind: 'ai', buf: Buffer.from('jpg'), credit: 'AI-generated illustration', license: '', licenseUrl: '', sourceUrl: '' };
   let last = '';

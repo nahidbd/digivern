@@ -3,7 +3,7 @@
 Global intelligence on e-governance, digital public infrastructure (DPI), AI and cybersecurity.
 A knowledge venture of Synapse Consulting.
 
-Live site: https://cgtk-sc.pages.dev (Cloudflare Pages project cgtk-sc). The previous address https://digivern.pages.dev redirects there (functions/_middleware.js). The old address https://digivern.netlify.app is no longer updated; it is kept only because Netlify Forms stores writeup submissions there.
+Live site: https://govtec.org (Cloudflare Pages project cgtk-sc, domain registered at Namecheap with DNS on Cloudflare). The older addresses https://cgtk-sc.pages.dev, https://digivern.pages.dev and https://www.govtec.org redirect there (functions/_middleware.js). The old address https://digivern.netlify.app is no longer updated; it is kept only because Netlify Forms stores writeup submissions there.
 
 ## Files
 
