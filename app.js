@@ -794,7 +794,7 @@ function homeEventsFunding(){
 /* ---------- site statistics ---------- */
 let lastTracked = null, firstHit = true;
 function track(name, param){
-  if (!/pages\.dev$|digivern\./.test(location.hostname) || name === 'stats') return;
+  if (!/pages\.dev$|digivern\.|govtec\.org$/.test(location.hostname) || name === 'stats') return;
   const path = (param ? name + '-' + param : name).toLowerCase().slice(0, 60);
   if (path === lastTracked) return; lastTracked = path;
   let v = 0;
