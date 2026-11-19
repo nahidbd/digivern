@@ -279,7 +279,7 @@ const ANALYSES = [
   related:["n98", "n69", "n97"]
 },
 {
-  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'18 Nov 2026', readMins:16,
+  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'19 Nov 2026', readMins:16,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
   standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and the central bank aims for full interoperability by July 2027. What the laws, the money, the people and the comparisons show.',
@@ -341,7 +341,7 @@ const ANALYSES = [
     ['Bangla QR mandatory for all merchants','1 Jul 2026','done','Launched by the governor at a bKash merchant outlet [16]'],
     ['Merchant fee removal and instant settlement','1 Oct 2026','done','Minimum MDR removed, interchange zero, all payments credited immediately [17][31]'],
     ['Bangla QR payment from every bank account app','31 Oct 2026','unclear','Deadline set in the September directive [31]; no compliance data published'],
-    ['Person-to-person Bangla QR','1 Nov 2026','done','Live; fees and limits not yet published [19]'],
+    ['Person-to-person Bangla QR','1 Nov 2026','done','Live; no separate person-to-person charge, with existing interbank fund transfer (IBFT) charges applying to bank-to-bank transfers [37]; limits not yet published [19]'],
     ['Limits on merchant cash-out misuse','Not set','not started','Officials considering transaction limits on merchants [26]'],
     ['All financial institutions interoperable','Jul 2027','unclear','Target set [9]; no monthly interoperability data published [11]']
   ]},
@@ -416,10 +416,10 @@ const ANALYSES = [
       ['NPSB cross-platform transfers','Bangladesh Bank','From 1 Nov 2025','MFS, bank and PSP transfers with fee caps; sender pays [7]'],
       ['Inclusive Instant Payment System (IIPS)','Bangladesh Bank, Mojaloop, Gates Foundation support','From Nov 2025','Feature-phone access, simpler accounts, fraud screening; to connect MFIs later [10]'],
       ['Bangla QR (merchant payments)','Bangladesh Bank, via NPSB','Pilot Jan 2023; mandatory 1 Jul 2026','9.63 lakh merchants by end-2025; 39 lakh merchant points by Sep 2026 [18][28]'],
-      ['Bangla QR person-to-person','Bangladesh Bank','From 1 Nov 2026','Scan a person’s code to pay across banks and wallets; fees and limits not yet published [19]']
+      ['Bangla QR person-to-person','Bangladesh Bank','From 1 Nov 2026','Scan a person’s code to pay across banks and wallets; no separate person-to-person charge, with existing interbank fund transfer (IBFT) charges applying to bank-to-bank transfers [37]; limits not yet published [19]']
     ]},
   watch:[
-    'The fees and limits Bangladesh Bank sets for person-to-person Bangla QR transfers, and whether they are lower than the 0.85% cap on MFS-originated transfers.',
+    'The transaction limits Bangladesh Bank sets for person-to-person Bangla QR transfers, and what the existing interbank transfer charges mean in practice compared with the 0.85% cap on MFS-originated transfers.',
     'Limits on merchant cash-outs through Bangla QR, and whether they slow genuine merchant adoption [26].',
     'Whether the largest MFS providers are required to route person-to-person transfers through IIPS, and by when.',
     'Monthly interoperable transaction data: Bangladesh Bank does not yet publish it separately, which makes progress hard to track.',
@@ -460,7 +460,8 @@ const ANALYSES = [
     ['Bangla QR made mandatory for retail business licence issuance, renewal','The Financial Express, 8 Oct 2026','https://thefinancialexpress.com.bd/home/bangla-qr-made-mandatory-for-retail-business-licence-issuance-renewal'],
     ['Bangla QR made mandatory for retail business licences','The Business Standard, 8 Oct 2026','https://www.tbsnews.net/economy/banking/bangla-qr-made-mandatory-retail-business-licences-1566651'],
     ['ব্যবসাপ্রতিষ্ঠানের ট্রেড লাইসেন্সে বাধ্যতামূলক হচ্ছে ‘বাংলা কিউআর’ (Bangla QR becomes mandatory for business trade licences)','Prothom Alo, 9 Oct 2026','https://www.prothomalo.com/business/hz6xxd6ono'],
-    ['Every trade licence will now require a cashless transaction option, ‘Bangla QR’','The Business Standard, 12 Oct 2025','https://www.tbsnews.net/economy/every-trade-licence-will-now-require-cashless-transaction-option-bangla-qr-1258381']
+    ['Every trade licence will now require a cashless transaction option, ‘Bangla QR’','The Business Standard, 12 Oct 2025','https://www.tbsnews.net/economy/every-trade-licence-will-now-require-cashless-transaction-option-bangla-qr-1258381'],
+    ['Person-to-person payments coming via Bangla QR; BB orders all apps to be ready by 31 Oct','The Business Standard, 13 Aug 2026','https://www.tbsnews.net/economy/banking/person-person-payments-coming-bangla-qr-bb-orders-all-apps-be-ready-31-oct-1513811']
   ],
   related:['n25','n19']
 },
