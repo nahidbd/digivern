@@ -58,6 +58,14 @@ function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs =
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Tag Manager -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSJLXW5D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+<!-- End Google Tag Manager -->
 <title>${esc(title)} | ${NAME}</title>
 <meta name="description" content="${esc(clip(desc, 300))}">
 <link rel="canonical" href="${canon}">
