@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://govtec.org/sitemap.xml

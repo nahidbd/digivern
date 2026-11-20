@@ -1,0 +1,48 @@
+# Rebuilds the plain HTML pages that search engines and link previews read (news/, analysis/, countries/, focus/),
+# plus sitemap.xml, feed.xml and the headline list in index.html, whenever the content files change on main.
+# See tools/build-seo.mjs. Commits the result back to main.
+name: Build static pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['data.js', 'analysis.js', 'focus.js', 'events.js', 'images.js', 'tools/build-seo.mjs']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build pages
+        run: node tools/build-seo.mjs
+      - name: Commit pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A news analysis countries focus sitemap.xml feed.xml index.html
+          if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
+          git commit -q -m "Static pages for search engines"
+          for i in 1 2 3 4; do
+            if git pull -q --rebase origin main && git push -q origin HEAD:main; then exit 0; fi
+            # if the rebase hit a conflict in generated files, rebuild from the latest content and try again
+            git rebase --abort 2>/dev/null || true
+            git reset -q --hard origin/main
+            node tools/build-seo.mjs
+            git add -A news analysis countries focus sitemap.xml feed.xml index.html
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -q -m "Static pages for search engines"
+            sleep 10
+          done
+          exit 1

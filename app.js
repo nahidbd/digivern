@@ -1015,6 +1015,27 @@ function focusSector(m){
   </div></section>`;
 }
 
+/* ---------- shareable addresses ---------- */
+// News, analysis and country pages also exist as plain pages (built by tools/build-seo.mjs) that search engines
+// and link previews can read, so links that people copy or share point there.
+function shareUrl(){
+  const h = (location.hash || '').slice(1), o = 'https://govtec.org';
+  let m;
+  if ((m = h.match(/^story-(n\d+)$/))) return o + '/news/' + m[1] + '/';
+  if ((m = h.match(/^(?:analysis|report)-(a\d+)$/))) return o + '/analysis/' + m[1] + '/';
+  if ((m = h.match(/^country-([a-z-]+)$/)) && PROFILES[m[1]]) return o + '/countries/' + m[1] + '/';
+  return location.href;
+}
+function pageTitle(name, param){
+  const base = 'GovTec — Governance & Technology Centre';
+  let t = '';
+  if (name === 'story') { const n = NEWS.find(x => x.id === param); if (n) t = n.title; }
+  else if (name === 'analysis') { const a = (window.DV_ANALYSES||[]).find(x => x.id === param); if (a) t = a.title; }
+  else if (name === 'country') { const c = COUNTRIES.find(x => (x.id||x[0]) === param); if (c) t = (c.name||c[1]) + ': digital government profile'; }
+  else if (name !== 'home') { const a = document.querySelector('.nav a[href="#' + (NAVMAP[name]||name) + '"]'); if (a) t = a.textContent; }
+  return t ? t + ' | GovTec' : base;
+}
+
 /* ---------- router ---------- */
 const NAVMAP = {home:'',news:'news',story:'news',reports:'reports',report:'reports',analysis:'reports',countries:'countries',country:'countries',tracker:'tracker',ask:'ask',consulting:'consulting',learn:'learn',voices:'voices',writeup:'voices',contribute:'voices',focus:'focus',events:'events',funding:'funding'};
 function render(){
@@ -1025,6 +1046,7 @@ function render(){
   if (!V[name]) name = 'home';
   $('#view').innerHTML = V[name](param);
   track(name, param);
+  try { document.title = pageTitle(name, param); } catch(e) {}
   if (name === 'stats') loadStats();
   document.querySelectorAll('.nav a').forEach(a => { if (a.getAttribute('href') === '#' + NAVMAP[name]) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   $('#nav').dataset.open = 'false'; $('#menuBtn').setAttribute('aria-expanded','false');
@@ -1061,7 +1083,7 @@ document.addEventListener('click', e => {
   else if (a === 'save') toast('Saving opens with reader accounts after the pilot.');
   else if (a === 'plan') toast(v === 'Free' ? 'Everything in Free is open now.' : 'Noted. The waiting list opens after the pilot.');
   else if (a === 'copylink') {
-    try { navigator.clipboard.writeText(location.href).then(()=>toast('Link copied'), ()=>toast('Copy is blocked here. Copy the address bar instead.')); } catch(err) { toast('Copy is blocked here. Copy the address bar instead.'); }
+    try { navigator.clipboard.writeText(shareUrl()).then(()=>toast('Link copied'), ()=>toast('Copy is blocked here. Copy the address bar instead.')); } catch(err) { toast('Copy is blocked here. Copy the address bar instead.'); }
   }
 });
 document.addEventListener('change', e => {
