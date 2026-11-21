@@ -8,7 +8,8 @@
 //      crowds and similar are skipped by their title, description and categories).
 //   2. Otherwise, unless noAi is set, create an editorial illustration from the prompt and save it, credited as an
 //      AI-generated illustration: first through the site's own /api/illustrate function (Cloudflare Workers AI binding,
-//      free daily allowance, no keys needed), then the Cloudflare API or Gemini if those secrets are set.
+//      free daily allowance, no keys needed), then the Cloudflare API if those secrets are set. (Gemini was dropped
+//      on 21 Nov 2026 at the editor's request; fromGemini is kept only for reference and is not called.)
 //   3. If neither works, mark the entry "failed" with the reason; the site then shows the item without an image.
 // Usage: node tools/process-images.mjs [--site .] [--max 12]
 // Environment: CF_ACCOUNT_ID and CF_AI_TOKEN (Cloudflare Workers AI, free illustrations), GEMINI_API_KEY (optional second choice), GEMINI_IMAGE_MODEL (default gemini-2.5-flash-image), IMAGES_MOCK=1 (offline test).
@@ -173,7 +174,6 @@ for (const [id, e] of Object.entries(images)) {
   for (const q of queries) { if (got) break; try { got = await searchCommons(q); } catch (err) { tried.push('photo search: ' + err.message); } }
   if (!got && e.prompt && !e.noAi) { try { got = await fromSite(id); } catch (err) { tried.push('illustration (site): ' + err.message); } }
   if (!got && e.prompt && !e.noAi && process.env.CF_AI_TOKEN) { try { got = await fromCloudflare(e.prompt); } catch (err) { tried.push('illustration (Cloudflare API): ' + err.message); } }
-  if (!got && e.prompt && !e.noAi && process.env.GEMINI_API_KEY) { try { got = await fromGemini(e.prompt); } catch (err) { tried.push('illustration (Gemini): ' + err.message.slice(0, 90)); } }
   if (!got) {
     images[id] = { status: 'failed', alt: e.alt || '', commons: e.commons || '', ...(e.commonsQuery ? { commonsQuery: e.commonsQuery } : {}), prompt: e.prompt || '', noAi: !!e.noAi, reason: tried.join('; ') || 'no photo named and illustrations not allowed', date: today };
     failed++; console.log(`${id}: failed – ${images[id].reason}`); continue;

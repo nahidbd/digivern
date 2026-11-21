@@ -1,6 +1,7 @@
 # Turns image requests in images.js into images (licensed Wikimedia Commons photos, or AI-generated illustrations as a fallback).
 # Runs whenever images.js changes on main, and can be started by hand. Commits the images and the updated images.js back to main.
-# Illustrations: Cloudflare Workers AI (secrets CF_ACCOUNT_ID and CF_AI_TOKEN, free daily allowance), then Gemini (GEMINI_API_KEY) if it has image access.
+# Illustrations: Cloudflare Workers AI through the site's own /api/illustrate function (free, no keys), then the Cloudflare API
+# (secrets CF_ACCOUNT_ID and CF_AI_TOKEN) if set. Gemini is no longer used (editor's decision, 21 Nov 2026).
 name: Process images
 
 on:
@@ -31,8 +32,6 @@ jobs:
         env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_AI_TOKEN: ${{ secrets.CF_AI_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
         run: node tools/process-images.mjs --site . --max 12
       - name: Commit images
         run: |
