@@ -50,7 +50,8 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          git fetch -q origin main && git checkout -q origin/main
+          git fetch -q --unshallow origin main 2>/dev/null || git fetch -q origin main
+          git checkout -q origin/main
           BEFORE="${{ github.event.before }}"
           if [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then BEFORE=HEAD~1; fi
           CHANGED=$(git diff --name-only "$BEFORE" HEAD -- news analysis countries focus events funding topics sectors policy-tracker glossary | grep '/index.html$' | sed 's#index.html$##' | sed 's#^#https://govtec.org/#' | head -9000)
