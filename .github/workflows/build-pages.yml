@@ -55,8 +55,10 @@ jobs:
           BEFORE="${{ github.event.before }}"
           if [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then BEFORE=HEAD~1; fi
           CHANGED=$(git diff --name-only "$BEFORE" HEAD -- news analysis countries focus events funding topics sectors policy-tracker glossary | grep '/index.html$' | sed 's#index.html$##' | sed 's#^#https://govtec.org/#' | head -9000)
+          # a manual run (workflow_dispatch) submits every page in the sitemap
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then CHANGED=$(cat indexnow-urls.txt); fi
           [ -z "$CHANGED" ] && { echo "No changed pages"; exit 0; }
-          URLS=$( (echo https://govtec.org/; echo "$CHANGED") | python3 -c 'import sys,json; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          URLS=$( (echo https://govtec.org/; echo "$CHANGED") | sort -u | python3 -c 'import sys,json; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
           echo "$URLS" | python3 -c 'import sys,json; print(len(json.load(sys.stdin)), "URLs")'
           curl -s -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
             -d "{\"host\":\"govtec.org\",\"key\":\"2871b06d9cbdec85bba33dba89cd6733\",\"keyLocation\":\"https://govtec.org/2871b06d9cbdec85bba33dba89cd6733.txt\",\"urlList\":$URLS}"
