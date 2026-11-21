@@ -4,9 +4,9 @@
 name: Collect leads (Gemini and ChatGPT)
 
 on:
-  schedule:
-    - cron: '5 23 * * *'   # 05:05 Asia/Dhaka, before the 06:38 daily update
-  workflow_dispatch:       # "Run workflow" button for a manual test
+  # Daily schedule switched off on 21 Nov 2026 at the editor's request (leads from Gemini and ChatGPT are no longer used).
+  # To switch it back on, restore:  schedule: - cron: '5 23 * * *'   (05:05 Asia/Dhaka)
+  workflow_dispatch:       # "Run workflow" button for a manual run
 
 permissions:
   contents: write
