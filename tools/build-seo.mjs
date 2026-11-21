@@ -3,8 +3,10 @@
 // engines treat as one page and link previews (LinkedIn, Facebook, WhatsApp, X) cannot read.
 // This script writes, from data.js, analysis.js, focus.js, events.js and images.js:
 //   news/<id>/index.html, analysis/<id>/index.html, countries/<id>/index.html, focus/<month>/index.html,
-//   news/index.html, analysis/index.html, countries/index.html (hub pages),
-//   sitemap.xml, feed.xml (RSS) and the <noscript> list of latest headlines in index.html.
+//   events/<id>/index.html, funding/<id>/index.html, topics/<theme>/index.html, sectors/<sector>/index.html,
+//   hub pages (news/, analysis/, countries/, focus/, events/, funding/, topics/, policy-tracker/, glossary/),
+//   sitemap.xml (with images), news-sitemap.xml (Google News), feed.xml (RSS), indexnow-urls.txt
+//   and the <noscript> list of latest headlines in index.html.
 // Run: node tools/build-seo.mjs   (the "Build static pages" GitHub Actions job runs it after every content change)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -40,12 +42,14 @@ const clip = (s, n) => { s = String(s).replace(/\s+/g, ' ').trim(); return s.len
 const strip = s => String(s ?? '').replace(/\[(\d+)\]/g, '');
 const imgOf = id => { const v = IMG[id]; return v && v.status === 'done' && v.src ? v : null; };
 const abs = p => SITE + '/' + p.replace(/^\//, '');
+const slug = s => String(s).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const BUILD_NOW = Date.now();
 
 function cite(s, prefix) {
   return esc(s).replace(/\[(\d+)\]/g, (m, n) => `<sup><a href="#${prefix}${n}">${n}</a></sup>`);
 }
 
-function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs = [], body, app }) {
+function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs = [], body, app, published, modified, noindex }) {
   const canon = SITE + url;
   const img = image || abs('img/og-govtec.jpg');
   const ld = [{
@@ -69,14 +73,17 @@ function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs =
 <title>${esc(title)} | ${NAME}</title>
 <meta name="description" content="${esc(clip(desc, 300))}">
 <link rel="canonical" href="${canon}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
+<meta name="author" content="${esc(FULL)}">
+<meta property="og:locale" content="en_GB">
 <meta property="og:site_name" content="${esc(FULL)}">
 <meta property="og:type" content="${type}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(clip(desc, 300))}">
 <meta property="og:url" content="${canon}">
 <meta property="og:image" content="${esc(img)}">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:alt" content="${esc(clip(title, 200))}">
+${published ? `<meta property="article:published_time" content="${published}">\n` : ''}${modified ? `<meta property="article:modified_time" content="${modified}">\n` : ''}<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(clip(desc, 200))}">
 <meta name="twitter:image" content="${esc(img)}">
@@ -92,7 +99,7 @@ function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs =
 <body class="sp">
 <header class="sp-mast"><div class="sp-wrap">
 <a class="sp-brand" href="/"><img src="/img/emblem.webp" width="44" height="44" alt=""><span><b>Gov<i>Tec</i></b><small>Governance &amp; Technology Centre</small></span></a>
-<nav aria-label="Main"><a href="/news/">News</a><a href="/analysis/">Analysis</a><a href="/countries/">Countries</a><a href="/#focus">Monthly Focus</a><a href="/#tracker">Policy Tracker</a><a href="/#events">Events</a><a href="/#funding">Funding</a></nav>
+<nav aria-label="Main"><a href="/news/">News</a><a href="/analysis/">Analysis</a><a href="/countries/">Countries</a><a href="/focus/">Monthly Focus</a><a href="/policy-tracker/">Policy Tracker</a><a href="/events/">Events</a><a href="/funding/">Grants &amp; jobs</a></nav>
 </div></header>
 <main class="sp-wrap sp-main">
 <p class="sp-crumb"><a href="/">Home</a>${crumbs.map(([n, u], i) => i === crumbs.length - 1 ? ` / <span>${esc(n)}</span>` : ` / <a href="${u}">${esc(n)}</a>`).join('')}</p>
@@ -102,14 +109,17 @@ ${app ? `<p class="sp-app"><a class="sp-btn" href="${app}">Open in the interacti
 </main>
 <footer class="sp-foot"><div class="sp-wrap">
 <p><b>${esc(FULL)}</b>: global intelligence on e-governance, digital public infrastructure, AI and cybersecurity, linked to its sources. A knowledge venture of <a href="https://synapseconsulting.services" rel="noopener">Synapse Consulting</a>. In beta: everything is free.</p>
-<p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/feed.xml">RSS feed</a> · <a href="/#about">Methodology</a> · <a href="/#contact">Contact</a></p>
+<p><b>Topics:</b> ${D.THEMES.map(t => `<a href="/topics/${t.id}/">${esc(t.label)}</a>`).join(' · ')}</p>
+<p><b>Sectors:</b> ${D.SECTORS.map(x => `<a href="/sectors/${slug(x)}/">${esc(x)}</a>`).join(' · ')}</p>
+<p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/events/">Events</a> · <a href="/funding/">Grants, fellowships and jobs</a> · <a href="/policy-tracker/">Policy &amp; Law Tracker</a> · <a href="/glossary/">Glossary</a> · <a href="/feed.xml">RSS feed</a> · <a href="/#about">Methodology</a> · <a href="/#contact">Contact</a></p>
 </div></footer>
 </body>
 </html>
 `;
 }
 
-const ORG = { '@type': 'Organization', name: FULL, alternateName: NAME, url: SITE + '/', logo: { '@type': 'ImageObject', url: abs('img/emblem-512.png'), width: 512, height: 512 } };
+const ORG = { '@type': 'Organization', '@id': SITE + '/#org', name: FULL, alternateName: NAME, url: SITE + '/', logo: { '@type': 'ImageObject', url: abs('img/emblem-512.png'), width: 512, height: 512 } };
+const FREE = { isAccessibleForFree: true, inLanguage: 'en' };
 const out = new Map(); // relative path -> content
 const sitemap = []; // [url, lastmod]
 const write = (rel, html) => out.set(rel, html);
@@ -138,20 +148,21 @@ ${im ? `<figure><img src="/${esc(im.src)}" width="${im.w}" height="${im.h}" alt=
 <ol class="sp-sources">${n.links.map(l => `<li><a href="${esc(l[2])}" rel="noopener">${esc(l[0])}</a>, ${esc(l[1])}</li>`).join('')}</ol>
 ${country && D.PROFILES[n.country] ? `<p>See also: <a href="/countries/${n.country}/">${esc(country.name)}: digital government profile</a></p>` : ''}
 ${related.length ? `<h2>Related</h2><ul class="sp-list">${related.map(newsCard).join('')}</ul>` : ''}
+<p class="sp-note">More on <a href="/topics/${n.theme}/">${esc(T[n.theme] || '')}</a> · <a href="/sectors/${slug(n.sector)}/">${esc(n.sector)}</a>${country ? ` · <a href="/countries/${n.country}/">${esc(country.name)}</a>` : ''}</p>
 </article>`;
   write(`news/${n.id}/index.html`, page({
     url: `/news/${n.id}/`, title: n.title, desc: n.summary, image: im ? abs(im.src) : null,
-    crumbs: [['News', '/news/'], [n.title, `/news/${n.id}/`]], app: `/#story-${n.id}`,
+    crumbs: [['News', '/news/'], [n.title, `/news/${n.id}/`]], app: `/#story-${n.id}`, published: d, modified: d,
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'NewsArticle', headline: clip(n.title, 110), description: clip(n.summary, 300),
       datePublished: d, dateModified: d, image: im ? [abs(im.src)] : [abs('img/og-govtec.jpg')],
       articleSection: T[n.theme], keywords: [T[n.theme], n.sector, country && country.name].filter(Boolean).join(', '),
       author: ORG, publisher: ORG, mainEntityOfPage: SITE + `/news/${n.id}/`,
-      isBasedOn: n.links.map(l => l[2]), ...(country ? { contentLocation: { '@type': 'Country', name: country.name } } : {})
+      isBasedOn: n.links.map(l => l[2]), ...FREE, ...(country ? { contentLocation: { '@type': 'Country', name: country.name } } : {})
     }],
     body
   }));
-  sitemap.push([`/news/${n.id}/`, d]);
+  sitemap.push([`/news/${n.id}/`, d, im ? [{ loc: abs(im.src), title: im.alt }] : []]);
 }
 write('news/index.html', page({
   url: '/news/', title: 'News on e-governance, DPI, AI and cybersecurity', type: 'website',
@@ -182,24 +193,25 @@ ${(a.watch || []).length ? sec('What to watch', `<ul>${a.watch.map(w => `<li>${c
 <ol class="sp-sources">${a.sources.map((s, i) => `<li id="${P}${i + 1}"><a href="${esc(s[2])}" rel="noopener">${esc(s[0])}</a>, ${esc(s[1])}</li>`).join('')}</ol>
 </article>`;
   const country = a.country && C[a.country];
+  const aim = (a.related || []).map(imgOf).find(Boolean);
   write(`analysis/${a.id}/index.html`, page({
-    url: `/analysis/${a.id}/`, title: a.title, desc: strip(a.standfirst),
+    url: `/analysis/${a.id}/`, title: a.title, desc: strip(a.standfirst), image: aim ? abs(aim.src) : null, published: d, modified: u,
     crumbs: [['Analysis', '/analysis/'], [a.title, `/analysis/${a.id}/`]], app: `/#analysis-${a.id}`,
     jsonld: [{
       '@context': 'https://schema.org', '@type': 'AnalysisNewsArticle', headline: clip(a.title, 110), description: clip(strip(a.standfirst), 300),
-      datePublished: d, dateModified: u, image: [abs('img/og-govtec.jpg')], articleSection: T[a.theme], author: ORG, publisher: ORG,
-      mainEntityOfPage: SITE + `/analysis/${a.id}/`, citation: a.sources.map(s => s[2]),
+      datePublished: d, dateModified: u, image: [aim ? abs(aim.src) : abs('img/og-govtec.jpg')], articleSection: T[a.theme], author: ORG, publisher: ORG,
+      mainEntityOfPage: SITE + `/analysis/${a.id}/`, citation: a.sources.map(s => s[2]), ...FREE, wordCount: (a.body || []).flatMap(b => b.p || []).join(' ').split(/\s+/).length,
       ...(country ? { contentLocation: { '@type': 'Country', name: country.name } } : {})
     }],
     body
   }));
-  sitemap.push([`/analysis/${a.id}/`, u]);
+  sitemap.push([`/analysis/${a.id}/`, u, aim ? [{ loc: abs(aim.src), title: aim.alt }] : []]);
 }
 write('analysis/index.html', page({
   url: '/analysis/', title: 'In-depth analysis on digital government and DPI', type: 'website',
   desc: 'GovTec in-depth analysis: policy, implementation, money, impact and voices on digital government, digital public infrastructure, payments, health and cybersecurity, with numbered sources.',
   crumbs: [['Analysis', '/analysis/']], app: '/#reports',
-  body: `<h1>Analysis</h1><p class="sp-lead">Deep, source-numbered analysis of the most significant developments, published twice a week.</p><ul class="sp-list">${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a><br><small>${esc(a.date)} · ${esc(a.kicker || '')}</small><br>${esc(clip(strip(a.standfirst), 260))}</li>`).join('')}</ul>`
+  body: `<h1>Analysis</h1><p class="sp-lead">Deep, source-numbered analysis of the most significant developments, published every Saturday.</p><ul class="sp-list">${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a><br><small>${esc(a.date)} · ${esc(a.kicker || '')}</small><br>${esc(clip(strip(a.standfirst), 260))}</li>`).join('')}</ul>`
 }));
 sitemap.push(['/analysis/', AN[0] ? isoDate(AN[0].updated || AN[0].date) : null]);
 
@@ -229,11 +241,35 @@ ${news.length ? `<h2>Latest news on ${esc(c.name)}</h2><ul class="sp-list">${new
   }));
   sitemap.push([`/countries/${id}/`, p.reviewed]);
 }
+
+// Countries that have news but no full profile yet get a basic page (UN EGDI data and their news), so that
+// searches for a country's digital government news land on GovTec.
+const newsOnlyIds = [...new Set(newsList.map(n => n.country).filter(id => id && C[id] && !D.PROFILES[id]))].sort((a, b) => C[a].name.localeCompare(C[b].name));
+for (const id of newsOnlyIds) {
+  const c = C[id];
+  const news = newsList.filter(n => n.country === id);
+  const title = `${c.name}: digital government and digital public infrastructure news`;
+  const desc = `GovTec news on ${c.name}’s digital government, digital ID, payments, data and cybersecurity, linked to sources. ${c.name} ranks ${c.egdiRank} of 193 in the UN E-Government Development Index 2024 (score ${c.egdi.toFixed(3)}).`;
+  const last = isoDate(news[0].date);
+  const body = `<article class="sp-article">
+<p class="sp-kicker">Country page · ${esc(c.region)}</p>
+<h1>${esc(c.name)}: digital government news</h1>
+<p class="sp-meta">UN E-Government Development Index 2024: rank ${c.egdiRank} of 193 · score ${c.egdi.toFixed(3)} (<a href="${esc(D.EGDI_SOURCE[1])}" rel="noopener">${esc(D.EGDI_SOURCE[0])}</a>)</p>
+<p class="sp-lead">A full GovTec country profile of ${esc(c.name)} (digital identity, payments, data exchange, data protection, cybersecurity and AI governance) is in preparation. Below is every GovTec news item about ${esc(c.name)}, newest first.</p>
+<h2>News on ${esc(c.name)}</h2><ul class="sp-list">${news.map(newsCard).join('')}</ul>
+</article>`;
+  write(`countries/${id}/index.html`, page({
+    url: `/countries/${id}/`, title, desc, crumbs: [['Countries', '/countries/'], [c.name, `/countries/${id}/`]], app: `/#country-${id}`, modified: last,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: clip(desc, 300), dateModified: last, about: { '@type': 'Country', name: c.name }, publisher: ORG, ...FREE }],
+    body
+  }));
+  sitemap.push([`/countries/${id}/`, last]);
+}
 write('countries/index.html', page({
   url: '/countries/', title: 'Country profiles: digital ID, payments, data protection and e-government', type: 'website',
   desc: `GovTec country profiles of digital public infrastructure and e-government for ${profIds.length} countries, each reviewed at least every 30 days and linked to official sources.`,
   crumbs: [['Countries', '/countries/']], app: '/#countries',
-  body: `<h1>Country profiles</h1><p class="sp-lead">Digital identity, payments, data exchange, civil registration, data protection, cybersecurity and AI governance, country by country, with sources.</p><ul class="sp-list">${profIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI ${esc(D.PROFILES[id].egdi)} · reviewed ${esc(D.PROFILES[id].reviewed)}</small></li>`).join('')}</ul>`
+  body: `<h1>Country profiles</h1><p class="sp-lead">Digital identity, payments, data exchange, civil registration, data protection, cybersecurity and AI governance, country by country, with sources.</p><ul class="sp-list">${profIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI ${esc(D.PROFILES[id].egdi)} · reviewed ${esc(D.PROFILES[id].reviewed)}</small></li>`).join('')}</ul>${newsOnlyIds.length ? `<h2>More countries in the news</h2><p>Full profiles in preparation; these pages list GovTec news and UN EGDI 2024 data.</p><ul class="sp-list">${newsOnlyIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI rank ${C[id].egdiRank} of 193</small></li>`).join('')}</ul>` : ''}`
 }));
 sitemap.push(['/countries/', profIds.map(id => D.PROFILES[id].reviewed).sort().pop()]);
 
@@ -255,14 +291,205 @@ ${(x.watch || []).length ? `<h3>What to watch</h3><ul>${x.watch.map(w => `<li>${
   sitemap.push([`/focus/${m.key}/`, d]);
 }
 
+/* ---------- monthly focus hub ---------- */
+if ((FOCUS.MONTHS || []).length) {
+  write('focus/index.html', page({
+    url: '/focus/', title: 'Monthly Focus: one country and one sector in depth each month', type: 'website',
+    desc: 'GovTec Monthly Focus: each month an in-depth look at one country’s digital government and one sector’s digitalisation, with numbered sources.',
+    crumbs: [['Monthly Focus', '/focus/']], app: '/#focus',
+    body: `<h1>Monthly Focus</h1><p class="sp-lead">Each month GovTec looks in depth at one country and one sector.</p><ul class="sp-list">${FOCUS.MONTHS.map(m => `<li><a href="/focus/${m.key}/">${esc(m.label)}: ${esc(m.country ? m.country.name : '')}${m.country && m.sector ? ' and ' : ''}${esc(m.sector ? m.sector.name : '')}</a><br><small>Published ${esc(m.published || m.label)}</small></li>`).join('')}</ul>`
+  }));
+  sitemap.push(['/focus/', isoDate(FOCUS.MONTHS[0].published || FOCUS.MONTHS[0].label)]);
+}
+
+/* ---------- events ---------- */
+const EV = (window.DV_EVENTS || []).slice().sort((a, b) => (a.start || '9999').localeCompare(b.start || '9999'));
+const todayIso = isoDate(D.UPDATED);
+const evUpcoming = EV.filter(e => !e.start || (e.end || e.start) >= todayIso);
+const evPast = EV.filter(e => e.start && (e.end || e.start) < todayIso).reverse();
+const evLine = e => `<li><a href="/events/${e.id}/">${esc(e.title)}</a><br><small>${esc(e.type)} · ${esc(e.dateText || 'Dates to be announced')} · ${esc(e.city)}${e.country && e.country !== e.city ? ', ' + esc(e.country) : ''} · ${esc(e.format)}</small></li>`;
+const isOnline = e => e.format === 'Online' || e.city === 'Online';
+for (const e of EV) {
+  const past = e.start && (e.end || e.start) < todayIso;
+  const postponed = /postpon/i.test(e.dateText || '') || /postpon/i.test(e.note || '');
+  const title = `${e.title}${e.start ? ' (' + e.dateText + ')' : ''}`;
+  const desc = `${e.type} on ${T[e.theme] || e.sector}: ${e.dateText || 'dates to be announced'}, ${isOnline(e) ? 'online' : e.city + ', ' + e.country}. Organised by ${e.organiser}. ${e.note || ''}`;
+  const body = `<article class="sp-article">
+<p class="sp-kicker">Event · ${esc(e.type)} · ${esc(T[e.theme] || '')} · ${esc(e.sector)}</p>
+<h1>${esc(e.title)}</h1>
+${past ? '<p class="sp-note">This event has taken place.</p>' : ''}
+<dl class="sp-dl"><dt>When</dt><dd>${e.start ? `<time datetime="${esc(e.start)}">${esc(e.dateText)}</time>` : esc(e.dateText || 'Dates to be announced')}</dd>
+<dt>Where</dt><dd>${isOnline(e) ? 'Online' : esc(e.city) + ', ' + esc(e.country)} (${esc(e.format)})</dd>
+<dt>Organiser</dt><dd>${esc(e.organiser)}</dd><dt>Cost</dt><dd>${esc(e.cost || 'Not stated')}</dd>${e.note ? `<dt>Notes</dt><dd>${esc(e.note)}</dd>` : ''}</dl>
+<p><a class="sp-btn" href="${esc(e.url)}" rel="noopener">Official event page</a></p>
+<p><small>Source: <a href="${esc(e.source[2])}" rel="noopener">${esc(e.source[0])}</a>, ${esc(e.source[1])}. Checked ${esc(e.checked || '')}. Always confirm details with the organiser.</small></p>
+<p class="sp-note">More events: <a href="/events/">all upcoming events</a> · <a href="/topics/${e.theme}/">${esc(T[e.theme] || '')}</a></p>
+</article>`;
+  const ld = e.start ? [{
+    '@context': 'https://schema.org', '@type': 'Event', name: e.title, description: clip(desc, 300),
+    startDate: e.start, endDate: e.end || e.start,
+    eventStatus: postponed ? 'https://schema.org/EventPostponed' : 'https://schema.org/EventScheduled',
+    eventAttendanceMode: isOnline(e) ? 'https://schema.org/OnlineEventAttendanceMode' : e.format === 'Hybrid' ? 'https://schema.org/MixedEventAttendanceMode' : 'https://schema.org/OfflineEventAttendanceMode',
+    location: isOnline(e) ? { '@type': 'VirtualLocation', url: e.url } : [{ '@type': 'Place', name: e.city, address: { '@type': 'PostalAddress', addressLocality: e.city, addressCountry: e.country } }, ...(e.format === 'Hybrid' ? [{ '@type': 'VirtualLocation', url: e.url }] : [])],
+    organizer: { '@type': 'Organization', name: e.organiser, url: e.url }, url: SITE + `/events/${e.id}/`, image: [abs('img/og-govtec.jpg')]
+  }] : [];
+  write(`events/${e.id}/index.html`, page({
+    url: `/events/${e.id}/`, title, desc, crumbs: [['Events', '/events/'], [e.title, `/events/${e.id}/`]], app: '/#events', jsonld: ld, body, modified: e.checked
+  }));
+  if (!past) sitemap.push([`/events/${e.id}/`, e.checked || todayIso]);
+}
+write('events/index.html', page({
+  url: '/events/', title: 'Events on e-governance, DPI, AI, cybersecurity and fintech: conferences, webinars and workshops', type: 'website',
+  desc: `Calendar of ${evUpcoming.length} upcoming conferences, summits, forums, workshops, seminars, webinars and trainings worldwide on e-governance, digital public infrastructure, digital ID, AI governance, cybersecurity, fintech and health tech, checked against organisers’ pages.`,
+  crumbs: [['Events', '/events/']], app: '/#events',
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Upcoming events', itemListElement: evUpcoming.filter(e => e.start).map((e, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + `/events/${e.id}/` })) }],
+  body: `<h1>Events</h1><p class="sp-lead">Conferences, summits, forums, workshops, seminars, webinars and trainings on digital government, DPI, AI, cybersecurity, fintech and digital health, in person and online.</p>
+<h2>Upcoming</h2><ul class="sp-list">${evUpcoming.filter(e => e.start).map(evLine).join('')}</ul>
+${evUpcoming.some(e => !e.start) ? `<h2>Dates to be announced</h2><ul class="sp-list">${evUpcoming.filter(e => !e.start).map(evLine).join('')}</ul>` : ''}
+${evPast.length ? `<h2>Recently held</h2><ul class="sp-list">${evPast.map(evLine).join('')}</ul>` : ''}`
+}));
+sitemap.push(['/events/', todayIso]);
+
+/* ---------- grants, fellowships and jobs ---------- */
+const FU = (window.DV_FUNDING || []).slice().sort((a, b) => a.close.localeCompare(b.close));
+const fuOpen = FU.filter(f => Date.parse(f.close) > BUILD_NOW);
+const JOBKIND = { Job: 'FULL_TIME', Consultancy: 'CONTRACTOR', Internship: 'INTERN' };
+const ALIAS = { 'united-states': ['USA', 'US'], 'united-kingdom': ['UK'], 'republic-of-korea': ['South Korea', 'Korea'], 'turkiye': ['Turkey'] };
+const reEsc = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function countriesIn(txt) { // longest names first, so "Papua New Guinea" is not also read as "Guinea"
+  let t = String(txt || ''); const found = [];
+  const names = D.COUNTRIES.flatMap(c => [c.name, ...(ALIAS[c.id] || [])].map(n => [n, c])).sort((a, b) => b[0].length - a[0].length);
+  for (const [n, c] of names) { const re = new RegExp('\\b' + reEsc(n) + '\\b', n.length <= 3 ? '' : 'i'); if (re.test(t)) { if (!found.includes(c)) found.push(c); t = t.replace(new RegExp('\\b' + reEsc(n) + '\\b', n.length <= 3 ? 'g' : 'gi'), ' '); } }
+  return found;
+}
+const fuLine = f => `<li><a href="/funding/${f.id}/">${esc(f.title)}</a><br><small>${esc(f.kind)} · ${esc(f.funder)} · closes ${esc(f.closeText)}</small></li>`;
+for (const f of FU) {
+  const open = Date.parse(f.close) > BUILD_NOW;
+  const closeDay = f.close.slice(0, 10);
+  const title = `${f.title} — ${f.funder}`;
+  const desc = `${f.kind}: ${f.summary} Who can apply: ${f.who}. Where: ${f.where}. Deadline: ${f.closeText}.`;
+  const body = `<article class="sp-article">
+<p class="sp-kicker">${esc(f.kind)} · ${esc(T[f.theme] || '')} · ${esc(f.sector)}</p>
+<h1>${esc(f.title)}</h1>
+<p class="sp-meta">${esc(f.funder)} · ${open ? 'Deadline' : 'Closed'}: ${esc(f.closeText)}</p>
+<p class="sp-lead">${esc(f.summary)}</p>
+<dl class="sp-dl">${f.amount ? `<dt>Amount</dt><dd>${esc(f.amount)}</dd>` : ''}${f.duration ? `<dt>Duration</dt><dd>${esc(f.duration)}</dd>` : ''}<dt>Who can apply</dt><dd>${esc(f.who)}</dd><dt>Where</dt><dd>${esc(f.where)}</dd><dt>Deadline</dt><dd>${esc(f.closeText)}</dd></dl>
+<p><a class="sp-btn" href="${esc(f.url)}" rel="noopener">Apply on the official page</a></p>
+<p><small>Checked ${esc(f.checked || '')}. GovTec lists opportunities free of charge and never asks for fees; apply only through the organisation’s own page.</small></p>
+<p class="sp-note">More: <a href="/funding/">all open grants, fellowships and jobs</a> · <a href="/topics/${f.theme}/">${esc(T[f.theme] || '')}</a></p>
+</article>`;
+  let ld = [];
+  const ctry = countriesIn(f.where), remote = /home-based|remote/i.test(f.where || '');
+  if (open && JOBKIND[f.kind] && ctry.length && (remote || ctry.length <= 2)) {
+    const jp = {
+      '@context': 'https://schema.org', '@type': 'JobPosting', title: f.title,
+      description: `<p>${esc(f.summary)}</p><p>Who can apply: ${esc(f.who)}</p><p>Where: ${esc(f.where)}</p>${f.amount ? `<p>Pay: ${esc(f.amount)}</p>` : ''}${f.duration ? `<p>Duration: ${esc(f.duration)}</p>` : ''}<p>Deadline: ${esc(f.closeText)}. Apply on the organisation’s official page: ${esc(f.url)}</p>`,
+      datePosted: f.checked, validThrough: f.close, employmentType: JOBKIND[f.kind],
+      hiringOrganization: { '@type': 'Organization', name: f.funder, sameAs: new URL(f.url).origin },
+      directApply: false
+    };
+    if (remote) { jp.jobLocationType = 'TELECOMMUTE'; jp.applicantLocationRequirements = ctry.map(c => ({ '@type': 'Country', name: c.name })); }
+    else jp.jobLocation = ctry.map(c => {
+      const parts = f.where.replace(/\([^)]*\)/g, '').split(/[,;]/).map(x => x.trim());
+      const i = parts.findIndex(x => x.toLowerCase().includes(c.name.toLowerCase()));
+      const loc = i > 0 && !/site|based|remote|duty|station/i.test(parts[i - 1]) && !countriesIn(parts[i - 1]).length ? parts[i - 1].replace(/^duty station\s+/i, '') : '';
+      return { '@type': 'Place', address: { '@type': 'PostalAddress', ...(loc ? { addressLocality: loc } : {}), addressCountry: c.iso2.toUpperCase() } };
+    });
+    ld = [jp];
+  }
+  write(`funding/${f.id}/index.html`, page({
+    url: `/funding/${f.id}/`, title, desc, crumbs: [['Grants & jobs', '/funding/'], [f.title, `/funding/${f.id}/`]], app: '/#funding', jsonld: ld, body, modified: f.checked, noindex: !open
+  }));
+  if (open) sitemap.push([`/funding/${f.id}/`, f.checked || todayIso]);
+}
+const byKind = {};
+for (const f of fuOpen) (byKind[f.kind] = byKind[f.kind] || []).push(f);
+write('funding/index.html', page({
+  url: '/funding/', title: 'Grants, fellowships, jobs and consultancies in digital government, DPI, AI and fintech', type: 'website',
+  desc: `${fuOpen.length} open opportunities: grants, fellowships, scholarships, awards, accelerators, calls for proposals and papers, trainings, jobs, consultancies and internships in digital government, digital public infrastructure, AI, data, cybersecurity, fintech and digital health. Free to use; every item links to the organisation’s own page.`,
+  crumbs: [['Grants & jobs', '/funding/']], app: '/#funding',
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Open opportunities', itemListElement: fuOpen.map((f, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + `/funding/${f.id}/` })) }],
+  body: `<h1>Grants, fellowships and jobs</h1><p class="sp-lead">Open opportunities for people and organisations working on digital government, DPI, AI, data, cybersecurity, fintech and digital health, soonest deadline first. GovTec never charges and never lists anything that asks applicants for fees.</p>
+${Object.entries(byKind).map(([k, list]) => `<h2>${esc(k)}</h2><ul class="sp-list">${list.map(fuLine).join('')}</ul>`).join('\n')}`
+}));
+sitemap.push(['/funding/', todayIso]);
+
+/* ---------- topic and sector hubs ---------- */
+const anList = AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a><br><small>${esc(a.date)} · ${esc(a.kicker || '')}</small></li>`);
+for (const t of D.THEMES) {
+  const news = newsList.filter(n => n.theme === t.id), ans = AN.filter(a => a.theme === t.id);
+  const evs = evUpcoming.filter(e => e.theme === t.id && e.start), fus = fuOpen.filter(f => f.theme === t.id);
+  const title = `${t.label}: news, analysis, events and opportunities`;
+  write(`topics/${t.id}/index.html`, page({
+    url: `/topics/${t.id}/`, title, type: 'website', desc: `GovTec on ${t.label.toLowerCase()}: ${t.desc} ${news.length} news items, ${ans.length} analyses, ${evs.length} upcoming events and ${fus.length} open opportunities, linked to sources.`,
+    crumbs: [['Topics', '/news/'], [t.label, `/topics/${t.id}/`]], app: '/#news', modified: news[0] ? isoDate(news[0].date) : null,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: t.desc, publisher: ORG, ...FREE }],
+    body: `<h1>${esc(t.label)}</h1><p class="sp-lead">${esc(t.desc)}</p>
+${ans.length ? `<h2>Analysis</h2><ul class="sp-list">${ans.map(a => anList[AN.indexOf(a)]).join('')}</ul>` : ''}
+${news.length ? `<h2>News</h2><ul class="sp-list">${news.map(newsCard).join('')}</ul>` : ''}
+${evs.length ? `<h2>Upcoming events</h2><ul class="sp-list">${evs.map(evLine).join('')}</ul>` : ''}
+${fus.length ? `<h2>Open grants and jobs</h2><ul class="sp-list">${fus.map(fuLine).join('')}</ul>` : ''}`
+  }));
+  sitemap.push([`/topics/${t.id}/`, news[0] ? isoDate(news[0].date) : todayIso]);
+}
+for (const sec of D.SECTORS) {
+  const sl = slug(sec);
+  const news = newsList.filter(n => n.sector === sec), ans = AN.filter(a => a.sector === sec);
+  const evs = evUpcoming.filter(e => e.sector === sec && e.start), fus = fuOpen.filter(f => f.sector === sec);
+  const title = `${sec}: digitalisation news, analysis and opportunities`;
+  write(`sectors/${sl}/index.html`, page({
+    url: `/sectors/${sl}/`, title, type: 'website', desc: `GovTec on digitalisation in ${sec.toLowerCase()}: ${news.length} news items, ${ans.length} analyses, ${evs.length} upcoming events and ${fus.length} open opportunities worldwide, linked to sources.`,
+    crumbs: [['Sectors', '/news/'], [sec, `/sectors/${sl}/`]], app: '/#news', modified: news[0] ? isoDate(news[0].date) : null,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, publisher: ORG, ...FREE }],
+    body: `<h1>${esc(sec)}</h1><p class="sp-lead">News, analysis, events and opportunities on digitalisation in ${esc(sec.toLowerCase())}, worldwide.</p>
+${ans.length ? `<h2>Analysis</h2><ul class="sp-list">${ans.map(a => anList[AN.indexOf(a)]).join('')}</ul>` : ''}
+${news.length ? `<h2>News</h2><ul class="sp-list">${news.map(newsCard).join('')}</ul>` : '<p>No news items yet.</p>'}
+${evs.length ? `<h2>Upcoming events</h2><ul class="sp-list">${evs.map(evLine).join('')}</ul>` : ''}
+${fus.length ? `<h2>Open grants and jobs</h2><ul class="sp-list">${fus.map(fuLine).join('')}</ul>` : ''}`
+  }));
+  sitemap.push([`/sectors/${sl}/`, news[0] ? isoDate(news[0].date) : todayIso]);
+}
+
+/* ---------- policy & law tracker, glossary ---------- */
+write('policy-tracker/index.html', page({
+  url: '/policy-tracker/', title: 'Policy & Law Tracker: AI, data protection, cybersecurity and DPI laws worldwide', type: 'website',
+  desc: `GovTec tracks ${D.LAWS.length} laws and policies on AI, data protection, cybersecurity and digital public infrastructure worldwide, with their status and official texts.`,
+  crumbs: [['Policy & Law Tracker', '/policy-tracker/']], app: '/#tracker',
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Policy & Law Tracker', itemListElement: D.LAWS.map((l, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Legislation', name: l.name, legislationJurisdiction: l.where, ...(/^\d{4}$/.test(l.year) ? { legislationDate: l.year } : {}), url: l.url } })) }],
+  body: `<h1>Policy &amp; Law Tracker</h1><p class="sp-lead">Laws, regulations and strategies on AI, data protection, cybersecurity and digital public infrastructure, with links to the official texts.</p>
+<div class="sp-table"><table><thead><tr><th>Jurisdiction</th><th>Law or policy</th><th>Area</th><th>Year</th><th>Status</th></tr></thead><tbody>${D.LAWS.map(l => `<tr><td>${esc(l.where)}</td><td><a href="${esc(l.url)}" rel="noopener">${esc(l.name)}</a></td><td>${esc(D.LAWCATS[l.cat] || l.cat)}</td><td>${esc(l.year)}</td><td>${esc(l.status)}</td></tr>`).join('')}</tbody></table></div>`
+}));
+sitemap.push(['/policy-tracker/', todayIso]);
+write('glossary/index.html', page({
+  url: '/glossary/', title: 'Glossary of digital government and digital public infrastructure terms', type: 'website',
+  desc: `Plain-language definitions of ${D.GLOSSARY.length} terms in digital government, digital public infrastructure (DPI), digital ID, payments, data and AI governance.`,
+  crumbs: [['Glossary', '/glossary/']], app: '/#learn',
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'DefinedTermSet', name: 'GovTec glossary', url: SITE + '/glossary/', hasDefinedTerm: D.GLOSSARY.map(g => ({ '@type': 'DefinedTerm', name: g[0], description: g[1] })) }],
+  body: `<h1>Glossary</h1><p class="sp-lead">Key terms in digital government and digital public infrastructure, in plain language.</p><dl class="sp-dl">${D.GLOSSARY.map(g => `<dt id="${slug(g[0])}">${esc(g[0])}</dt><dd>${esc(g[1])}</dd>`).join('')}</dl>`
+}));
+sitemap.push(['/glossary/', todayIso]);
+
 /* ---------- sitemap, RSS, home page ---------- */
 const today = isoDate(D.UPDATED);
 sitemap.unshift(['/', today]);
 out.set('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemap.map(([u, d]) => `<url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`).join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${sitemap.map(([u, d, ims]) => `<url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}${(ims || []).map(im => `<image:image><image:loc>${esc(im.loc)}</image:loc></image:image>`).join('')}</url>`).join('\n')}
 </urlset>
 `);
+// Google News sitemap: news and analysis from the last two days (Google reads only those).
+const recentCut = ymd(...(d => [d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()])(new Date(Date.parse(today + 'T00:00:00Z') - 2 * 864e5)));
+const recent = [
+  ...newsList.map(n => ({ u: `/news/${n.id}/`, d: isoDate(n.date), t: n.title })),
+  ...AN.map(a => ({ u: `/analysis/${a.id}/`, d: isoDate(a.date), t: a.title }))
+].filter(x => x.d && x.d >= recentCut);
+out.set('news-sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+${recent.map(x => `<url><loc>${SITE}${x.u}</loc><news:news><news:publication><news:name>${NAME}</news:name><news:language>en</news:language></news:publication><news:publication_date>${x.d}</news:publication_date><news:title>${esc(x.t)}</news:title></news:news></url>`).join('\n')}
+</urlset>
+`);
+// Every URL, one per line, for the IndexNow ping in the "Build static pages" workflow.
+out.set('indexnow-urls.txt', sitemap.map(([u]) => SITE + u).join('\n') + '\n');
 const rfc = d => new Date(d + 'T06:00:00Z').toUTCString();
 const feedItems = [
   ...newsList.map(n => ({ t: n.title, u: `/news/${n.id}/`, d: isoDate(n.date), s: n.summary, c: T[n.theme] })),
@@ -284,13 +511,13 @@ ${feedItems.map(x => `<item><title>${esc(x.t)}</title><link>${SITE}${x.u}</link>
 
 const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
-const latest = `<!--SEO:LATEST--><noscript><section class="wrap" style="padding:24px 0"><h2>Latest news</h2><ul>${newsList.slice(0, 30).map(n => `<li><a href="/news/${n.id}/">${esc(n.title)}</a> (${esc(n.date)})</li>`).join('')}</ul><h2>Analysis</h2><ul>${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a></li>`).join('')}</ul><p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a></p></section></noscript><!--/SEO:LATEST-->`;
+const latest = `<!--SEO:LATEST--><noscript><section class="wrap" style="padding:24px 0"><h2>Latest news</h2><ul>${newsList.slice(0, 30).map(n => `<li><a href="/news/${n.id}/">${esc(n.title)}</a> (${esc(n.date)})</li>`).join('')}</ul><h2>Analysis</h2><ul>${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a></li>`).join('')}</ul><p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/focus/">Monthly Focus</a> · <a href="/events/">Events</a> · <a href="/funding/">Grants, fellowships and jobs</a> · <a href="/policy-tracker/">Policy &amp; Law Tracker</a> · <a href="/glossary/">Glossary</a></p><p>Topics: ${D.THEMES.map(t => `<a href="/topics/${t.id}/">${esc(t.label)}</a>`).join(' · ')}</p></section></noscript><!--/SEO:LATEST-->`;
 if (!/<!--SEO:LATEST-->[\s\S]*?<!--\/SEO:LATEST-->/.test(index)) throw new Error('index.html has no SEO:LATEST markers');
 index = index.replace(/<!--SEO:LATEST-->[\s\S]*?<!--\/SEO:LATEST-->/, () => latest);
 out.set('index.html', index);
 
 /* ---------- write, removing pages whose item no longer exists ---------- */
-for (const dir of ['news', 'analysis', 'countries', 'focus']) {
+for (const dir of ['news', 'analysis', 'countries', 'focus', 'events', 'funding', 'topics', 'sectors']) {
   const d = path.join(ROOT, dir);
   if (!fs.existsSync(d)) continue;
   for (const sub of fs.readdirSync(d)) {

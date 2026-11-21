@@ -1023,7 +1023,11 @@ function shareUrl(){
   let m;
   if ((m = h.match(/^story-(n\d+)$/))) return o + '/news/' + m[1] + '/';
   if ((m = h.match(/^(?:analysis|report)-(a\d+)$/))) return o + '/analysis/' + m[1] + '/';
-  if ((m = h.match(/^country-([a-z-]+)$/)) && PROFILES[m[1]]) return o + '/countries/' + m[1] + '/';
+  if ((m = h.match(/^country-([a-z-]+)$/)) && (PROFILES[m[1]] || NEWS.some(n => n.country === m[1]))) return o + '/countries/' + m[1] + '/';
+  if (h === 'events') return o + '/events/';
+  if (h === 'funding') return o + '/funding/';
+  if (h === 'tracker') return o + '/policy-tracker/';
+  if (h === 'focus' || h.startsWith('focus-')) return o + '/focus/';
   return location.href;
 }
 function pageTitle(name, param){

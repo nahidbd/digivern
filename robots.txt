@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://govtec.org/sitemap.xml
+Sitemap: https://govtec.org/news-sitemap.xml
