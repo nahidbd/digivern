@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url><loc>https://govtec.org/</loc><lastmod>2026-11-22</lastmod></url>
-<url><loc>https://govtec.org/news/n137/</loc><lastmod>2026-11-20</lastmod></url>
-<url><loc>https://govtec.org/news/n138/</loc><lastmod>2026-11-20</lastmod></url>
+<url><loc>https://govtec.org/news/n137/</loc><lastmod>2026-11-20</lastmod><image:image><image:loc>https://govtec.org/img/n137.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n138/</loc><lastmod>2026-11-20</lastmod><image:image><image:loc>https://govtec.org/img/n138.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n134/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n134.webp</image:loc></image:image></url>
-<url><loc>https://govtec.org/news/n139/</loc><lastmod>2026-11-19</lastmod></url>
-<url><loc>https://govtec.org/news/n140/</loc><lastmod>2026-11-19</lastmod></url>
+<url><loc>https://govtec.org/news/n139/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n139.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n140/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n140.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n141/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n141.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n135/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n135.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n136/</loc><lastmod>2026-11-19</lastmod><image:image><image:loc>https://govtec.org/img/n136.webp</image:loc></image:image></url>
