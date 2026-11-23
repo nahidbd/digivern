@@ -309,6 +309,16 @@ const evUpcoming = EV.filter(e => !e.start || (e.end || e.start) >= todayIso);
 const evPast = EV.filter(e => e.start && (e.end || e.start) < todayIso).reverse();
 const evLine = e => `<li><a href="/events/${e.id}/">${esc(e.title)}</a><br><small>${esc(e.type)} · ${esc(e.dateText || 'Dates to be announced')} · ${esc(e.city)}${e.country && e.country !== e.city ? ', ' + esc(e.country) : ''} · ${esc(e.format)}</small></li>`;
 const isOnline = e => e.format === 'Online' || e.city === 'Online';
+/* schema.org Offer for an event: price 0 only when the organiser says the event is free; otherwise the registration
+   link and the cost text as published (no price is guessed). */
+const evOffer = e => {
+  const cost = (e.cost || '').trim();
+  const free = /^free\b/i.test(cost);
+  const o = { '@type': 'Offer', url: e.url };
+  if (free) Object.assign(o, { price: 0, priceCurrency: 'USD', availability: 'https://schema.org/InStock' });
+  if (cost && !/^not stated$/i.test(cost)) o.description = cost;
+  return o;
+};
 for (const e of EV) {
   const past = e.start && (e.end || e.start) < todayIso;
   const postponed = /postpon/i.test(e.dateText || '') || /postpon/i.test(e.note || '');
@@ -331,7 +341,11 @@ ${past ? '<p class="sp-note">This event has taken place.</p>' : ''}
     eventStatus: postponed ? 'https://schema.org/EventPostponed' : 'https://schema.org/EventScheduled',
     eventAttendanceMode: isOnline(e) ? 'https://schema.org/OnlineEventAttendanceMode' : e.format === 'Hybrid' ? 'https://schema.org/MixedEventAttendanceMode' : 'https://schema.org/OfflineEventAttendanceMode',
     location: isOnline(e) ? { '@type': 'VirtualLocation', url: e.url } : [{ '@type': 'Place', name: e.city, address: { '@type': 'PostalAddress', addressLocality: e.city, addressCountry: e.country } }, ...(e.format === 'Hybrid' ? [{ '@type': 'VirtualLocation', url: e.url }] : [])],
-    organizer: { '@type': 'Organization', name: e.organiser, url: e.url }, url: SITE + `/events/${e.id}/`, image: [abs('img/og-govtec.jpg')]
+    organizer: { '@type': 'Organization', name: e.organiser, url: e.url },
+    /* Speakers are not tracked, so the organiser is named as the presenting organisation. */
+    performer: { '@type': 'Organization', name: e.organiser, url: e.url },
+    offers: evOffer(e),
+    url: SITE + `/events/${e.id}/`, image: [abs('img/og-govtec.jpg')]
   }] : [];
   write(`events/${e.id}/index.html`, page({
     url: `/events/${e.id}/`, title, desc, crumbs: [['Events', '/events/'], [e.title, `/events/${e.id}/`]], app: '/#events', jsonld: ld, body, modified: e.checked
