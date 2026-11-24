@@ -1,4 +1,10 @@
 https://govtec.org/
+https://govtec.org/news/n146/
+https://govtec.org/news/n147/
+https://govtec.org/news/n148/
+https://govtec.org/news/n149/
+https://govtec.org/news/n150/
+https://govtec.org/news/n151/
 https://govtec.org/news/n143/
 https://govtec.org/news/n137/
 https://govtec.org/news/n138/
@@ -164,6 +170,7 @@ https://govtec.org/countries/japan/
 https://govtec.org/countries/jordan/
 https://govtec.org/countries/kenya/
 https://govtec.org/countries/maldives/
+https://govtec.org/countries/mexico/
 https://govtec.org/countries/nepal/
 https://govtec.org/countries/nigeria/
 https://govtec.org/countries/pakistan/
@@ -183,6 +190,7 @@ https://govtec.org/countries/bulgaria/
 https://govtec.org/countries/cambodia/
 https://govtec.org/countries/costa-rica/
 https://govtec.org/countries/dr-congo/
+https://govtec.org/countries/egypt/
 https://govtec.org/countries/ethiopia/
 https://govtec.org/countries/france/
 https://govtec.org/countries/germany/
@@ -217,6 +225,7 @@ https://govtec.org/events/e73/
 https://govtec.org/events/e30/
 https://govtec.org/events/e68/
 https://govtec.org/events/e78/
+https://govtec.org/events/e82/
 https://govtec.org/events/e38/
 https://govtec.org/events/e33/
 https://govtec.org/events/e36/
@@ -280,10 +289,8 @@ https://govtec.org/events/e10/
 https://govtec.org/events/e56/
 https://govtec.org/events/e79/
 https://govtec.org/events/e9/
+https://govtec.org/events/e83/
 https://govtec.org/events/
-https://govtec.org/funding/f25/
-https://govtec.org/funding/f78/
-https://govtec.org/funding/f36/
 https://govtec.org/funding/f47/
 https://govtec.org/funding/f48/
 https://govtec.org/funding/f62/
@@ -303,11 +310,13 @@ https://govtec.org/funding/f35/
 https://govtec.org/funding/f63/
 https://govtec.org/funding/f5/
 https://govtec.org/funding/f21/
+https://govtec.org/funding/f104/
 https://govtec.org/funding/f24/
 https://govtec.org/funding/f85/
 https://govtec.org/funding/f86/
 https://govtec.org/funding/f101/
 https://govtec.org/funding/f50/
+https://govtec.org/funding/f103/
 https://govtec.org/funding/f88/
 https://govtec.org/funding/f93/
 https://govtec.org/funding/f99/
@@ -318,7 +327,9 @@ https://govtec.org/funding/f84/
 https://govtec.org/funding/f94/
 https://govtec.org/funding/f39/
 https://govtec.org/funding/f4/
+https://govtec.org/funding/f3/
 https://govtec.org/funding/f57/
+https://govtec.org/funding/f105/
 https://govtec.org/funding/f22/
 https://govtec.org/funding/f26/
 https://govtec.org/funding/f32/
@@ -343,12 +354,15 @@ https://govtec.org/funding/f77/
 https://govtec.org/funding/f89/
 https://govtec.org/funding/f90/
 https://govtec.org/funding/f100/
+https://govtec.org/funding/f106/
 https://govtec.org/funding/f67/
 https://govtec.org/funding/f29/
 https://govtec.org/funding/f95/
+https://govtec.org/funding/f107/
 https://govtec.org/funding/f87/
 https://govtec.org/funding/f20/
 https://govtec.org/funding/f92/
+https://govtec.org/funding/f108/
 https://govtec.org/funding/f79/
 https://govtec.org/funding/f97/
 https://govtec.org/funding/f91/
