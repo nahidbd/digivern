@@ -1,12 +1,13 @@
 // Builds plain HTML copies of GovTec content so that search engines and social networks can read them.
 // The site itself is a single page that draws everything with JavaScript under "#..." addresses, which search
 // engines treat as one page and link previews (LinkedIn, Facebook, WhatsApp, X) cannot read.
-// This script writes, from data.js, analysis.js, focus.js, events.js and images.js:
+// This script writes, from data.js, analysis.js, focus.js, events.js, images.js and i18n.js:
 //   news/<id>/index.html, analysis/<id>/index.html, countries/<id>/index.html, focus/<month>/index.html,
 //   events/<id>/index.html, funding/<id>/index.html, topics/<theme>/index.html, sectors/<sector>/index.html,
 //   hub pages (news/, analysis/, countries/, focus/, events/, funding/, topics/, policy-tracker/, glossary/),
 //   sitemap.xml (with images), news-sitemap.xml (Google News), feed.xml (RSS), indexnow-urls.txt
-//   and the <noscript> list of latest headlines in index.html.
+//   regions/<region>/, a page for every UN member state in countries/, translated pages in fr/, es/ and ar/ (from i18n.js),
+//   llms.txt, and the <noscript> list of latest headlines in index.html.
 // Run: node tools/build-seo.mjs   (the "Build static pages" GitHub Actions job runs it after every content change)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -19,10 +20,15 @@ const FULL = 'GovTec, the Governance & Technology Centre';
 
 const window = {};
 const ctx = vm.createContext({ window, console });
-for (const f of ['data.js', 'images.js', 'analysis.js', 'focus.js', 'events.js'])
-  vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
+for (const f of ['data.js', 'images.js', 'analysis.js', 'focus.js', 'events.js', 'i18n.js'])
+  if (fs.existsSync(path.join(ROOT, f))) vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 const D = window.DV, IMG = window.DV_IMAGES || {}, AN = window.DV_ANALYSES || [], FOCUS = window.DV_FOCUS || { MONTHS: [] };
 const T = Object.fromEntries(D.THEMES.map(t => [t.id, t.label]));
+const I18N = window.DV_I18N || { LANGS: [], UI: {}, NEWS: {}, ANALYSES: {} };
+const LANGS = (I18N.LANGS || []).filter(l => I18N.UI[l]);
+const LANGNAME = { en: 'English', ...Object.fromEntries(LANGS.map(l => [l, I18N.UI[l].name])) };
+const OGLOCALE = { en: 'en_GB', ...Object.fromEntries(LANGS.map(l => [l, I18N.UI[l].locale || l])) };
+const REGIONS = ['Africa', 'Americas', 'Asia-Pacific', 'Europe', 'Middle East', 'Global'];
 const C = Object.fromEntries(D.COUNTRIES.map(c => [c.id, c]));
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -49,16 +55,22 @@ function cite(s, prefix) {
   return esc(s).replace(/\[(\d+)\]/g, (m, n) => `<sup><a href="#${prefix}${n}">${n}</a></sup>`);
 }
 
-function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs = [], body, app, published, modified, noindex }) {
+function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs = [], body, app, published, modified, noindex, lang = 'en', alts, seoTitle }) {
   const canon = SITE + url;
+  const U = lang === 'en' ? null : I18N.UI[lang];
+  const home = lang === 'en' ? '/' : `/${lang}/`;
+  // hreflang: this page and its translations; x-default is the English page
+  const altMap = alts && Object.keys(alts).length > 1 ? alts : { [lang]: url };
+  const hreflang = Object.entries(altMap).map(([l, u]) => `<link rel="alternate" hreflang="${l}" href="${SITE}${u}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${SITE}${altMap.en || url}">`;
+  const langBar = `<p class="sp-langs" aria-label="Language">${['en', ...LANGS].map(l => { const u = altMap[l] || (l === 'en' ? '/' : `/${l}/`); return l === lang ? `<b lang="${l}">${esc(LANGNAME[l])}</b>` : `<a href="${u}" hreflang="${l}" lang="${l}">${esc(LANGNAME[l])}</a>`; }).join(' · ')}</p>`;
   const img = image || abs('img/og-govtec.jpg');
   const ld = [{
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-    itemListElement: [['Home', '/'], ...crumbs].map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE + u }))
+    itemListElement: [[lang === 'en' ? 'Home' : 'GovTec', home], ...crumbs].map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE + u }))
   }, ...jsonld];
   const share = encodeURIComponent(canon), st = encodeURIComponent(title);
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}"${U && U.dir ? ` dir="${U.dir}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,12 +82,13 @@ function page({ url, title, desc, image, type = 'article', jsonld = [], crumbs =
   gtag('js', new Date());
 </script>
 <!-- End Google Tag Manager -->
-<title>${esc(title)} | ${NAME}</title>
-<meta name="description" content="${esc(clip(desc, 300))}">
+<title>${esc(seoTitle || title)} | ${NAME}</title>
+<meta name="description" content="${esc(clip(desc, 160))}">
 <link rel="canonical" href="${canon}">
+${hreflang}
 <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
 <meta name="author" content="${esc(FULL)}">
-<meta property="og:locale" content="en_GB">
+<meta property="og:locale" content="${OGLOCALE[lang] || 'en_GB'}">${Object.keys(altMap).filter(l => l !== lang).map(l => `\n<meta property="og:locale:alternate" content="${OGLOCALE[l]}">`).join('')}
 <meta property="og:site_name" content="${esc(FULL)}">
 <meta property="og:type" content="${type}">
 <meta property="og:title" content="${esc(title)}">
@@ -98,17 +111,19 @@ ${published ? `<meta property="article:published_time" content="${published}">\n
 </head>
 <body class="sp">
 <header class="sp-mast"><div class="sp-wrap">
-<a class="sp-brand" href="/"><img src="/img/emblem.webp" width="44" height="44" alt=""><span><b>Gov<i>Tec</i></b><small>Governance &amp; Technology Centre</small></span></a>
-<nav aria-label="Main"><a href="/news/">News</a><a href="/analysis/">Analysis</a><a href="/countries/">Countries</a><a href="/focus/">Monthly Focus</a><a href="/policy-tracker/">Policy Tracker</a><a href="/events/">Events</a><a href="/funding/">Grants &amp; jobs</a></nav>
+<a class="sp-brand" href="${home}"><img src="/img/emblem.webp" width="44" height="44" alt=""><span><b>Gov<i>Tec</i></b><small>${U ? esc(U.tagline) : 'Governance &amp; Technology Centre'}</small></span></a>
+${U ? `<nav aria-label="Main"><a href="/${lang}/">${esc(U.news)}</a>${REGIONS.map(r => `<a href="/${lang}/regions/${slug(r)}/">${esc(U.R[r])}</a>`).join('')}</nav>` : `<nav aria-label="Main"><a href="/news/">News</a><a href="/analysis/">Analysis</a><a href="/regions/">Regions</a><a href="/countries/">Countries</a><a href="/focus/">Monthly Focus</a><a href="/policy-tracker/">Policy Tracker</a><a href="/events/">Events</a><a href="/funding/">Grants &amp; jobs</a></nav>`}
 </div></header>
 <main class="sp-wrap sp-main">
-<p class="sp-crumb"><a href="/">Home</a>${crumbs.map(([n, u], i) => i === crumbs.length - 1 ? ` / <span>${esc(n)}</span>` : ` / <a href="${u}">${esc(n)}</a>`).join('')}</p>
+${langBar}
+<p class="sp-crumb"><a href="${home}">${U ? 'GovTec' : 'Home'}</a>${crumbs.map(([n, u], i) => i === crumbs.length - 1 ? ` / <span>${esc(n)}</span>` : ` / <a href="${u}">${esc(n)}</a>`).join('')}</p>
 ${body}
 ${app ? `<p class="sp-app"><a class="sp-btn" href="${app}">Open in the interactive ${NAME} site</a></p>` : ''}
 <p class="sp-share"><b>Share:</b> <a href="https://www.linkedin.com/sharing/share-offsite/?url=${share}" rel="noopener" target="_blank">LinkedIn</a> · <a href="https://x.com/intent/post?url=${share}&amp;text=${st}" rel="noopener" target="_blank">X</a> · <a href="https://www.facebook.com/sharer/sharer.php?u=${share}" rel="noopener" target="_blank">Facebook</a> · <a href="https://wa.me/?text=${st}%20${share}" rel="noopener" target="_blank">WhatsApp</a> · <a href="mailto:?subject=${st}&amp;body=${share}">Email</a></p>
 </main>
 <footer class="sp-foot"><div class="sp-wrap">
-<p><b>${esc(FULL)}</b>: global intelligence on e-governance, digital public infrastructure, AI and cybersecurity, linked to its sources. A knowledge venture of <a href="https://synapseconsulting.services" rel="noopener">Synapse Consulting</a>. In beta: everything is free.</p>
+${U ? `<p>${esc(U.about)} ${esc(U.free)}</p><p>${REGIONS.map(r => `<a href="/${lang}/regions/${slug(r)}/">${esc(U.R[r])}</a>`).join(' · ')}</p>` : `<p><b>${esc(FULL)}</b>: global intelligence on e-governance, digital public infrastructure, AI and cybersecurity, linked to its sources. A knowledge venture of <a href="https://synapseconsulting.services" rel="noopener">Synapse Consulting</a>. In beta: everything is free.</p>`}
+<p><b>Regions:</b> ${REGIONS.map(r => `<a href="/regions/${slug(r)}/">${esc(r)}</a>`).join(' · ')}</p>
 <p><b>Topics:</b> ${D.THEMES.map(t => `<a href="/topics/${t.id}/">${esc(t.label)}</a>`).join(' · ')}</p>
 <p><b>Sectors:</b> ${D.SECTORS.map(x => `<a href="/sectors/${slug(x)}/">${esc(x)}</a>`).join(' · ')}</p>
 <p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/events/">Events</a> · <a href="/funding/">Grants, fellowships and jobs</a> · <a href="/policy-tracker/">Policy &amp; Law Tracker</a> · <a href="/glossary/">Glossary</a> · <a href="/feed.xml">RSS feed</a> · <a href="/#about">Methodology</a> · <a href="/#contact">Contact</a></p>
@@ -150,11 +165,14 @@ ${country && D.PROFILES[n.country] ? `<p>See also: <a href="/countries/${n.count
 ${related.length ? `<h2>Related</h2><ul class="sp-list">${related.map(newsCard).join('')}</ul>` : ''}
 <p class="sp-note">More on <a href="/topics/${n.theme}/">${esc(T[n.theme] || '')}</a> · <a href="/sectors/${slug(n.sector)}/">${esc(n.sector)}</a>${country ? ` · <a href="/countries/${n.country}/">${esc(country.name)}</a>` : ''}</p>
 </article>`;
+  const tr = I18N.NEWS[n.id] || {};
+  const nAlts = { en: `/news/${n.id}/`, ...Object.fromEntries(LANGS.filter(l => tr[l]).map(l => [l, `/${l}/news/${n.id}/`])) };
   write(`news/${n.id}/index.html`, page({
-    url: `/news/${n.id}/`, title: n.title, desc: n.summary, image: im ? abs(im.src) : null,
+    url: `/news/${n.id}/`, title: n.title, seoTitle: n.seoTitle, desc: n.seoDesc || n.summary, image: im ? abs(im.src) : null, alts: nAlts,
     crumbs: [['News', '/news/'], [n.title, `/news/${n.id}/`]], app: `/#story-${n.id}`, published: d, modified: d,
     jsonld: [{
-      '@context': 'https://schema.org', '@type': 'NewsArticle', headline: clip(n.title, 110), description: clip(n.summary, 300),
+      '@context': 'https://schema.org', '@type': 'NewsArticle', headline: clip(n.title, 110), description: clip(n.seoDesc || n.summary, 300),
+      ...(n.region && n.region !== 'Global' ? { spatialCoverage: { '@type': 'Place', name: n.region } } : {}),
       datePublished: d, dateModified: d, image: im ? [abs(im.src)] : [abs('img/og-govtec.jpg')],
       articleSection: T[n.theme], keywords: [T[n.theme], n.sector, country && country.name].filter(Boolean).join(', '),
       author: ORG, publisher: ORG, mainEntityOfPage: SITE + `/news/${n.id}/`,
@@ -224,7 +242,7 @@ for (const id of profIds) {
   const title = `${c.name}: digital government, digital ID, payments and data protection`;
   const desc = `${c.name} digital public infrastructure profile: ${p.rows.map(r => r[0]).join(', ')}. Lead agency: ${p.agency}. UN EGDI: ${p.egdi}.`;
   const body = `<article class="sp-article">
-<p class="sp-kicker">Country profile · ${esc(c.region)}</p>
+<p class="sp-kicker">Country profile · <a href="/regions/${slug(c.region)}/">${esc(c.region)}</a></p>
 <h1>${esc(c.name)}: digital government profile</h1>
 <p class="sp-meta">Reviewed <time datetime="${esc(p.reviewed)}">${esc(p.reviewed)}</time> · UN E-Government Development Index: ${esc(p.egdi)}</p>
 <dl class="sp-dl"><dt>Lead agency</dt><dd>${esc(p.agency)}</dd><dt>Strategy</dt><dd>${esc(p.strategy)}</dd></dl>
@@ -241,37 +259,6 @@ ${news.length ? `<h2>Latest news on ${esc(c.name)}</h2><ul class="sp-list">${new
   }));
   sitemap.push([`/countries/${id}/`, p.reviewed]);
 }
-
-// Countries that have news but no full profile yet get a basic page (UN EGDI data and their news), so that
-// searches for a country's digital government news land on GovTec.
-const newsOnlyIds = [...new Set(newsList.map(n => n.country).filter(id => id && C[id] && !D.PROFILES[id]))].sort((a, b) => C[a].name.localeCompare(C[b].name));
-for (const id of newsOnlyIds) {
-  const c = C[id];
-  const news = newsList.filter(n => n.country === id);
-  const title = `${c.name}: digital government and digital public infrastructure news`;
-  const desc = `GovTec news on ${c.name}’s digital government, digital ID, payments, data and cybersecurity, linked to sources. ${c.name} ranks ${c.egdiRank} of 193 in the UN E-Government Development Index 2024 (score ${c.egdi.toFixed(3)}).`;
-  const last = isoDate(news[0].date);
-  const body = `<article class="sp-article">
-<p class="sp-kicker">Country page · ${esc(c.region)}</p>
-<h1>${esc(c.name)}: digital government news</h1>
-<p class="sp-meta">UN E-Government Development Index 2024: rank ${c.egdiRank} of 193 · score ${c.egdi.toFixed(3)} (<a href="${esc(D.EGDI_SOURCE[1])}" rel="noopener">${esc(D.EGDI_SOURCE[0])}</a>)</p>
-<p class="sp-lead">A full GovTec country profile of ${esc(c.name)} (digital identity, payments, data exchange, data protection, cybersecurity and AI governance) is in preparation. Below is every GovTec news item about ${esc(c.name)}, newest first.</p>
-<h2>News on ${esc(c.name)}</h2><ul class="sp-list">${news.map(newsCard).join('')}</ul>
-</article>`;
-  write(`countries/${id}/index.html`, page({
-    url: `/countries/${id}/`, title, desc, crumbs: [['Countries', '/countries/'], [c.name, `/countries/${id}/`]], app: `/#country-${id}`, modified: last,
-    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: clip(desc, 300), dateModified: last, about: { '@type': 'Country', name: c.name }, publisher: ORG, ...FREE }],
-    body
-  }));
-  sitemap.push([`/countries/${id}/`, last]);
-}
-write('countries/index.html', page({
-  url: '/countries/', title: 'Country profiles: digital ID, payments, data protection and e-government', type: 'website',
-  desc: `GovTec country profiles of digital public infrastructure and e-government for ${profIds.length} countries, each reviewed at least every 30 days and linked to official sources.`,
-  crumbs: [['Countries', '/countries/']], app: '/#countries',
-  body: `<h1>Country profiles</h1><p class="sp-lead">Digital identity, payments, data exchange, civil registration, data protection, cybersecurity and AI governance, country by country, with sources.</p><ul class="sp-list">${profIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI ${esc(D.PROFILES[id].egdi)} · reviewed ${esc(D.PROFILES[id].reviewed)}</small></li>`).join('')}</ul>${newsOnlyIds.length ? `<h2>More countries in the news</h2><p>Full profiles in preparation; these pages list GovTec news and UN EGDI 2024 data.</p><ul class="sp-list">${newsOnlyIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI rank ${C[id].egdiRank} of 193</small></li>`).join('')}</ul>` : ''}`
-}));
-sitemap.push(['/countries/', profIds.map(id => D.PROFILES[id].reviewed).sort().pop()]);
 
 /* ---------- monthly focus ---------- */
 for (const m of FOCUS.MONTHS || []) {
@@ -428,6 +415,187 @@ ${Object.entries(byKind).map(([k, list]) => `<h2>${esc(k)}</h2><ul class="sp-lis
 }));
 sitemap.push(['/funding/', todayIso]);
 
+/* ---------- country pages for every UN member state ---------- */
+// Countries without a full profile get a page with their UN E-Government Development Index standing, regional peers and
+// everything GovTec has on them (news, events, open opportunities), so searches for any country's digital government land here.
+const byRegion = {};
+for (const c of D.COUNTRIES) (byRegion[c.region] = byRegion[c.region] || []).push(c);
+for (const r in byRegion) byRegion[r].sort((a, b) => a.egdiRank - b.egdiRank);
+const regRank = c => byRegion[c.region].indexOf(c) + 1;
+const evFor = c => evUpcoming.filter(e => e.country === c.name);
+const fuFor = c => fuOpen.filter(f => countriesIn(f.where).includes(c));
+const peerTable = (c, list) => `<div class="sp-table"><table><thead><tr><th>Country</th><th>UN EGDI 2024 rank (of 193)</th><th>Score</th></tr></thead><tbody>${list.map(p => `<tr><td>${p.id === c.id ? `<b>${esc(p.name)}</b>` : `<a href="/countries/${p.id}/">${esc(p.name)}</a>`}</td><td>${p.egdiRank}</td><td>${p.egdi.toFixed(3)}</td></tr>`).join('')}</tbody></table></div>`;
+const basicIds = D.COUNTRIES.map(c => c.id).filter(id => !D.PROFILES[id]).sort((a, b) => C[a].name.localeCompare(C[b].name));
+for (const id of basicIds) {
+  const c = C[id], reg = byRegion[c.region], k = regRank(c);
+  const news = newsList.filter(n => n.country === id), evs = evFor(c), fus = fuFor(c);
+  const peers = reg.slice(Math.max(0, k - 3), Math.min(reg.length, k + 2));
+  const title = `${c.name}: e-government ranking, digital ID and digital public infrastructure`;
+  const desc = `${c.name} ranks ${c.egdiRank} of 193 in the UN E-Government Development Index 2024 (score ${c.egdi.toFixed(3)}), ${k} of ${reg.length} in ${c.region}. GovTec news, events and opportunities on ${c.name}’s digital government.`;
+  const last = news[0] ? isoDate(news[0].date) : null;
+  const body = `<article class="sp-article">
+<p class="sp-kicker">Country page · <a href="/regions/${slug(c.region)}/">${esc(c.region)}</a></p>
+<h1>${esc(c.name)}: digital government at a glance</h1>
+<p class="sp-meta">UN E-Government Development Index 2024: rank ${c.egdiRank} of 193 · score ${c.egdi.toFixed(3)} · ${k} of ${reg.length} in ${esc(c.region)} (<a href="${esc(D.EGDI_SOURCE[1])}" rel="noopener">${esc(D.EGDI_SOURCE[0])}</a>)</p>
+<p class="sp-lead">${esc(c.name)} ranks ${c.egdiRank} of 193 UN member states in the 2024 E-Government Development Index, which combines online services, telecommunications infrastructure and human capital, with a score of ${c.egdi.toFixed(3)} on a scale of 0 to 1. It is ${k} of ${reg.length} countries in ${esc(c.region)}. A full GovTec profile of ${esc(c.name)} (digital identity, digital payments, data exchange, civil registration, data protection, cybersecurity and AI governance, each with official sources) is in preparation.</p>
+<h2>${esc(c.name)} and its regional neighbours in the index</h2>
+${peerTable(c, peers)}
+${news.length ? `<h2>GovTec news on ${esc(c.name)}</h2><ul class="sp-list">${news.map(newsCard).join('')}</ul>` : ''}
+${evs.length ? `<h2>Upcoming events in ${esc(c.name)}</h2><ul class="sp-list">${evs.map(evLine).join('')}</ul>` : ''}
+${fus.length ? `<h2>Open opportunities in ${esc(c.name)}</h2><ul class="sp-list">${fus.map(fuLine).join('')}</ul>` : ''}
+<p class="sp-note">More: <a href="/regions/${slug(c.region)}/">${esc(c.region)}: digital government news and rankings</a> · <a href="/countries/">all 193 countries</a></p>
+</article>`;
+  write(`countries/${id}/index.html`, page({
+    url: `/countries/${id}/`, title, desc, crumbs: [['Countries', '/countries/'], [c.name, `/countries/${id}/`]], app: `/#country-${id}`, modified: last,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description: clip(desc, 300), ...(last ? { dateModified: last } : {}), about: { '@type': 'Country', name: c.name, identifier: c.iso2.toUpperCase() }, publisher: ORG, ...FREE }],
+    body
+  }));
+  sitemap.push([`/countries/${id}/`, last]);
+}
+write('countries/index.html', page({
+  url: '/countries/', title: 'All 193 countries: digital government profiles and UN e-government rankings', type: 'website',
+  desc: `Digital government, digital ID, payments and data protection in all 193 UN member states: ${profIds.length} full GovTec profiles reviewed every 30 days, plus UN EGDI 2024 rankings and news for every country.`,
+  crumbs: [['Countries', '/countries/']], app: '/#countries',
+  body: `<h1>Countries</h1><p class="sp-lead">Digital identity, payments, data exchange, civil registration, data protection, cybersecurity and AI governance, country by country, with sources. Every UN member state has a page.</p>
+<h2>Full country profiles</h2><ul class="sp-list">${profIds.map(id => `<li><a href="/countries/${id}/">${esc(C[id].name)}</a> <small>· ${esc(C[id].region)} · EGDI ${esc(D.PROFILES[id].egdi)} · reviewed ${esc(D.PROFILES[id].reviewed)}</small></li>`).join('')}</ul>
+${REGIONS.filter(r => byRegion[r]).map(r => `<h2>${esc(r)}</h2><p><a href="/regions/${slug(r)}/">${esc(r)}: news and rankings</a></p><ul class="sp-cols">${byRegion[r].slice().sort((a, b) => a.name.localeCompare(b.name)).map(c => `<li><a href="/countries/${c.id}/">${esc(c.name)}</a> <small>#${c.egdiRank}</small></li>`).join('')}</ul>`).join('\n')}`
+}));
+sitemap.push(['/countries/', profIds.map(id => D.PROFILES[id].reviewed).sort().pop()]);
+
+/* ---------- region hubs ---------- */
+const GLOBALWHERE = /worldwide|global|any country|all countries|international|remote|home-based|online/i;
+const regionAlts = r => ({ en: `/regions/${slug(r)}/`, ...Object.fromEntries(LANGS.map(l => [l, `/${l}/regions/${slug(r)}/`])) });
+const anLine = a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a><br><small>${esc(a.date)} · ${esc(a.kicker || '')}</small></li>`;
+for (const r of REGIONS) {
+  const news = newsList.filter(n => n.region === r), ans = AN.filter(a => a.region === r);
+  const evs = evUpcoming.filter(e => e.region === r && e.start);
+  const fus = fuOpen.filter(f => r === 'Global' ? GLOBALWHERE.test(f.where || '') : countriesIn(f.where).some(c => c.region === r));
+  const ctr = byRegion[r] || [];
+  const profiled = ctr.filter(c => D.PROFILES[c.id]);
+  const title = r === 'Global' ? 'Global digital government, DPI, AI and cybersecurity news' : `${r}: digital government, digital ID, DPI, AI and cybersecurity news`;
+  const desc = r === 'Global'
+    ? `Worldwide and multi-country developments in e-governance, digital public infrastructure, AI governance and cybersecurity: ${news.length} news items, analysis, events and open opportunities, linked to sources.`
+    : `Digital government in ${r}: ${news.length} news items, ${profiled.length} country profiles, UN e-government rankings for ${ctr.length} countries, ${evs.length} upcoming events and ${fus.length} open opportunities, linked to sources.`;
+  const body = `<h1>${esc(r === 'Global' ? 'Global' : r)}: digital government and digital public infrastructure</h1>
+<p class="sp-lead">${r === 'Global' ? 'Multi-country and worldwide developments' : `News, analysis, country profiles, events and opportunities from ${esc(r)}`} on e-governance, digital ID, digital payments, data, AI and cybersecurity. Every item links to its original sources.</p>
+${ans.length ? `<h2>Analysis</h2><ul class="sp-list">${ans.map(anLine).join('')}</ul>` : ''}
+${news.length ? `<h2>Latest news</h2><ul class="sp-list">${news.slice(0, 40).map(newsCard).join('')}</ul>` : ''}
+${ctr.length ? `<h2>E-government leaders in ${esc(r)} (UN EGDI 2024)</h2>${peerTable({}, ctr.slice(0, 10))}
+<h2>All ${ctr.length} countries</h2><ul class="sp-cols">${ctr.slice().sort((a, b) => a.name.localeCompare(b.name)).map(c => `<li><a href="/countries/${c.id}/">${esc(c.name)}</a>${D.PROFILES[c.id] ? ' <small>· full profile</small>' : ''}</li>`).join('')}</ul>` : ''}
+${evs.length ? `<h2>Upcoming events</h2><ul class="sp-list">${evs.map(evLine).join('')}</ul>` : ''}
+${fus.length ? `<h2>Open grants and jobs</h2><ul class="sp-list">${fus.map(fuLine).join('')}</ul>` : ''}`;
+  const last = news[0] ? isoDate(news[0].date) : null;
+  write(`regions/${slug(r)}/index.html`, page({
+    url: `/regions/${slug(r)}/`, title, desc, type: 'website', alts: regionAlts(r), crumbs: [['Regions', '/regions/'], [r, `/regions/${slug(r)}/`]], app: '/#news', modified: last,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: clip(desc, 300), ...(last ? { dateModified: last } : {}), ...(r !== 'Global' ? { spatialCoverage: { '@type': 'Place', name: r } } : {}), publisher: ORG, ...FREE }],
+    body
+  }));
+  sitemap.push([`/regions/${slug(r)}/`, last]);
+}
+write('regions/index.html', page({
+  url: '/regions/', title: 'Digital government news by region: Africa, Americas, Asia-Pacific, Europe, Middle East', type: 'website',
+  desc: 'GovTec by region: e-governance, digital public infrastructure, AI and cybersecurity news, country profiles and UN e-government rankings for Africa, the Americas, Asia-Pacific, Europe and the Middle East.',
+  crumbs: [['Regions', '/regions/']], app: '/#news',
+  body: `<h1>Regions</h1><p class="sp-lead">Follow digital government and digital public infrastructure region by region.</p><ul class="sp-list">${REGIONS.map(r => `<li><a href="/regions/${slug(r)}/">${esc(r)}</a><br><small>${newsList.filter(n => n.region === r).length} news items${byRegion[r] ? ` · ${byRegion[r].length} countries` : ''}</small></li>`).join('')}</ul>`
+}));
+sitemap.push(['/regions/', todayIso]);
+
+/* ---------- translated pages (French, Spanish, Arabic) ---------- */
+const fmtDate = (iso, l) => { try { return new Intl.DateTimeFormat(l === 'ar' ? 'ar-u-nu-latn' : l, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z')); } catch (e) { return iso; } };
+const cName = (c, l) => { try { return new Intl.DisplayNames([l], { type: 'region' }).of(c.iso2.toUpperCase()) || c.name; } catch (e) { return c.name; } };
+for (const l of LANGS) {
+  const U = I18N.UI[l];
+  const fill = (s, r) => s.replace('{r}', r);
+  const trNews = newsList.filter(n => (I18N.NEWS[n.id] || {})[l]);
+  const card = n => { const t = I18N.NEWS[n.id][l], d = isoDate(n.date); const c = n.country && C[n.country]; return `<li><a href="/${l}/news/${n.id}/">${esc(t.t)}</a><br><small>${d ? esc(fmtDate(d, l)) : esc(n.date)} · ${esc(U.R[n.region] || n.region)}${c ? ' · ' + esc(cName(c, l)) : ''}</small></li>`; };
+  for (const n of trNews) {
+    const t = I18N.NEWS[n.id][l], d = isoDate(n.date), im = imgOf(n.id), c = n.country && C[n.country];
+    const related = trNews.filter(x => x.id !== n.id && (x.region === n.region || x.theme === n.theme)).slice(0, 5);
+    const body = `<article class="sp-article">
+<p class="sp-kicker">${esc(U.R[n.region] || n.region)}${c ? ' · ' + esc(cName(c, l)) : ''}</p>
+<h1>${esc(t.t)}</h1>
+<p class="sp-meta"><time datetime="${d || ''}">${d ? esc(fmtDate(d, l)) : esc(n.date)}</time></p>
+${im ? `<figure><img src="/${esc(im.src)}" width="${im.w}" height="${im.h}" alt="${esc(im.alt)}" lang="en"><figcaption lang="en">${im.kind === 'ai' ? 'AI-generated illustration' : `Photo: ${esc(im.credit || '')}, <a href="${esc(im.licenseUrl || '#')}" rel="noopener">${esc(im.license || '')}</a>, via <a href="${esc(im.sourceUrl || '#')}" rel="noopener">Wikimedia Commons</a>`}</figcaption></figure>` : ''}
+<p class="sp-lead">${esc(t.s)}</p>
+<h2>${esc(U.whyMatters)}</h2>
+<p>${esc(t.w)}</p>
+<h2>${esc(U.sources)}</h2>
+<ol class="sp-sources">${n.links.map(x => `<li><a href="${esc(x[2])}" rel="noopener">${esc(x[0])}</a>, ${esc(x[1])}</li>`).join('')}</ol>
+<p class="sp-note">${esc(U.translatedNote)} <a href="/news/${n.id}/" hreflang="en" lang="en">${esc(U.readEnglish)}</a></p>
+${related.length ? `<h2>${esc(U.latest)}</h2><ul class="sp-list">${related.map(card).join('')}</ul>` : ''}
+</article>`;
+    const tr = I18N.NEWS[n.id];
+    const alts = { en: `/news/${n.id}/`, ...Object.fromEntries(LANGS.filter(x => tr[x]).map(x => [x, `/${x}/news/${n.id}/`])) };
+    write(`${l}/news/${n.id}/index.html`, page({
+      lang: l, url: `/${l}/news/${n.id}/`, title: t.t, desc: t.s, image: im ? abs(im.src) : null, alts, published: d, modified: d,
+      crumbs: [[U.news, `/${l}/`], [t.t, `/${l}/news/${n.id}/`]],
+      jsonld: [{
+        '@context': 'https://schema.org', '@type': 'NewsArticle', headline: clip(t.t, 110), description: clip(t.s, 300), inLanguage: l,
+        datePublished: d, dateModified: d, image: im ? [abs(im.src)] : [abs('img/og-govtec.jpg')], author: ORG, publisher: ORG,
+        mainEntityOfPage: SITE + `/${l}/news/${n.id}/`, translationOfWork: { '@id': SITE + `/news/${n.id}/` }, isBasedOn: n.links.map(x => x[2]), isAccessibleForFree: true,
+        ...(c ? { contentLocation: { '@type': 'Country', name: c.name } } : {})
+      }],
+      body
+    }));
+    sitemap.push([`/${l}/news/${n.id}/`, d, im ? [{ loc: abs(im.src), title: im.alt }] : []]);
+  }
+  for (const r of REGIONS) {
+    const rn = U.R[r] || r, news = trNews.filter(n => n.region === r), ctr = byRegion[r] || [];
+    const last = news[0] ? isoDate(news[0].date) : null;
+    write(`${l}/regions/${slug(r)}/index.html`, page({
+      lang: l, url: `/${l}/regions/${slug(r)}/`, title: fill(U.regionTitle, rn), desc: fill(U.regionDesc, rn), type: 'website', alts: regionAlts(r), modified: last,
+      crumbs: [[rn, `/${l}/regions/${slug(r)}/`]],
+      jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: fill(U.regionTitle, rn), inLanguage: l, publisher: ORG, isAccessibleForFree: true }],
+      body: `<h1>${esc(fill(U.regionTitle, rn))}</h1><p class="sp-lead">${esc(fill(U.regionLead, rn))}</p>
+${news.length ? `<h2>${esc(U.latest)}</h2><ul class="sp-list">${news.map(card).join('')}</ul>` : ''}
+<p><a href="/regions/${slug(r)}/" hreflang="en">${esc(U.moreEnglish)}</a></p>
+${ctr.length ? `<h2>${esc(U.countriesInRegion)}</h2><ul class="sp-cols">${ctr.map(c => `<li><a href="/countries/${c.id}/" hreflang="en">${esc(cName(c, l))}</a> <small>#${c.egdiRank}</small></li>`).join('')}</ul>` : ''}`
+    }));
+    sitemap.push([`/${l}/regions/${slug(r)}/`, last]);
+  }
+  const trAn = AN.filter(a => (I18N.ANALYSES[a.id] || {})[l]);
+  const S = U.S || {};
+  write(`${l}/index.html`, page({
+    lang: l, url: `/${l}/`, title: U.homeTitle, desc: U.homeDesc, type: 'website',
+    alts: { en: '/', ...Object.fromEntries(LANGS.map(x => [x, `/${x}/`])) }, crumbs: [],
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: U.homeTitle, description: U.homeDesc, inLanguage: l, publisher: ORG, isAccessibleForFree: true }],
+    body: `<h1>GovTec — ${esc(U.tagline)}</h1><p class="sp-lead">${esc(U.homeLead)}</p>
+<h2>${esc(U.regions)}</h2><p>${REGIONS.map(r => `<a href="/${l}/regions/${slug(r)}/">${esc(U.R[r])}</a>`).join(' · ')}</p>
+${trNews.length ? `<h2>${esc(U.latest)}</h2><ul class="sp-list">${trNews.slice(0, 40).map(card).join('')}</ul>` : ''}
+${trAn.length ? `<h2>${esc(U.analysis)}</h2><ul class="sp-list">${trAn.map(a => { const t = I18N.ANALYSES[a.id][l]; return `<li><b>${esc(t.t)}</b><br>${esc(clip(t.s, 320))}<br><small><a href="/analysis/${a.id}/" hreflang="en">${esc(U.fullAnalysisEnglish)}</a></small></li>`; }).join('')}</ul>` : ''}
+<h2>${esc(U.sections)}</h2><p><a href="/news/" hreflang="en">${esc(S.news)}</a> · <a href="/analysis/" hreflang="en">${esc(S.analysis)}</a> · <a href="/countries/" hreflang="en">${esc(S.countries)}</a> · <a href="/events/" hreflang="en">${esc(S.events)}</a> · <a href="/funding/" hreflang="en">${esc(S.funding)}</a> · <a href="/policy-tracker/" hreflang="en">${esc(S.tracker)}</a> · <a href="/glossary/" hreflang="en">${esc(S.glossary)}</a></p>`
+  }));
+  sitemap.push([`/${l}/`, trNews[0] ? isoDate(trNews[0].date) : todayIso]);
+}
+
+/* ---------- llms.txt: a plain summary for AI search and answer engines ---------- */
+out.set('llms.txt', `# ${FULL}
+
+> Global news and intelligence on e-governance, digital public infrastructure (digital ID, digital payments, data exchange, civil registration), AI governance, cybersecurity and the digitalisation of sectors (fintech and payments, health, education, agriculture, social protection, telecom, trade, energy). Every item is written from original sources (governments, central banks, regulators, UN agencies, the World Bank, expert bodies and major media) and links to them. Free for everyone; content in English, with French, Spanish and Arabic versions of recent news.
+
+Updated ${D.UPDATED}. ${newsList.length} news items, ${AN.length} in-depth analyses, ${profIds.length} full country profiles and pages for all 193 UN member states, ${evUpcoming.length} upcoming events and ${fuOpen.length} open grants, fellowships and jobs.
+
+## Main sections
+- [News](${SITE}/news/): daily news, newest first
+- [Analysis](${SITE}/analysis/): weekly in-depth analysis with numbered sources
+- [Countries](${SITE}/countries/): digital government profiles and UN E-Government Development Index 2024 rankings for all 193 UN member states
+- [Regions](${SITE}/regions/): ${REGIONS.map(r => `[${r}](${SITE}/regions/${slug(r)}/)`).join(', ')}
+- [Policy & Law Tracker](${SITE}/policy-tracker/): AI, data protection, cybersecurity and DPI laws worldwide
+- [Events](${SITE}/events/): conferences, workshops and webinars on digital government
+- [Grants, fellowships and jobs](${SITE}/funding/)
+- [Glossary](${SITE}/glossary/)
+- Topics: ${D.THEMES.map(t => `[${t.label}](${SITE}/topics/${t.id}/)`).join(', ')}
+- Sectors: ${D.SECTORS.map(x => `[${x}](${SITE}/sectors/${slug(x)}/)`).join(', ')}
+- Other languages: ${LANGS.map(l => `[${LANGNAME[l]}](${SITE}/${l}/)`).join(', ')}
+- [RSS feed](${SITE}/feed.xml)
+
+## Latest analysis
+${AN.map(a => `- [${a.title}](${SITE}/analysis/${a.id}/) (${a.date}): ${clip(strip(a.standfirst), 220)}`).join('\n')}
+
+## Latest news
+${newsList.slice(0, 25).map(n => `- [${n.title}](${SITE}/news/${n.id}/) (${n.date})`).join('\n')}
+`);
+
 /* ---------- topic and sector hubs ---------- */
 const anList = AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a><br><small>${esc(a.date)} · ${esc(a.kicker || '')}</small></li>`);
 for (const t of D.THEMES) {
@@ -497,9 +665,10 @@ const recent = [
   ...newsList.map(n => ({ u: `/news/${n.id}/`, d: isoDate(n.date), t: n.title })),
   ...AN.map(a => ({ u: `/analysis/${a.id}/`, d: isoDate(a.date), t: a.title }))
 ].filter(x => x.d && x.d >= recentCut);
+for (const n of newsList) { const d = isoDate(n.date); if (!d || d < recentCut) continue; for (const l of LANGS) { const t = (I18N.NEWS[n.id] || {})[l]; if (t) recent.push({ u: `/${l}/news/${n.id}/`, d, t: t.t, l }); } }
 out.set('news-sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${recent.map(x => `<url><loc>${SITE}${x.u}</loc><news:news><news:publication><news:name>${NAME}</news:name><news:language>en</news:language></news:publication><news:publication_date>${x.d}</news:publication_date><news:title>${esc(x.t)}</news:title></news:news></url>`).join('\n')}
+${recent.map(x => `<url><loc>${SITE}${x.u}</loc><news:news><news:publication><news:name>${NAME}</news:name><news:language>${x.l || 'en'}</news:language></news:publication><news:publication_date>${x.d}</news:publication_date><news:title>${esc(x.t)}</news:title></news:news></url>`).join('\n')}
 </urlset>
 `);
 // Every URL, one per line, for the IndexNow ping in the "Build static pages" workflow.
@@ -525,13 +694,13 @@ ${feedItems.map(x => `<item><title>${esc(x.t)}</title><link>${SITE}${x.u}</link>
 
 const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
-const latest = `<!--SEO:LATEST--><noscript><section class="wrap" style="padding:24px 0"><h2>Latest news</h2><ul>${newsList.slice(0, 30).map(n => `<li><a href="/news/${n.id}/">${esc(n.title)}</a> (${esc(n.date)})</li>`).join('')}</ul><h2>Analysis</h2><ul>${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a></li>`).join('')}</ul><p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/focus/">Monthly Focus</a> · <a href="/events/">Events</a> · <a href="/funding/">Grants, fellowships and jobs</a> · <a href="/policy-tracker/">Policy &amp; Law Tracker</a> · <a href="/glossary/">Glossary</a></p><p>Topics: ${D.THEMES.map(t => `<a href="/topics/${t.id}/">${esc(t.label)}</a>`).join(' · ')}</p></section></noscript><!--/SEO:LATEST-->`;
+const latest = `<!--SEO:LATEST--><noscript><section class="wrap" style="padding:24px 0"><h2>Latest news</h2><ul>${newsList.slice(0, 30).map(n => `<li><a href="/news/${n.id}/">${esc(n.title)}</a> (${esc(n.date)})</li>`).join('')}</ul><h2>Analysis</h2><ul>${AN.map(a => `<li><a href="/analysis/${a.id}/">${esc(a.title)}</a></li>`).join('')}</ul><p><a href="/news/">All news</a> · <a href="/analysis/">All analysis</a> · <a href="/countries/">Country profiles</a> · <a href="/focus/">Monthly Focus</a> · <a href="/events/">Events</a> · <a href="/funding/">Grants, fellowships and jobs</a> · <a href="/policy-tracker/">Policy &amp; Law Tracker</a> · <a href="/glossary/">Glossary</a></p><p>Topics: ${D.THEMES.map(t => `<a href="/topics/${t.id}/">${esc(t.label)}</a>`).join(' · ')}</p><p>Regions: ${REGIONS.map(r => `<a href="/regions/${slug(r)}/">${esc(r)}</a>`).join(' · ')}</p><p>${LANGS.map(l => `<a href="/${l}/" hreflang="${l}" lang="${l}">${esc(LANGNAME[l])}</a>`).join(' · ')}</p></section></noscript><!--/SEO:LATEST-->`;
 if (!/<!--SEO:LATEST-->[\s\S]*?<!--\/SEO:LATEST-->/.test(index)) throw new Error('index.html has no SEO:LATEST markers');
 index = index.replace(/<!--SEO:LATEST-->[\s\S]*?<!--\/SEO:LATEST-->/, () => latest);
 out.set('index.html', index);
 
 /* ---------- write, removing pages whose item no longer exists ---------- */
-for (const dir of ['news', 'analysis', 'countries', 'focus', 'events', 'funding', 'topics', 'sectors']) {
+for (const dir of ['news', 'analysis', 'countries', 'focus', 'events', 'funding', 'topics', 'sectors', 'regions', ...LANGS.flatMap(l => [`${l}/news`, `${l}/regions`])]) {
   const d = path.join(ROOT, dir);
   if (!fs.existsSync(d)) continue;
   for (const sub of fs.readdirSync(d)) {

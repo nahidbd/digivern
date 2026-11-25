@@ -1,4 +1,4 @@
-# Rebuilds the plain HTML pages that search engines and link previews read (news/, analysis/, countries/, focus/),
+# Rebuilds the plain HTML pages that search engines and link previews read (news/, analysis/, countries/, focus/, regions/, fr/, es/, ar/),
 # plus sitemap.xml, feed.xml and the headline list in index.html, whenever the content files change on main.
 # See tools/build-seo.mjs. Commits the result back to main.
 name: Build static pages
@@ -6,7 +6,7 @@ name: Build static pages
 on:
   push:
     branches: [main]
-    paths: ['data.js', 'analysis.js', 'focus.js', 'events.js', 'images.js', 'tools/build-seo.mjs']
+    paths: ['data.js', 'analysis.js', 'focus.js', 'events.js', 'images.js', 'i18n.js', 'tools/build-seo.mjs']
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A news analysis countries focus events funding topics sectors policy-tracker glossary sitemap.xml news-sitemap.xml feed.xml indexnow-urls.txt index.html
+          git add -A news analysis countries focus events funding topics sectors regions fr es ar policy-tracker glossary sitemap.xml news-sitemap.xml feed.xml indexnow-urls.txt llms.txt index.html
           if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
           git commit -q -m "Static pages for search engines"
           for i in 1 2 3 4; do
@@ -40,7 +40,7 @@ jobs:
             git rebase --abort 2>/dev/null || true
             git reset -q --hard origin/main
             node tools/build-seo.mjs
-            git add -A news analysis countries focus events funding topics sectors policy-tracker glossary sitemap.xml news-sitemap.xml feed.xml indexnow-urls.txt index.html
+            git add -A news analysis countries focus events funding topics sectors regions fr es ar policy-tracker glossary sitemap.xml news-sitemap.xml feed.xml indexnow-urls.txt llms.txt index.html
             if git diff --cached --quiet; then exit 0; fi
             git commit -q -m "Static pages for search engines"
             sleep 10
@@ -54,7 +54,7 @@ jobs:
           git checkout -q origin/main
           BEFORE="${{ github.event.before }}"
           if [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then BEFORE=HEAD~1; fi
-          CHANGED=$(git diff --name-only "$BEFORE" HEAD -- news analysis countries focus events funding topics sectors policy-tracker glossary | grep '/index.html$' | sed 's#index.html$##' | sed 's#^#https://govtec.org/#' | head -9000)
+          CHANGED=$(git diff --name-only "$BEFORE" HEAD -- news analysis countries focus events funding topics sectors regions fr es ar policy-tracker glossary | grep '/index.html$' | sed 's#index.html$##' | sed 's#^#https://govtec.org/#' | head -9000)
           # a manual run (workflow_dispatch) submits every page in the sitemap
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then CHANGED=$(cat indexnow-urls.txt); fi
           [ -z "$CHANGED" ] && { echo "No changed pages"; exit 0; }

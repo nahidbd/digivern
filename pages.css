@@ -44,3 +44,10 @@
 .sp-share{font-size:.95rem}
 .sp-foot{background:var(--navy-950,#06162A);color:#DDE6F0;padding:20px 0;font-size:.92rem}
 .sp-foot a{color:#fff}
+/* language switcher, multi-column country lists, right-to-left pages */
+.sp-langs{margin:0 0 6px;font-size:.85rem;color:var(--muted,#5b6470);display:flex;flex-wrap:wrap;gap:4px 8px}
+.sp-langs b{color:var(--ink,#1a1a1a)}
+.sp-cols{list-style:none;padding:0;margin:0 0 1em;columns:3 14rem;column-gap:24px}
+.sp-cols li{break-inside:avoid;padding:3px 0}
+[dir="rtl"] .sp-article,[dir="rtl"] .sp-main{text-align:right}
+[dir="rtl"] .sp-sources,[dir="rtl"] .sp-list{padding-right:1.2em;padding-left:0}

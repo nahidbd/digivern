@@ -1,0 +1,53 @@
+# GovTec, the Governance & Technology Centre
+
+> Global news and intelligence on e-governance, digital public infrastructure (digital ID, digital payments, data exchange, civil registration), AI governance, cybersecurity and the digitalisation of sectors (fintech and payments, health, education, agriculture, social protection, telecom, trade, energy). Every item is written from original sources (governments, central banks, regulators, UN agencies, the World Bank, expert bodies and major media) and links to them. Free for everyone; content in English, with French, Spanish and Arabic versions of recent news.
+
+Updated 25 Nov 2026. 156 news items, 5 in-depth analyses, 27 full country profiles and pages for all 193 UN member states, 75 upcoming events and 80 open grants, fellowships and jobs.
+
+## Main sections
+- [News](https://govtec.org/news/): daily news, newest first
+- [Analysis](https://govtec.org/analysis/): weekly in-depth analysis with numbered sources
+- [Countries](https://govtec.org/countries/): digital government profiles and UN E-Government Development Index 2024 rankings for all 193 UN member states
+- [Regions](https://govtec.org/regions/): [Africa](https://govtec.org/regions/africa/), [Americas](https://govtec.org/regions/americas/), [Asia-Pacific](https://govtec.org/regions/asia-pacific/), [Europe](https://govtec.org/regions/europe/), [Middle East](https://govtec.org/regions/middle-east/), [Global](https://govtec.org/regions/global/)
+- [Policy & Law Tracker](https://govtec.org/policy-tracker/): AI, data protection, cybersecurity and DPI laws worldwide
+- [Events](https://govtec.org/events/): conferences, workshops and webinars on digital government
+- [Grants, fellowships and jobs](https://govtec.org/funding/)
+- [Glossary](https://govtec.org/glossary/)
+- Topics: [E-governance & services](https://govtec.org/topics/egov/), [Digital Public Infrastructure](https://govtec.org/topics/dpi/), [Digital governance & policy](https://govtec.org/topics/pol/), [Artificial intelligence](https://govtec.org/topics/ai/), [Cybersecurity](https://govtec.org/topics/cyb/), [Sector digitalisation](https://govtec.org/topics/sec/), [Green digitalisation](https://govtec.org/topics/grn/), [Enabling areas](https://govtec.org/topics/enb/)
+- Sectors: [Government](https://govtec.org/sectors/government/), [Fintech & payments](https://govtec.org/sectors/fintech-and-payments/), [Health](https://govtec.org/sectors/health/), [Education](https://govtec.org/sectors/education/), [Agriculture](https://govtec.org/sectors/agriculture/), [Social protection](https://govtec.org/sectors/social-protection/), [Telecom](https://govtec.org/sectors/telecom/), [Trade & business](https://govtec.org/sectors/trade-and-business/), [Energy & climate](https://govtec.org/sectors/energy-and-climate/)
+- Other languages: [Français](https://govtec.org/fr/), [Español](https://govtec.org/es/), [العربية](https://govtec.org/ar/)
+- [RSS feed](https://govtec.org/feed.xml)
+
+## Latest analysis
+- [Twenty-five crore accounts, one in three adults left out: what Bangladesh’s national financial inclusion survey says](https://govtec.org/analysis/a5/) (21 Nov 2026): Bangladesh’s National Financial Inclusion Survey 2025, presented in Dhaka on 18 November, puts formal financial inclusion at 64.5% of adults — short of the 100% the government aimed for by June 2026. Mobile money…
+- [When the front door goes dark: what Poland’s ePUAP attack says about securing shared e-government platforms](https://govtec.org/analysis/a4/) (16 Nov 2026): On 10 November Poland detected a cyberattack on ePUAP, the platform behind official e-mailboxes and Trusted Profile signatures, and took it offline as a precaution. Four days later it was still down, and the minister…
+- [Paying shops to say yes to QR: can Pakistan’s cashless push beat its cash habit?](https://govtec.org/analysis/a3/) (14 Nov 2026): Pakistan has decided to keep paying the fees on Raast QR payments, after the number of shops accepting digital payments passed two million and the Prime Minister ordered a roadmap to “100%” digital payments. Raast is…
+- [One switch for every taka: can Bangladesh catch up on interoperable payments?](https://govtec.org/analysis/a1/) (2 Nov 2026): From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory…
+- [A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore](https://govtec.org/analysis/a2/) (2 Nov 2026): Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting…
+
+## Latest news
+- [Swiss National Bank and eight financial firms start exploring a shared ‘Swiss Financial Ledger’ for tokenised money and securities](https://govtec.org/news/n152/) (24 Nov 2026)
+- [Bangladesh briefs diplomats and donors on its draft cyber law amendment and gives them one week to send written recommendations](https://govtec.org/news/n153/) (24 Nov 2026)
+- [Kenya’s bank-owned Pesalink network adds till, Paybill and QR payments for shops, taking on M-PESA’s merchant business](https://govtec.org/news/n154/) (24 Nov 2026)
+- [Hong Kong cuts Gleneagles Hospital off its eHealth record-sharing system after hackers reached patient data through the hospital's app](https://govtec.org/news/n155/) (24 Nov 2026)
+- [Chile delays its new personal data protection law to 15 October 2027 and enlarges the board of the future data protection agency](https://govtec.org/news/n156/) (23 Nov 2026)
+- [India’s central bank proposes a ’Stop Switch’ and an optional trusted-person approval to cut digital banking fraud](https://govtec.org/news/n146/) (23 Nov 2026)
+- [Egypt’s central bank brings tokenised card payments to Android phones, after 292 million transactions through Apple Pay](https://govtec.org/news/n147/) (23 Nov 2026)
+- [Nigeria’s $500 million World Bank farm loan pays states only if they set up rules for a common digital farmer registry and other reforms](https://govtec.org/news/n148/) (23 Nov 2026)
+- [UN weapons treaty talks end without a mandate to negotiate a ban on autonomous weapons, giving experts until 2028 instead](https://govtec.org/news/n149/) (21–23 Nov 2026)
+- [World’s privacy regulators adopt 11 principles for AI tools in schools, including a model charter and limits on using pupils’ data](https://govtec.org/news/n150/) (20–23 Nov 2026)
+- [US Department of Agriculture confirms a cyber threat behind outages in farm payment and loan systems, but keeps its 11 December sign-up deadline](https://govtec.org/news/n151/) (20–23 Nov 2026)
+- [Pakistan’s prime minister is due to launch the ‘Mehfooz Dawa’ app on 24 November so patients can scan medicine barcodes to spot fakes](https://govtec.org/news/n143/) (22 Nov 2026)
+- [Vietnam passes a law requiring banking, telecom and social media accounts to be linked to a national electronic identity](https://govtec.org/news/n137/) (20 Nov 2026)
+- [Germany’s Bundesrat approves the digital identities law, clearing the way for the ‘d-you’ wallet on 2 January 2027](https://govtec.org/news/n138/) (20 Nov 2026)
+- [Africa’s instant payment systems handled 71.4 billion transactions worth $1.8 trillion in 2025, but most users still rely heavily on cash](https://govtec.org/news/n134/) (19 Nov 2026)
+- [Tanzania launches a new national ID card and a NIDA Wallet phone app, and will stop accepting ID numbers alone in three months](https://govtec.org/news/n139/) (18–19 Nov 2026)
+- [Bulgaria says hackers spent five years inside government networks and took about 62 million pages of documents](https://govtec.org/news/n140/) (18–19 Nov 2026)
+- [APEC leaders adopt a 2027–2030 trade digitalisation framework and back paperless trade at their Shenzhen summit](https://govtec.org/news/n141/) (18–19 Nov 2026)
+- [ECOWAS leans towards splitting its planned regional payment system between Nigeria, Senegal’s BCEAO and Ghana](https://govtec.org/news/n135/) (18–19 Nov 2026)
+- [India’s UPI steering committee reportedly settles on a flat ₹5 fee for merchant-to-merchant payments](https://govtec.org/news/n136/) (18–19 Nov 2026)
+- [Singapore’s central bank will build a ‘Know Your Agent’ protocol so banks can check the AI agents acting for customers](https://govtec.org/news/n128/) (19 Nov 2026)
+- [UK financial regulators consult on cyber resilience expectations for firms, with extra guidance on AI and quantum risks](https://govtec.org/news/n129/) (19 Nov 2026)
+- [Philippines’ education department scales up AI tools to flag likely dropouts and screen Grade 2 pupils for learning difficulties](https://govtec.org/news/n132/) (18–19 Nov 2026)
+- [Singapore sets a 2027–2028 roadmap for PayNow, including interoperable QR codes and higher limits for government payments](https://govtec.org/news/n142/) (18 Nov 2026)
+- [Bangladesh seeks Estonia’s help to build its ‘One Citizen One ID’ system and a national interoperability framework](https://govtec.org/news/n130/) (18 Nov 2026)
