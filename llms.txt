@@ -2,7 +2,7 @@
 
 > Global news and intelligence on e-governance, digital public infrastructure (digital ID, digital payments, data exchange, civil registration), AI governance, cybersecurity and the digitalisation of sectors (fintech and payments, health, education, agriculture, social protection, telecom, trade, energy). Every item is written from original sources (governments, central banks, regulators, UN agencies, the World Bank, expert bodies and major media) and links to them. Free for everyone; content in English, with French, Spanish and Arabic versions of recent news.
 
-Updated 25 Nov 2026. 156 news items, 5 in-depth analyses, 27 full country profiles and pages for all 193 UN member states, 75 upcoming events and 80 open grants, fellowships and jobs.
+Updated 26 Nov 2026. 162 news items, 5 in-depth analyses, 28 full country profiles and pages for all 193 UN member states, 76 upcoming events and 83 open grants, fellowships and jobs.
 
 ## Main sections
 - [News](https://govtec.org/news/): daily news, newest first
@@ -26,11 +26,17 @@ Updated 25 Nov 2026. 156 news items, 5 in-depth analyses, 27 full country profil
 - [A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore](https://govtec.org/analysis/a2/) (2 Nov 2026): Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting…
 
 ## Latest news
+- [Singapore merges its public hospital apps into one national HealthHub app, with single-payment bills and live polyclinic slots](https://govtec.org/news/n157/) (25 Nov 2026)
+- [Peru launches a free digital national ID card in its Perú Pass wallet, built on the open-source Inji platform](https://govtec.org/news/n160/) (18–25 Nov 2026)
+- [India launches SAMAVESH, one login for 33 social justice portals, and a new e-Anudaan system for NGO grants](https://govtec.org/news/n158/) (24 Nov 2026)
+- [Czechia picks a Wultra-led consortium to build and run its EU digital identity wallet, Valetka, now due by the end of 2027](https://govtec.org/news/n159/) (24 Nov 2026)
+- [Ethiopia and the World Bank agree to review, and possibly restructure, the Eastern Africa Regional Digital Integration Project](https://govtec.org/news/n161/) (24 Nov 2026)
 - [Swiss National Bank and eight financial firms start exploring a shared ‘Swiss Financial Ledger’ for tokenised money and securities](https://govtec.org/news/n152/) (24 Nov 2026)
 - [Bangladesh briefs diplomats and donors on its draft cyber law amendment and gives them one week to send written recommendations](https://govtec.org/news/n153/) (24 Nov 2026)
 - [Kenya’s bank-owned Pesalink network adds till, Paybill and QR payments for shops, taking on M-PESA’s merchant business](https://govtec.org/news/n154/) (24 Nov 2026)
 - [Hong Kong cuts Gleneagles Hospital off its eHealth record-sharing system after hackers reached patient data through the hospital's app](https://govtec.org/news/n155/) (24 Nov 2026)
 - [Chile delays its new personal data protection law to 15 October 2027 and enlarges the board of the future data protection agency](https://govtec.org/news/n156/) (23 Nov 2026)
+- [Central banks of four Central Asian states and Azerbaijan back a plan to link their national QR payment systems](https://govtec.org/news/n162/) (23 Nov 2026)
 - [India’s central bank proposes a ’Stop Switch’ and an optional trusted-person approval to cut digital banking fraud](https://govtec.org/news/n146/) (23 Nov 2026)
 - [Egypt’s central bank brings tokenised card payments to Android phones, after 292 million transactions through Apple Pay](https://govtec.org/news/n147/) (23 Nov 2026)
 - [Nigeria’s $500 million World Bank farm loan pays states only if they set up rules for a common digital farmer registry and other reforms](https://govtec.org/news/n148/) (23 Nov 2026)
@@ -45,9 +51,3 @@ Updated 25 Nov 2026. 156 news items, 5 in-depth analyses, 27 full country profil
 - [Bulgaria says hackers spent five years inside government networks and took about 62 million pages of documents](https://govtec.org/news/n140/) (18–19 Nov 2026)
 - [APEC leaders adopt a 2027–2030 trade digitalisation framework and back paperless trade at their Shenzhen summit](https://govtec.org/news/n141/) (18–19 Nov 2026)
 - [ECOWAS leans towards splitting its planned regional payment system between Nigeria, Senegal’s BCEAO and Ghana](https://govtec.org/news/n135/) (18–19 Nov 2026)
-- [India’s UPI steering committee reportedly settles on a flat ₹5 fee for merchant-to-merchant payments](https://govtec.org/news/n136/) (18–19 Nov 2026)
-- [Singapore’s central bank will build a ‘Know Your Agent’ protocol so banks can check the AI agents acting for customers](https://govtec.org/news/n128/) (19 Nov 2026)
-- [UK financial regulators consult on cyber resilience expectations for firms, with extra guidance on AI and quantum risks](https://govtec.org/news/n129/) (19 Nov 2026)
-- [Philippines’ education department scales up AI tools to flag likely dropouts and screen Grade 2 pupils for learning difficulties](https://govtec.org/news/n132/) (18–19 Nov 2026)
-- [Singapore sets a 2027–2028 roadmap for PayNow, including interoperable QR codes and higher limits for government payments](https://govtec.org/news/n142/) (18 Nov 2026)
-- [Bangladesh seeks Estonia’s help to build its ‘One Citizen One ID’ system and a national interoperability framework](https://govtec.org/news/n130/) (18 Nov 2026)
