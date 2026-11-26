@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url><loc>https://govtec.org/</loc><lastmod>2026-11-26</lastmod></url>
-<url><loc>https://govtec.org/news/n157/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/news/n160/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/news/n158/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/news/n159/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/news/n161/</loc><lastmod>2026-11-24</lastmod></url>
+<url><loc>https://govtec.org/news/n157/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n157.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n160/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n160.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n158/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n158.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n159/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n159.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/news/n161/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n161.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n152/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n152.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n153/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n153.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/news/n154/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n154.webp</image:loc></image:image></url>
@@ -534,11 +534,11 @@
 <url><loc>https://govtec.org/regions/middle-east/</loc><lastmod>2026-11-09</lastmod></url>
 <url><loc>https://govtec.org/regions/global/</loc><lastmod>2026-11-23</lastmod></url>
 <url><loc>https://govtec.org/regions/</loc><lastmod>2026-11-26</lastmod></url>
-<url><loc>https://govtec.org/fr/news/n157/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/fr/news/n160/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/fr/news/n158/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/fr/news/n159/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/fr/news/n161/</loc><lastmod>2026-11-24</lastmod></url>
+<url><loc>https://govtec.org/fr/news/n157/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n157.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/fr/news/n160/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n160.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/fr/news/n158/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n158.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/fr/news/n159/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n159.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/fr/news/n161/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n161.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/fr/news/n152/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n152.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/fr/news/n153/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n153.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/fr/news/n154/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n154.webp</image:loc></image:image></url>
@@ -577,11 +577,11 @@
 <url><loc>https://govtec.org/fr/regions/middle-east/</loc></url>
 <url><loc>https://govtec.org/fr/regions/global/</loc><lastmod>2026-11-23</lastmod></url>
 <url><loc>https://govtec.org/fr/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/es/news/n157/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/es/news/n160/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/es/news/n158/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/es/news/n159/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/es/news/n161/</loc><lastmod>2026-11-24</lastmod></url>
+<url><loc>https://govtec.org/es/news/n157/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n157.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/es/news/n160/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n160.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/es/news/n158/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n158.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/es/news/n159/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n159.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/es/news/n161/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n161.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/es/news/n152/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n152.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/es/news/n153/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n153.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/es/news/n154/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n154.webp</image:loc></image:image></url>
@@ -620,11 +620,11 @@
 <url><loc>https://govtec.org/es/regions/middle-east/</loc></url>
 <url><loc>https://govtec.org/es/regions/global/</loc><lastmod>2026-11-23</lastmod></url>
 <url><loc>https://govtec.org/es/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/ar/news/n157/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/ar/news/n160/</loc><lastmod>2026-11-25</lastmod></url>
-<url><loc>https://govtec.org/ar/news/n158/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/ar/news/n159/</loc><lastmod>2026-11-24</lastmod></url>
-<url><loc>https://govtec.org/ar/news/n161/</loc><lastmod>2026-11-24</lastmod></url>
+<url><loc>https://govtec.org/ar/news/n157/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n157.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/ar/news/n160/</loc><lastmod>2026-11-25</lastmod><image:image><image:loc>https://govtec.org/img/n160.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/ar/news/n158/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n158.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/ar/news/n159/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n159.webp</image:loc></image:image></url>
+<url><loc>https://govtec.org/ar/news/n161/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n161.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/ar/news/n152/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n152.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/ar/news/n153/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n153.webp</image:loc></image:image></url>
 <url><loc>https://govtec.org/ar/news/n154/</loc><lastmod>2026-11-24</lastmod><image:image><image:loc>https://govtec.org/img/n154.webp</image:loc></image:image></url>
