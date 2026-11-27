@@ -2,7 +2,7 @@
 
 > Global news and intelligence on e-governance, digital public infrastructure (digital ID, digital payments, data exchange, civil registration), AI governance, cybersecurity and the digitalisation of sectors (fintech and payments, health, education, agriculture, social protection, telecom, trade, energy). Every item is written from original sources (governments, central banks, regulators, UN agencies, the World Bank, expert bodies and major media) and links to them. Free for everyone; content in English, with French, Spanish and Arabic versions of recent news.
 
-Updated 26 Nov 2026. 162 news items, 5 in-depth analyses, 28 full country profiles and pages for all 193 UN member states, 76 upcoming events and 83 open grants, fellowships and jobs.
+Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profiles and pages for all 193 UN member states, 75 upcoming events and 87 open grants, fellowships and jobs.
 
 ## Main sections
 - [News](https://govtec.org/news/): daily news, newest first
@@ -26,6 +26,11 @@ Updated 26 Nov 2026. 162 news items, 5 in-depth analyses, 28 full country profil
 - [A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore](https://govtec.org/analysis/a2/) (2 Nov 2026): Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting…
 
 ## Latest news
+- [Maharashtra has given AgriStack digital farmer IDs to 1.44 crore farmers, the second-highest number of any Indian state](https://govtec.org/news/n166/) (26 Nov 2026)
+- [Kenya and the EU adopt a joint digital roadmap and agree to base digital ID cooperation on the EU’s interoperability framework](https://govtec.org/news/n163/) (23–26 Nov 2026)
+- [Ghana’s MTN MoMo adds monthly wallet caps of GH¢150,000 and GH¢300,000 after a Bank of Ghana review of limits](https://govtec.org/news/n165/) (24–26 Nov 2026)
+- [US financial intelligence unit FinCEN takes some systems offline after unauthorised access and extends filing deadlines](https://govtec.org/news/n164/) (24–25 Nov 2026)
+- [Malaysia launches ‘AI TEMU AI’, a national AI education initiative with AI literacy guidelines for schools](https://govtec.org/news/n167/) (25 Nov 2026)
 - [Singapore merges its public hospital apps into one national HealthHub app, with single-payment bills and live polyclinic slots](https://govtec.org/news/n157/) (25 Nov 2026)
 - [Peru launches a free digital national ID card in its Perú Pass wallet, built on the open-source Inji platform](https://govtec.org/news/n160/) (18–25 Nov 2026)
 - [India launches SAMAVESH, one login for 33 social justice portals, and a new e-Anudaan system for NGO grants](https://govtec.org/news/n158/) (24 Nov 2026)
@@ -46,8 +51,3 @@ Updated 26 Nov 2026. 162 news items, 5 in-depth analyses, 28 full country profil
 - [Pakistan’s prime minister is due to launch the ‘Mehfooz Dawa’ app on 24 November so patients can scan medicine barcodes to spot fakes](https://govtec.org/news/n143/) (22 Nov 2026)
 - [Vietnam passes a law requiring banking, telecom and social media accounts to be linked to a national electronic identity](https://govtec.org/news/n137/) (20 Nov 2026)
 - [Germany’s Bundesrat approves the digital identities law, clearing the way for the ‘d-you’ wallet on 2 January 2027](https://govtec.org/news/n138/) (20 Nov 2026)
-- [Africa’s instant payment systems handled 71.4 billion transactions worth $1.8 trillion in 2025, but most users still rely heavily on cash](https://govtec.org/news/n134/) (19 Nov 2026)
-- [Tanzania launches a new national ID card and a NIDA Wallet phone app, and will stop accepting ID numbers alone in three months](https://govtec.org/news/n139/) (18–19 Nov 2026)
-- [Bulgaria says hackers spent five years inside government networks and took about 62 million pages of documents](https://govtec.org/news/n140/) (18–19 Nov 2026)
-- [APEC leaders adopt a 2027–2030 trade digitalisation framework and back paperless trade at their Shenzhen summit](https://govtec.org/news/n141/) (18–19 Nov 2026)
-- [ECOWAS leans towards splitting its planned regional payment system between Nigeria, Senegal’s BCEAO and Ghana](https://govtec.org/news/n135/) (18–19 Nov 2026)
