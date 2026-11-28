@@ -1,4 +1,7 @@
 https://govtec.org/
+https://govtec.org/news/n169/
+https://govtec.org/news/n171/
+https://govtec.org/news/n170/
 https://govtec.org/news/n166/
 https://govtec.org/news/n163/
 https://govtec.org/news/n165/
@@ -6,6 +9,7 @@ https://govtec.org/news/n164/
 https://govtec.org/news/n167/
 https://govtec.org/news/n157/
 https://govtec.org/news/n160/
+https://govtec.org/news/n168/
 https://govtec.org/news/n158/
 https://govtec.org/news/n159/
 https://govtec.org/news/n161/
@@ -167,6 +171,7 @@ https://govtec.org/news/n34/
 https://govtec.org/news/n35/
 https://govtec.org/news/n36/
 https://govtec.org/news/
+https://govtec.org/analysis/a6/
 https://govtec.org/analysis/a5/
 https://govtec.org/analysis/a4/
 https://govtec.org/analysis/a3/
@@ -192,6 +197,7 @@ https://govtec.org/countries/mexico/
 https://govtec.org/countries/nepal/
 https://govtec.org/countries/nigeria/
 https://govtec.org/countries/pakistan/
+https://govtec.org/countries/peru/
 https://govtec.org/countries/philippines/
 https://govtec.org/countries/poland/
 https://govtec.org/countries/rwanda/
@@ -204,9 +210,6 @@ https://govtec.org/countries/united-states/
 https://govtec.org/countries/viet-nam/
 https://govtec.org/focus/2026-11/
 https://govtec.org/focus/
-https://govtec.org/events/e12/
-https://govtec.org/events/e40/
-https://govtec.org/events/e78/
 https://govtec.org/events/e38/
 https://govtec.org/events/e33/
 https://govtec.org/events/e36/
@@ -223,6 +226,8 @@ https://govtec.org/events/e37/
 https://govtec.org/events/e61/
 https://govtec.org/events/e16/
 https://govtec.org/events/e20/
+https://govtec.org/events/e92/
+https://govtec.org/events/e93/
 https://govtec.org/events/e53/
 https://govtec.org/events/e58/
 https://govtec.org/events/e71/
@@ -280,7 +285,6 @@ https://govtec.org/events/e79/
 https://govtec.org/events/e9/
 https://govtec.org/events/e83/
 https://govtec.org/events/
-https://govtec.org/funding/f81/
 https://govtec.org/funding/f102/
 https://govtec.org/funding/f1/
 https://govtec.org/funding/f110/
@@ -352,11 +356,13 @@ https://govtec.org/funding/f90/
 https://govtec.org/funding/f100/
 https://govtec.org/funding/f106/
 https://govtec.org/funding/f109/
+https://govtec.org/funding/f125/
 https://govtec.org/funding/f67/
 https://govtec.org/funding/f29/
 https://govtec.org/funding/f95/
 https://govtec.org/funding/f113/
 https://govtec.org/funding/f112/
+https://govtec.org/funding/f124/
 https://govtec.org/funding/f107/
 https://govtec.org/funding/f87/
 https://govtec.org/funding/f115/
@@ -483,7 +489,6 @@ https://govtec.org/countries/palau/
 https://govtec.org/countries/panama/
 https://govtec.org/countries/papua-new-guinea/
 https://govtec.org/countries/paraguay/
-https://govtec.org/countries/peru/
 https://govtec.org/countries/portugal/
 https://govtec.org/countries/qatar/
 https://govtec.org/countries/republic-of-the-congo/
@@ -540,6 +545,9 @@ https://govtec.org/regions/europe/
 https://govtec.org/regions/middle-east/
 https://govtec.org/regions/global/
 https://govtec.org/regions/
+https://govtec.org/fr/news/n169/
+https://govtec.org/fr/news/n171/
+https://govtec.org/fr/news/n170/
 https://govtec.org/fr/news/n166/
 https://govtec.org/fr/news/n163/
 https://govtec.org/fr/news/n165/
@@ -547,6 +555,7 @@ https://govtec.org/fr/news/n164/
 https://govtec.org/fr/news/n167/
 https://govtec.org/fr/news/n157/
 https://govtec.org/fr/news/n160/
+https://govtec.org/fr/news/n168/
 https://govtec.org/fr/news/n158/
 https://govtec.org/fr/news/n159/
 https://govtec.org/fr/news/n161/
@@ -588,6 +597,9 @@ https://govtec.org/fr/regions/europe/
 https://govtec.org/fr/regions/middle-east/
 https://govtec.org/fr/regions/global/
 https://govtec.org/fr/
+https://govtec.org/es/news/n169/
+https://govtec.org/es/news/n171/
+https://govtec.org/es/news/n170/
 https://govtec.org/es/news/n166/
 https://govtec.org/es/news/n163/
 https://govtec.org/es/news/n165/
@@ -595,6 +607,7 @@ https://govtec.org/es/news/n164/
 https://govtec.org/es/news/n167/
 https://govtec.org/es/news/n157/
 https://govtec.org/es/news/n160/
+https://govtec.org/es/news/n168/
 https://govtec.org/es/news/n158/
 https://govtec.org/es/news/n159/
 https://govtec.org/es/news/n161/
@@ -636,6 +649,9 @@ https://govtec.org/es/regions/europe/
 https://govtec.org/es/regions/middle-east/
 https://govtec.org/es/regions/global/
 https://govtec.org/es/
+https://govtec.org/ar/news/n169/
+https://govtec.org/ar/news/n171/
+https://govtec.org/ar/news/n170/
 https://govtec.org/ar/news/n166/
 https://govtec.org/ar/news/n163/
 https://govtec.org/ar/news/n165/
@@ -643,6 +659,7 @@ https://govtec.org/ar/news/n164/
 https://govtec.org/ar/news/n167/
 https://govtec.org/ar/news/n157/
 https://govtec.org/ar/news/n160/
+https://govtec.org/ar/news/n168/
 https://govtec.org/ar/news/n158/
 https://govtec.org/ar/news/n159/
 https://govtec.org/ar/news/n161/

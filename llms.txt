@@ -2,7 +2,7 @@
 
 > Global news and intelligence on e-governance, digital public infrastructure (digital ID, digital payments, data exchange, civil registration), AI governance, cybersecurity and the digitalisation of sectors (fintech and payments, health, education, agriculture, social protection, telecom, trade, energy). Every item is written from original sources (governments, central banks, regulators, UN agencies, the World Bank, expert bodies and major media) and links to them. Free for everyone; content in English, with French, Spanish and Arabic versions of recent news.
 
-Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profiles and pages for all 193 UN member states, 75 upcoming events and 87 open grants, fellowships and jobs.
+Updated 28 Nov 2026. 171 news items, 6 in-depth analyses, 30 full country profiles and pages for all 193 UN member states, 74 upcoming events and 88 open grants, fellowships and jobs.
 
 ## Main sections
 - [News](https://govtec.org/news/): daily news, newest first
@@ -19,6 +19,7 @@ Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profil
 - [RSS feed](https://govtec.org/feed.xml)
 
 ## Latest analysis
+- [Twenty-seven wallets, one deadline: who will be ready for Europe’s digital identity wallet on 24 December?](https://govtec.org/analysis/a6/) (28 Nov 2026): Every EU member state must offer its people a free European Digital Identity Wallet by 24 December 2026. This week Italy opened its IT-Wallet to all, Czechia handed its wallet to a private concessionaire with a 2027…
 - [Twenty-five crore accounts, one in three adults left out: what Bangladesh’s national financial inclusion survey says](https://govtec.org/analysis/a5/) (21 Nov 2026): Bangladesh’s National Financial Inclusion Survey 2025, presented in Dhaka on 18 November, puts formal financial inclusion at 64.5% of adults — short of the 100% the government aimed for by June 2026. Mobile money…
 - [When the front door goes dark: what Poland’s ePUAP attack says about securing shared e-government platforms](https://govtec.org/analysis/a4/) (16 Nov 2026): On 10 November Poland detected a cyberattack on ePUAP, the platform behind official e-mailboxes and Trusted Profile signatures, and took it offline as a precaution. Four days later it was still down, and the minister…
 - [Paying shops to say yes to QR: can Pakistan’s cashless push beat its cash habit?](https://govtec.org/analysis/a3/) (14 Nov 2026): Pakistan has decided to keep paying the fees on Raast QR payments, after the number of shops accepting digital payments passed two million and the Prime Minister ordered a roadmap to “100%” digital payments. Raast is…
@@ -26,6 +27,9 @@ Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profil
 - [A health card for 200 million people: what Bangladesh can learn from India, the UK and Singapore](https://govtec.org/analysis/a2/) (2 Nov 2026): Bangladesh has promised every citizen an e-health card by 2028, linked to a national health database, and has doubled its health budget. Other countries show that the card is the easy part. Linking records, getting…
 
 ## Latest news
+- [Sri Lanka’s state fuel company says automation and an AI dispatch queue helped cut its staff from 3,292 to 2,031](https://govtec.org/news/n169/) (27 Nov 2026)
+- [Somalia moves aviation licensing online with SOFIA, a platform aligned with East African safety oversight rules](https://govtec.org/news/n171/) (26–27 Nov 2026)
+- [Maharashtra launches 174 online services across three state portals and gives departments until 26 January to go digital](https://govtec.org/news/n170/) (26–27 Nov 2026)
 - [Maharashtra has given AgriStack digital farmer IDs to 1.44 crore farmers, the second-highest number of any Indian state](https://govtec.org/news/n166/) (26 Nov 2026)
 - [Kenya and the EU adopt a joint digital roadmap and agree to base digital ID cooperation on the EU’s interoperability framework](https://govtec.org/news/n163/) (23–26 Nov 2026)
 - [Ghana’s MTN MoMo adds monthly wallet caps of GH¢150,000 and GH¢300,000 after a Bank of Ghana review of limits](https://govtec.org/news/n165/) (24–26 Nov 2026)
@@ -33,6 +37,7 @@ Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profil
 - [Malaysia launches ‘AI TEMU AI’, a national AI education initiative with AI literacy guidelines for schools](https://govtec.org/news/n167/) (25 Nov 2026)
 - [Singapore merges its public hospital apps into one national HealthHub app, with single-payment bills and live polyclinic slots](https://govtec.org/news/n157/) (25 Nov 2026)
 - [Peru launches a free digital national ID card in its Perú Pass wallet, built on the open-source Inji platform](https://govtec.org/news/n160/) (18–25 Nov 2026)
+- [Italy opens its IT-Wallet to all, with a mobile driving licence and ID documents that have legal force](https://govtec.org/news/n168/) (23–24 Nov 2026)
 - [India launches SAMAVESH, one login for 33 social justice portals, and a new e-Anudaan system for NGO grants](https://govtec.org/news/n158/) (24 Nov 2026)
 - [Czechia picks a Wultra-led consortium to build and run its EU digital identity wallet, Valetka, now due by the end of 2027](https://govtec.org/news/n159/) (24 Nov 2026)
 - [Ethiopia and the World Bank agree to review, and possibly restructure, the Eastern Africa Regional Digital Integration Project](https://govtec.org/news/n161/) (24 Nov 2026)
@@ -47,7 +52,3 @@ Updated 27 Nov 2026. 167 news items, 5 in-depth analyses, 29 full country profil
 - [Nigeria’s $500 million World Bank farm loan pays states only if they set up rules for a common digital farmer registry and other reforms](https://govtec.org/news/n148/) (23 Nov 2026)
 - [UN weapons treaty talks end without a mandate to negotiate a ban on autonomous weapons, giving experts until 2028 instead](https://govtec.org/news/n149/) (21–23 Nov 2026)
 - [World’s privacy regulators adopt 11 principles for AI tools in schools, including a model charter and limits on using pupils’ data](https://govtec.org/news/n150/) (20–23 Nov 2026)
-- [US Department of Agriculture confirms a cyber threat behind outages in farm payment and loan systems, but keeps its 11 December sign-up deadline](https://govtec.org/news/n151/) (20–23 Nov 2026)
-- [Pakistan’s prime minister is due to launch the ‘Mehfooz Dawa’ app on 24 November so patients can scan medicine barcodes to spot fakes](https://govtec.org/news/n143/) (22 Nov 2026)
-- [Vietnam passes a law requiring banking, telecom and social media accounts to be linked to a national electronic identity](https://govtec.org/news/n137/) (20 Nov 2026)
-- [Germany’s Bundesrat approves the digital identities law, clearing the way for the ‘d-you’ wallet on 2 January 2027](https://govtec.org/news/n138/) (20 Nov 2026)
