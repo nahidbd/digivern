@@ -19,6 +19,284 @@
 */
 const ANALYSES = [
 {
+  id:"a6",
+  theme:"dpi",
+  sector:"Government",
+  region:"Europe",
+  country:"",
+  date:"28 Nov 2026",
+  readMins:18,
+  kicker:"Digital identity · The European Union in global context",
+  title:"Twenty-seven wallets, one deadline: who will be ready for Europe’s digital identity wallet on 24 December?",
+  standfirst:"Every EU member state must offer its people a free European Digital Identity Wallet by 24 December 2026. This week Italy opened its IT-Wallet to all, Czechia handed its wallet to a private concessionaire with a 2027 date, and Kenya agreed to base its ID cooperation with the EU on the wallet’s rules. Only three member states had a wallet in production in October. How Europe got here, what the data show, what it costs, and what comes after the deadline.",
+  infographic:{"title":"Europe’s identity wallet at a glance","sub":"The law is in force and the money has been spent on pilots; most national wallets will still arrive late.","blocks":[
+    {"type":"flow","title":"From eIDAS to a wallet in every pocket","steps":[
+      {"date":"Jul 2014","status":"done","icon":"law","label":"eIDAS Regulation (EU) No 910/2014 adopted","c":[8]},
+      {"date":"Jun 2021","status":"done","icon":"id","label":"Commission proposes a European Digital Identity","c":[6]},
+      {"date":"May 2024","status":"done","icon":"law","label":"Regulation (EU) 2024/1183 enters into force","c":[5]},
+      {"date":"Dec 2024","status":"done","icon":"check","label":"First implementing acts in force; 24-month clock starts","c":[2,3]},
+      {"date":"24 Dec 2026","status":"delayed","icon":"clock","label":"Every member state must offer a free wallet","note":"3 in production in Oct 2026","c":[3,22]},
+      {"date":"24 Dec 2027","status":"planned","icon":"bank","label":"Banks and other regulated private firms must accept it","c":[3]}
+    ]},
+    {"type":"stats","title":"The deadline in four numbers","items":[
+      {"icon":"globe","v":"3 of 27","l":"member states with a wallet in production (Denmark, France, Italy), October 2026","c":22},
+      {"icon":"people","v":"550+","l":"stakeholders in six EU large-scale wallet pilots","c":13},
+      {"icon":"coin","v":"€46 m","l":"EU grant for the first four pilots (over €90 m with co-financing)","c":17},
+      {"icon":"phone","v":"13 m","l":"Italians who have activated documents in the IO app","c":28}
+    ]},
+    {"type":"iconArray","title":"How many Europeans already use an eID","pct":52,"icon":"person","big":"52%","label":"of people aged 16–74 in the EU used their electronic ID in 2025 — from 99% in Denmark to 12% in Bulgaria","c":14,"legend":["used an eID","did not"]},
+    {"type":"compare","title":"National ID apps that wallets will build on (million)","items":[
+      {"label":"Italy · IO, activated ‘Documenti su IO’ (Nov 2026)","v":12.7,"text":"12.7 m people","icon":"phone","hl":true},
+      {"label":"Poland · mObywatel, smartphones (May 2026)","v":12,"text":"12 m+","icon":"phone"},
+      {"label":"Austria · ID Austria, registrations (Sep 2026)","v":6.3,"text":"almost 6.3 m","icon":"id"},
+      {"label":"Portugal · Chave Móvel Digital, active users (Jul 2026)","v":5,"text":"5 m+","icon":"id"},
+      {"label":"France · France Identité, users (Mar 2026)","v":4,"text":"4 m","icon":"phone"}
+    ],"c":[30,39,42,43,31],"note":"Each figure counts something different (users, devices, registrations), so the comparison is indicative only."}
+  ]},
+  keynums:[
+    {"v":"24 Dec 2026","l":"deadline for every member state to offer at least one free EU Digital Identity Wallet","c":3},
+    {"v":"3","l":"member states with a wallet in production in October 2026; 8 in public pilot","c":22},
+    {"v":"52%","l":"of EU people aged 16–74 used an eID in 2025; Germany 15%","c":14},
+    {"v":"€3.2 bn+","l":"estimated cost of the chosen option in the Commission’s 2021 impact assessment","c":16},
+    {"v":"€0.8–6.5 bn","l":"expected net benefits in the same assessment","c":16},
+    {"v":"24 Dec 2027","l":"date by which banks and other regulated private firms must accept the wallet","c":3}
+  ],
+  body:[
+    {"h":"The short version","p":[
+      "In less than four weeks the European Union reaches the central deadline of its digital identity law. By 24 December 2026 each member state must offer its citizens at least one free European Digital Identity Wallet — a phone app in which people can hold a verified identity, a driving licence, diplomas or a health insurance card, and share only the details a service needs [3][1]. The Commission’s own wording is ‘by the end of 2026’ [1].",
+      "Most of the Union will not make it. An independent tracker counted three member states with a wallet in production in October — Denmark, France and Italy — with eight more in public pilots and the rest in closed pilots or the EU’s large-scale pilot projects [22]. Euronews reported in September that 24 of 27 would miss the deadline [23]. In its June 2026 report on the Digital Decade the Commission itself warned that ‘deployment remains uneven’ and that unfinished certification schemes were ‘blocking national deployment timelines’ [13].",
+      "This week showed both sides. Italy opened its IT-Wallet to all citizens and residents on 23 November, with legally valid driving licences and IDs, a month before the deadline [28]. Czechia picked a private consortium to build and run its wallet, Valetka, now due only by the end of 2027 [36]. Germany’s upper house approved the law for its d-you wallet, due on 2 January 2027 [34]. And Kenya agreed with the EU that the wallet’s interoperability rules will be the basis of their cooperation on digital identity [62] — a sign that the European design is becoming an export.",
+      "The deadline matters less than what follows it. From 24 December 2027 banks, telecoms, energy, transport and health providers that must identify customers will have to accept the wallet [3], and banks face anti-money-laundering identification rules from July 2027 [53]. Whether Europeans use the wallet will depend on trust, on whether everyday services accept it, and on whether late countries catch up."
+    ]},
+    {"h":"Background and history: from cross-border logins to a wallet in every pocket","p":[
+      "The European Union first regulated electronic identification in 2014. Regulation (EU) No 910/2014 of 23 July 2014 — eIDAS — set rules for the mutual recognition of national eID schemes and for trust services such as electronic signatures [8]. It did not oblige any country to have an eID, and take-up was patchy: by 2021 only 14 member states had notified an eID scheme to the others, 59% of EU citizens had access to an eID usable across borders, and only 14% of key public service providers allowed cross-border authentication with one [16].",
+      "On 3 June 2021 the Commission proposed a European Digital Identity built around a wallet, adding that very large online platforms would have to accept it at the user’s request [6]. The outline of the Architecture and Reference Framework, the technical blueprint, was adopted on 22 February 2022, and the first toolbox was published on 10 February 2023 [9]. In May 2023 the Commission launched four large-scale pilots — POTENTIAL, EWC, NOBID and DC4EU — with €46 million from the Digital Europe Programme and more than 250 private and public organisations [17].",
+      "The European Parliament adopted the regulation on 29 February 2024 and the Council on 26 March; Regulation (EU) 2024/1183 of 11 April 2024 entered into force on 20 May 2024 [5][7]. It gave member states 24 months from the adoption of implementing acts to provide wallets [5]. The Commission adopted the first five implementing regulations on 28 November 2024 [2]; they were published on 4 December and entered into force on 24 December 2024, which is why the deadline falls on 24 December 2026 [3]. Certification, the open-source reference wallet and an EU age-verification app built on the same specifications followed in 2025–2026 [10][9][11][12].",
+      "Some countries started early with national apps that are now being converted. Italy put driving licences and health cards into its IO app from 23 October 2024 and opened them to all users on 4 December 2024 [29]. France Identité, Poland’s mObywatel, Austria’s ID Austria and Portugal’s Chave Móvel Digital already serve millions [31][39][42][43]; Greece’s Gov.gr Wallet holds more than 20 digital documents and is being prepared to become a fully compatible European wallet [66]."
+    ]},
+    {"h":"What the data show: a two-speed Europe","p":[
+      "The starting points could hardly be more different. In 2025, 52% of people aged 16–74 in the EU said they had used their eID; the share was 99% in Denmark, 96% in Finland and 95% in the Netherlands, but only 15% in Germany, 14% in Slovakia and 12% in Bulgaria [14]. Cyprus rose from 9% to 57% [14]. The gap between the top and bottom countries is 87 percentage points (GovTec calculation).",
+      "Readiness has improved quickly but from a low base. An ENISA draft noted that in early 2026 ‘no EUDI Wallet has been deployed or certified’ [24]. By 2 July only Denmark’s AltID, launched on 3 June, was in production [68][33]; by late October the tracker counted three wallets in production, eight in public pilot and 22 in closed pilots or pilot projects across the jurisdictions it follows [22]. The Commission’s Launchpad testing event in spring found that ‘fewer than one quarter’ of member states took part with wallet-enabled applications [24].",
+      "Use is concentrated where national apps already existed. Italy says 13 million people have activated documents on IO [28]; another count puts it at 12.7 million people holding 21.8 million documents in November [30], and Euronews reported close to 8 million monthly users in September [23]. France Identité passed 4 million users in March [31]. Elsewhere numbers are tiny: the Dutch pilot had 57 users, and the Netherlands postponed its roll-out to late 2027 [23].",
+      "Public awareness is low. In a survey of 2,000 adults in France and Germany commissioned by the identity firm IDnow, 51% had never heard of the wallet and only 20% clearly understood it; 73% feared systems would not work together, but 63% said they would be more likely to use it to prove they are over 18 without sharing other details [51]. The Commission says 63% of users want a secure single digital ID for all online services [69]."
+    ]},
+    {"h":"What other countries did","p":[
+      "Outside the EU, the closest comparisons are national credential wallets built by governments. India’s DigiLocker had more than 71.66 crore registered users and 936.03 crore documents issued by 2,822 issuers by August 2026 [55]. Ukraine’s Diia app had more than 24 million users in 2026 [56], and Ukraine’s government says its Diia team tested compatibility with European wallets so Ukrainians can use digital documents in the EU [57].",
+      "Others moved more cautiously. The UK’s GOV.UK Wallet started with a digital veteran card that more than 15,000 veterans had added by January 2026, with a wider driving licence roll-out to follow [58]. Australia’s Digital ID Act 2024 underpins myID, which had 15 million users a year after the Act began [59]. Singapore’s Singpass serves 5.5 million users [60]. Swiss voters approved a new e-ID law in September 2025 by just 50.39% to 49.61% [54] — a reminder that public consent for digital identity cannot be assumed.",
+      "Two developing-country cases this month show the design spreading. Peru launched a free digital national ID in its Perú Pass wallet, built on the open-source Inji platform and with the same legal force as the card [61]. Kenya and the EU agreed that the EU interoperability framework, drawing on the wallet and trust services, will be the basis of their digital identity cooperation [62]."
+    ]},
+    {"h":"Where Europe stands now","p":[
+      "Three groups are emerging. The first has wallets live: Denmark’s AltID, which ‘can be used as official identification’ [33]; France Identité, designated as France’s European wallet and due to open to all residents by the end of 2026 [32]; and Italy’s IT-Wallet, whose decree was published on 3 August 2026 and which public bodies must join as sources of attestations by 3 August 2027 [63][28].",
+      "The second will launch around the deadline: Germany on 2 January 2027 [34], Romania on 14 January 2027 [37], Poland with a separate mObywatel Europa pilot app in December 2026 before merging it with mObywatel in early 2028 [39], and Ireland, which opened a pilot for up to 10,000 people in July and plans a wider launch by year-end [41]. Spain put a draft royal decree on its wallet ecosystem out for consultation, with no official name or launch date yet [44].",
+      "The third is clearly late: the Netherlands (late 2027) [23], Czechia (end of 2027) [36], Estonia, which only opened an international tender on 18 May 2026 and expects contracting to take about a year [40], and Sweden, which does not expect a wallet before 2028 [25]. Croatia’s digitalisation head warned a year ago: ‘If there’s no scheme, there is no wallet’ [65]."
+    ]},
+    {"h":"Outlook: what comes next","p":[
+      "The legal calendar is fixed. Banks must apply new remote identification rules under the Anti-Money Laundering Regulation from 10 July 2027, and regulated private relying parties must accept the wallet by 24 December 2027 [53][3]. The Commission has said it will enforce relying-party obligations systematically, ‘including through the Digital Omnibus where necessary’ [13]. Member states that miss December 2026 face pressure but no public timetable for sanctions; GovTec found no Commission statement on infringement action.",
+      "Best case (GovTec’s view): certification is finalised in early 2027, Germany, Romania, Poland and Ireland launch as planned, and banks’ 2027 deadlines create a pull for use, so most member states have a certified wallet by the end of 2027. Base case: a dozen or so countries have public wallets in 2027, Italy and France carry most of the users, and private acceptance is patchy at the December 2027 date. Worst case: a security incident or privacy dispute in an early wallet, together with continued certification delays, erodes trust and leaves late countries — and their citizens — outside the system into 2028–2029."
+    ]},
+    {"h":"GovTec’s assessment","p":[
+      "GovTec’s view: the December deadline will be missed by most member states, but that is not the main test. The EU has built the law, the technical framework, an open-source reference wallet and a certification route in under six years [5][9][10]. What it has not yet built is demand. Use of eIDs is already near-universal in the Nordic countries and the Netherlands and very low in Germany and parts of eastern Europe [14]; a wallet will not close that gap unless banks, telecoms and everyday services accept it and people trust it.",
+      "Trust is the scarce resource. The technical work is not finished either: in September Thomas Lohninger of epicenter.works estimated that Europe was ‘at maybe 50–60% of the technical standards’ needed [27]. Civil-society groups argue that draft implementing rules weaken protection against tracking and make facial biometrics mandatory [45][46]; the Commission replies that users ‘remain in full control of their data’ [47]. The narrow Swiss vote [54] and low awareness in France and Germany [51] suggest these arguments will decide take-up more than launch dates. For developing countries watching — Kenya, Peru, Ukraine — Europe offers a credible template for privacy-preserving, interoperable credentials, but also a lesson: a legal mandate and pilot money are not enough without a functioning certification regime and early, visible uses such as age checks, driving licences and bank onboarding."
+    ]}
+  ],
+  policy:{"intro":"An EU regulation sets the obligation and deadlines; implementing acts, certification schemes and national laws turn it into working wallets.","rows":[
+    ["eIDAS Regulation (EU) No 910/2014","2014","Mutual recognition of notified national eIDs and rules for trust services [8]","In force; amended by 2024/1183 [7]"],
+    ["Digital Decade Decision (EU) 2022/2481","2022","Target: 100% of EU citizens with access to secure eID recognised across the Union by 2030 [15]","In force; monitored in yearly reports [13]"],
+    ["European Digital Identity Regulation (EU) 2024/1183","2024","Requires each member state to provide wallets, free for natural persons; open-source; free qualified e-signatures for non-professional use [1][5]","In force since 20 May 2024 [5]"],
+    ["First five implementing regulations","2024","Technical standards for wallets, including a certification framework; in force 24 Dec 2024 [2][3]","In force; set the 24 Dec 2026 deadline [3]"],
+    ["Certification scheme under the Cybersecurity Act","2026","EU candidate scheme for certifying wallets; consultation to 30 Apr 2026 [10]","Not finalised (June 2026) [13]"],
+    ["Relying-party obligations","2027","Regulated private firms (banking, energy, transport, health, telecoms; not micro and small firms) must accept the wallet from 24 Dec 2027 [3]","Not yet applicable"],
+    ["Anti-Money Laundering Regulation (identification rules)","2027","Remote customer identification routes for banks from 10 July 2027 [53]","Adopted; applies from July 2027"],
+    ["Germany: Digital Identities Act (Digitale Identitätengesetz)","2026","Legal basis for the d-you wallet [64][34]","Passed Bundestag 15 Oct, Bundesrat 20 Nov 2026 [34]"],
+    ["Italy: IT-Wallet decree","2026","Rules for the IT-Wallet system; public bodies must join as authentic sources by 3 Aug 2027 [63]","Published 3 Aug 2026 [63]"],
+    ["Spain: draft royal decree on the wallet ecosystem","2026","Would regulate the European wallet ecosystem in Spain [44]","Draft, public consultation [44]"],
+    ["Netherlands: wallet implementing law","2026","National legislation for the public EDI wallet [38]","To be consulted towards end-2026 [38]"]
+  ]},
+  implementation:{"intro":"EU-level building blocks are largely done; national wallets and certification are behind schedule.","rows":[
+    ["Architecture and Reference Framework and toolbox","2022–2023","done","ARF outline 22 Feb 2022; toolbox 10 Feb 2023; updated many times [9]"],
+    ["First large-scale pilots","May 2023","done","Four pilots, €46 m EU funding, 250+ organisations [17]"],
+    ["Implementing acts","Nov–Dec 2024","done","Adopted 28 Nov, in force 24 Dec 2024 [2][3]"],
+    ["Wallet certification scheme","2026","delayed","Not finalised by June 2026, ‘blocking national deployment timelines’ [13]"],
+    ["A wallet in every member state","24 Dec 2026","delayed","3 in production, 8 in public pilot (Oct 2026) [22]"],
+    ["Italy IT-Wallet open to all","23 Nov 2026","done","Legally valid driving licence and IDs in IO [28]"],
+    ["Denmark AltID","3 Jun 2026","done","Launched as official identification [33]"],
+    ["Germany d-you","2 Jan 2027","on track","Law approved by Bundesrat 20 Nov 2026 [34]"],
+    ["Romania RO Wallet","14 Jan 2027","on track","Launch date set [37]"],
+    ["Poland mObywatel Europa pilot","Dec 2026","on track","Pilot app; merger with mObywatel early 2028 [39]"],
+    ["Netherlands public wallet","Late 2027","delayed","Postponed after a 57-user pilot [23]"],
+    ["Czechia Valetka","End 2027","delayed","Concession to Wultra-led consortium [36]"],
+    ["Estonia wallet","2027","delayed","Tender opened 18 May 2026; contract could take a year [40]"],
+    ["Private relying parties accept the wallet","24 Dec 2027","not started","Obligation applies from that date [3]"]
+  ]},
+  economics:{"figures":[
+    {"v":"€3.2 bn+","l":"estimated cost of the preferred option (Commission impact assessment, 2021)","c":16},
+    {"v":"€0.8–6.5 bn","l":"expected net benefits of the preferred option","c":16},
+    {"v":"€0.85–1.4 bn","l":"estimated yearly savings from less cybercrime in financial services","c":16},
+    {"v":"€350–400 m","l":"estimated yearly administrative savings for users","c":16},
+    {"v":"€46 m","l":"EU grant for the first four large-scale pilots (over €90 m in total)","c":17},
+    {"v":"€155 m","l":"Germany’s 2027 federal budget for its wallet","c":35}
+  ],"p":[
+    "The Commission’s 2021 impact assessment, as summarised by the European Parliament’s research service, put the cost of the chosen option at more than €3.2 billion and its net benefits at €800 million to €6.5 billion; it expected €0.85–1.4 billion a year in savings from reduced cybercrime in financial services and €350–400 million a year in administrative savings for users [16]. The wide range shows how much depends on take-up.",
+    "EU money has gone mainly into piloting and certification. The first four large-scale pilots received €46 million from the Digital Europe Programme, for a combined investment of over €90 million with 50% co-financing [17]. The second-wave APTITUDE project has a budget of €20.38 million, half co-financed by the Commission [18], and WE BUILD brings together more than 350 participants from 35 countries [19]. A further €15 million call in 2025 offered €10 million for wallet development and certification and €5 million for mobile driving licences [20]. ENISA received €1.6 million for two years of work on certification [10].",
+    "National budgets carry the build cost. Germany alone has allocated €155 million in its 2027 budget to the d-you wallet [35] — about 3.4 times the EU grant for all four first-wave pilots (GovTec calculation). Czechia chose a concession in which the contractor builds, operates and bears the risk of the wallet, without disclosing its value [36].",
+    "Who pays and who gains: citizens get the wallet and non-professional qualified e-signatures free [1]. Relying parties are not expected to pay wallet providers in the short term, and the EWC pilot warned that ‘a price set too high will discourage adoption by relying parties’ [21]. Banks and other regulated firms bear integration costs ahead of the 2027 deadlines [53][3], while gaining cheaper onboarding and fraud reduction if the impact assessment’s savings materialise [16]. GovTec’s value-for-money view: the economics stand or fall on use — a wallet that most people never open is a cost, not a saving."
+  ]},
+  charts:[
+    {"type":"bar","title":"Wallets in production grew from none to three in 2026","sub":"EU member states with a European Digital Identity Wallet in production","fmt":"int","rows":[["Early 2026",0,""],["2 Jul 2026",1,""],["Late Oct 2026",3,"hl"],["Required by 24 Dec 2026",27,""]],"c":[24,68,22,3]},
+    {"type":"bar","title":"Use of eIDs ranges from almost everyone to one in eight","sub":"People aged 16–74 who used their eID, 2025, %","fmt":"pct","rows":[["Denmark",99,""],["Finland",96,""],["Netherlands",95,""],["EU average",52,"hl"],["Germany",15,""],["Slovakia",14,""],["Bulgaria",12,""]],"c":[14]},
+    {"type":"bar","title":"EU grants for wallet pilots and roll-out","sub":"EU contribution, € million","fmt":"dec","rows":[["First four pilots (2023)",46,"hl"],["2025 call: wallets and mobile driving licences",15,""],["APTITUDE pilot (EU share, 2025–2027)",10.19,""],["ENISA certification work (2026–2028)",1.6,""]],"c":[17,20,18,10]}
+  ],
+  timeline:{"title":"Europe’s road to a digital identity wallet","items":[
+    ["23 Jul 2014","eIDAS Regulation adopted",8],
+    ["3 Jun 2021","Commission proposes a European Digital Identity",6],
+    ["22 Feb 2022","Outline of the Architecture and Reference Framework",9],
+    ["14 Dec 2022","Digital Decade decision: 100% eID access target for 2030",15],
+    ["10 Feb 2023","First wallet toolbox published",9],
+    ["23 May 2023","Four large-scale pilots launched",17],
+    ["20 May 2024","Regulation (EU) 2024/1183 enters into force",5],
+    ["28 Nov 2024","First implementing acts adopted",2],
+    ["4 Dec 2024","Italy opens IT-Wallet documents to all IO users",29],
+    ["14 Jul 2025","EU age-verification blueprint released",11],
+    ["3 Jun 2026","Denmark launches AltID",33],
+    ["17 Jun 2026","Digital Decade report warns deployment is uneven",13],
+    ["20 Nov 2026","Germany’s Bundesrat approves the wallet law",34],
+    ["23 Nov 2026","Italy opens IT-Wallet to all with legally valid IDs",28],
+    ["24 Nov 2026","Czechia picks Valetka consortium; due end-2027",36],
+    ["24 Dec 2026","Deadline for every member state to offer a wallet",3],
+    ["2 Jan 2027","Germany’s d-you wallet due",34],
+    ["14 Jan 2027","Romania’s RO Wallet due",37],
+    ["10 Jul 2027","Banks’ new remote identification rules apply",53],
+    ["3 Aug 2027","Italian public bodies must join IT-Wallet",63],
+    ["24 Dec 2027","Regulated private firms must accept the wallet",3]
+  ]},
+  impact:[
+    {"who":"Citizens and residents","dir":"±","size":"High","text":"Free wallet and e-signatures [1], but low awareness (51% in France and Germany had never heard of it) and privacy concerns [51][45]."},
+    {"who":"People without recent smartphones","dir":"−","size":"Medium","text":"Germany’s wallet needs an NFC phone with recent Android or iOS; non-digital routes are kept [34][35]."},
+    {"who":"Banks and regulated firms","dir":"±","size":"High","text":"Must accept the wallet by Dec 2027 and adapt to AML identification rules from July 2027 [3][53]; potential fraud savings [16]."},
+    {"who":"Public administrations","dir":"+","size":"Medium","text":"Must accept wallets and, in Italy, supply attestations by Aug 2027 [4][63]."},
+    {"who":"Identity technology firms","dir":"+","size":"Medium","text":"Concessions and contracts such as Czechia’s Valetka and Finland’s wallet build [36][22]."},
+    {"who":"Late member states","dir":"−","size":"Medium","text":"Citizens wait until 2027–2029 for a wallet [23][36][40]."},
+    {"who":"Partner countries (Ukraine, Kenya)","dir":"+","size":"Low","text":"Can align with EU rules to make IDs work across borders [57][62]."}
+  ],
+  voices:[
+    {"who":"Christiane Kirketerp de Viron, acting Director, DG CNECT, European Commission","group":"Government","stance":"support","view":"Said the implementing rules ‘ensure that users remain in full control of their data’; a portrait cannot be requested for simple age verification.","c":47},
+    {"who":"Henna Virkkunen, Executive Vice-President, European Commission","group":"Government","stance":"support","view":"Said the EU age-verification app, built on wallet specifications, lets people ‘keep browsing the Internet in full privacy’ and is ready for member states to roll out.","c":70},
+    {"who":"European Digital Rights (EDRi)","group":"Civil society","stance":"concern","view":"Warns that ‘the eID Wallet risks becoming a tool of surveillance and control rather than a tool that empowers users’.","c":45},
+    {"who":"Thomas Lohninger, epicenter.works","group":"Civil society","stance":"concern","view":"“Very few member states will be able to hold this deadline.”","c":26},
+    {"who":"Ten civil-society groups including the Chaos Computer Club, open letter to the Commission","group":"Civil society","stance":"concern","view":"“Registration certificates must be mandatory”; mandatory biometric data ‘would be disproportionate’.","c":46},
+    {"who":"Association of German Banks (BdB)","group":"Industry","stance":"mixed","view":"Supports the wallet if rules stay clear and easy to maintain, but says many proposed rules are ‘unnecessarily technical’.","c":48},
+    {"who":"DIHK, Association of German Chambers of Commerce and Industry","group":"Industry","stance":"mixed","view":"Backs Germany’s law but says it ‘can only be one element in successfully implementing the European Wallets’.","c":49},
+    {"who":"Jacques Van Zijp, IN Groupe","group":"Industry","stance":"support","view":"“The technology is ready.” “Launching a Wallet is a milestone, not the objective.”","c":50},
+    {"who":"Igor Ljubi, Croatian Ministry of Digital Transformation","group":"Government","stance":"concern","view":"“I’m worried about certification. If there’s no scheme, there is no wallet.”","c":65},
+    {"who":"Adults surveyed in France and Germany (IDnow/Sapio, 2,000 people)","group":"Users","stance":"mixed","view":"51% had never heard of the wallet; 73% fear systems won’t work together, yet 63% would use it for age checks.","c":51},
+    {"who":"Federation of German Consumer Organisations (vzbv)","group":"Civil society","stance":"mixed","view":"Supports a consumer-friendly wallet but warns that otherwise data protection and data security would be put at risk.","c":52},
+    {"who":"Swiss voters, e-ID referendum, September 2025","group":"Users","stance":"mixed","view":"Approved the e-ID law by 50.39% to 49.61%.","c":54}
+  ],
+  world:{"title":"How other countries built digital ID wallets","cols":["Country","Programme","What it did","Result or lesson"],"rows":[
+    ["India","DigiLocker","Government document wallet with issuers onboarded [55]","71.66 crore users, 936.03 crore documents (Aug 2026) [55]"],
+    ["Ukraine","Diia","National app for digital documents and services [56]","24 million users; tested compatibility with EU wallets [56][57]"],
+    ["United Kingdom","GOV.UK Wallet","Started with a digital veteran card, driving licence next [58]","15,000+ veteran cards added by Jan 2026 [58]"],
+    ["Australia","myID under the Digital ID Act 2024","Legislated accredited digital ID system [59]","15 million myIDs a year after the Act [59]"],
+    ["Singapore","Singpass","National authentication gateway [60]","5.5 million users [60]"],
+    ["Switzerland","e-ID (swiyu)","State-issued e-ID after a referendum [54]","Approved by 50.39% — consent is narrow [54]"],
+    ["Peru","Perú Pass with DNI digital","Free digital national ID in an open-source Inji wallet [61]","Same legal validity as the card [61]"],
+    ["Kenya","EU–Kenya Digital Dialogue","Agreed to base ID cooperation on EU wallet interoperability [62]","First African country with such a roadmap [62]"]
+  ]},
+  home:{"title":"Inside the EU: earlier and parallel efforts","cols":["Initiative","Lead","Period","What happened"],"rows":[
+    ["Notified national eID schemes under eIDAS","Member states","2014–2024","Only 14 member states had notified an eID by 2021 [16]"],
+    ["Large-scale pilots (POTENTIAL, EWC, NOBID, DC4EU)","Commission and consortia","2023–2025","€46 m EU funding, 250+ organisations [17]"],
+    ["Second-wave pilots (APTITUDE, WE BUILD)","Commission and consortia","2025–2027","€20.38 m APTITUDE budget; 350+ WE BUILD participants [18][19]"],
+    ["EU age-verification app","European Commission","2025–2026","Blueprint July 2025; ready for deployment April 2026 [11][12]"],
+    ["Italy IO app documents","PagoPA and Department for Digital Transformation","2024 onwards","From 50,000 trial users to all users [29]; 13 m activations [28]"],
+    ["France Identité","French state","2024 onwards","4 m users; designated as France’s EU wallet [31][32]"],
+    ["Austria ID Austria","Federal Chancellery","Ongoing","Almost 6.3 m registrations (Sep 2026) [42]"],
+    ["Greece Gov.gr Wallet","Ministry of Digital Governance","Ongoing","20+ digital documents; upgrade to EU wallet planned [66]"],
+    ["Croatia Certilia","FINA","Ongoing","Being re-coded to meet the EU framework [26][65]"]
+  ]},
+  watch:[
+    "Which member states have a public, certified wallet on 24 December 2026, and whether the Commission names laggards or opens infringement procedures [3][13].",
+    "Finalisation of the EU wallet certification scheme under the Cybersecurity Act [10][13].",
+    "Germany’s d-you launch on 2 January 2027 and Romania’s on 14 January 2027 [34][37].",
+    "How banks prepare for the July 2027 AML identification rules and the December 2027 acceptance obligation [53][3].",
+    "Whether the Commission changes privacy safeguards in the implementing rules, as civil-society groups demand [45][46][47].",
+    "Take-up figures from Italy and France as the first large tests of everyday use [28][31][32].",
+    "Partner countries — Ukraine, Kenya and Western Balkan states — aligning their IDs with the EU framework [57][62][67]."
+  ],
+  sources:[
+    ["European Digital Identity Regulation (policy page)","European Commission, Shaping Europe’s digital future","https://digital-strategy.ec.europa.eu/en/policies/eudi-regulation"],
+    ["Commission adopts technical standards for cross-border European Digital Identity Wallets","European Commission, 28 Nov 2024","https://digital-strategy.ec.europa.eu/en/news/commission-adopts-technical-standards-cross-border-european-digital-identity-wallets"],
+    ["The European Digital Identity Wallet now has a timetable: tasks to be completed by December 2027","Garrigues, 30 Sep 2026","https://www.garrigues.com/en_GB/garrigues-digital/european-digital-identity-wallet-now-has-timetable-tasks-be-completed-december"],
+    ["European Union: EUDI Wallet harmonizes identification and age gating","Baker McKenzie, 27 Mar 2026","https://www.bakermckenzie.com/en/insight/publications/2026/03/european-union-eudi-wallet-harmonizes-identification-and-age-gating"],
+    ["The legal and technical road to EU Digital Identity Wallets","European Commission, EUDI Wallet site (updated 2 Feb 2026)","https://ec.europa.eu/digital-building-blocks/sites/spaces/EUDIGITALIDENTITYWALLET/pages/915931903/The%2Blegal%2Band%2Btechnical%2Broad%2Bto%2BEU%2BDigital%2BIdentity%2BWallets"],
+    ["Commission proposes a trusted and secure Digital Identity for all Europeans","European Commission Representation in Ireland, 3 Jun 2021","https://ireland.representation.ec.europa.eu/news-and-events/news/commission-proposes-digital-identity-all-europeans-2021-06-03_en"],
+    ["Regulation (EU) 2024/1183 of 11 April 2024 (European Digital Identity Framework)","EUR-Lex, Official Journal of the EU","https://eur-lex.europa.eu/eli/reg/2024/1183/oj"],
+    ["Regulation (EU) No 910/2014 of 23 July 2014 (eIDAS), consolidated version","EUR-Lex","https://eur-lex.europa.eu/eli/reg/2014/910/2024-05-20/eng"],
+    ["EUDI Wallet Toolbox","European Commission (updated 24 Nov 2026)","https://digital-strategy.ec.europa.eu/en/policies/eudi-wallet-toolbox"],
+    ["ENISA advances the certification of EU Digital Wallets","ENISA, 3 Apr 2026","https://www.enisa.europa.eu/news/enisa-advances-the-certification-of-eu-digital-wallets"],
+    ["Commission makes available age verification blueprint","European Commission, 14 Jul 2025","https://digital-strategy.ec.europa.eu/en/news/commission-makes-available-age-verification-blueprint"],
+    ["Commission urges fast rollout of age verification app","European Commission, 29 Apr 2026","https://commission.europa.eu/news-and-media/news/commission-urges-fast-rollout-age-verification-app-2026-04-29_en"],
+    ["State of the Digital Decade 2026, COM(2026) 288","European Commission (Council doc. 10476/26), 17 Jun 2026","https://data.consilium.europa.eu/doc/document/ST-10476-2026-INIT/en/pdf"],
+    ["State of the Digital Decade 2026, Annex 1 (corrigendum)","European Commission (Council doc. 10476/26 ADD 1 REV 1), 3 Nov 2026","https://data.consilium.europa.eu/doc/document/ST-10476-2026-ADD-1-REV-1/en/pdf"],
+    ["Decision (EU) 2022/2481 establishing the Digital Decade Policy Programme 2030","Official Journal L 323, 19 Dec 2022 (EU Transition Pathways copy)","https://transition-pathways.europa.eu/system/files/2024-09/CELEX_32022D2481_EN_TXT.pdf"],
+    ["European Digital Identity: initial appraisal of the Commission impact assessment","European Parliamentary Research Service, Oct 2021","https://www.europarl.europa.eu/RegData/etudes/BRIE/2021/694244/EPRS_BRI(2021)694244_EN.pdf"],
+    ["EU Digital Identity: 4 projects launched to test the EUDI Wallet","European Commission, 23 May 2023","https://digital-strategy.ec.europa.eu/en/news/eu-digital-identity-4-projects-launched-test-eudi-wallet"],
+    ["Advanced Project for Trusted Identity Technologies and Unified Digital Ecosystem (APTITUDE)","Latvian Ministry of Smart Administration and Regional Development, 4 Nov 2025","https://www.varam.gov.lv/en/projects/advanced-project-trusted-identity-technologies-and-unified-digital-ecosystem"],
+    ["Start of WE BUILD","Betaalvereniging Nederland (Dutch Payments Association), 7 Oct 2025","https://www.betaalvereniging.nl/en/news/start-we-build/"],
+    ["EU offers new funding to boost EUDI Wallet certification and rollout","Identity Week, 28 Oct 2025","https://identityweek.net/eu-offers-new-funding-to-boost-eudi-wallet-certification-and-rollout/"],
+    ["D4.5 eIDAS Economic Model Analysis","EU Digital Identity Wallet Consortium (EWC), 28 May 2025","https://ec.europa.eu/digital-building-blocks/sites/download/attachments/920064565/D4.5-eIDAS-Economic-Model-Analysis_v1.0_FINAL%20%281%29.pdf"],
+    ["EUDI Wallet Tracker","iGrant.io, updated Oct 2026","https://eudi-wallet-tracker.igrant.io/"],
+    ["EU digital wallet: 24 of 27 members will miss the deadline","Euronews, 16 Sep 2026","https://www.euronews.com/my-europe/2026/09/16/eu-digital-wallet-24-of-27-members-will-miss-the-deadline"],
+    ["EU Commission doubtful all member states will be able to launch EUDI wallets this year","Biometric Update, 28 Apr 2026","https://www.biometricupdate.com/202604/eu-commission-doubtful-all-member-states-will-be-able-launch-eudi-wallets-this-year"],
+    ["EUDI wallet deadline nears as Europe’s rollout picture remains uneven","Biometric Update, 24 Sep 2026","https://www.biometricupdate.com/202609/eudi-wallet-deadline-nears-as-europes-rollout-picture-remains-uneven"],
+    ["Would you trust one app with all your digital identity?","Euronews, 15 Sep 2026","https://www.euronews.com/2026/09/15/would-you-trust-one-app-with-all-your-digital-identity"],
+    ["One wallet, 27 systems: can the EU build an untraceable digital ID?","Euronews, 17 Sep 2026","https://www.euronews.com/my-europe/2026/09/17/one-wallet-27-systems-can-the-eu-build-an-untraceable-digital-id"],
+    ["Italy opens digital ID wallet to public with legally valid driving licenses and IDs","Biometric Update, 24 Nov 2026","https://www.biometricupdate.com/202611/italy-opens-digital-id-wallet-to-public-with-legally-valid-driving-licenses-and-ids"],
+    ["Da oggi si potranno avere alcuni documenti di identità sullo smartphone","Il Post, 4 Dec 2024","https://www.ilpost.it/2024/12/04/it-wallet-portafoglio-digitale-documenti/"],
+    ["Portafoglio digitale: l’Italia è avanti, ma a due mesi dalla scadenza non è ancora pronta","SmartWorld, 6 Nov 2026","https://www.smartworld.it/news/wallet-digitale-europeo-italia-ritardo-scadenza.html"],
+    ["France Identité franchit le cap des 4 millions d’utilisateurs","Banque des Territoires (Localtis), 27 Mar 2026","https://www.banquedesterritoires.fr/france-identite-franchit-le-cap-des-4-millions-dutilisateurs"],
+    ["France’s national digital ID scaling up after graduating from pilot","Biometric Update, 5 Dec 2025","https://www.biometricupdate.com/202512/frances-national-digital-id-scaling-up-after-graduating-from-pilot"],
+    ["AltID er landet: Mobilen kan fra i dag bevise din alder","Ingeniøren, 3 Jun 2026","https://ing.dk/artikel/altid-er-landet-mobilen-kan-fra-i-dag-bevise-din-alder"],
+    ["Germany’s Bundesrat approves digital identity law ahead of January EUDI wallet launch","ID Tech, 20 Nov 2026","https://idtechwire.com/germanys-bundesrat-approves-digital-identity-law-ahead-of-january-eudi-wallet-launch/"],
+    ["d-you-Wallet: Bundesregierung plant Start der digitalen Brieftasche am 2. Januar","Borncity, 14 Nov 2026","https://borncity.com/news/d-you-wallet-bundesregierung-plant-start-der-digitalen-brieftasche-am-2-januar/"],
+    ["Wultra-led consortium wins Czech EUDI Wallet concession, Valetka due by end of 2027","Biometric Update, 24 Nov 2026","https://www.biometricupdate.com/202611/wultra-led-consortium-wins-czech-eudi-wallet-concession-valetka-due-by-end-of-2027"],
+    ["Lansarea oficială a aplicației „RO Wallet” este programată pentru 14 ianuarie 2027","Bursa.ro, 12 Nov 2026","https://www.bursa.ro/lansarea-oficiala-a-aplicatiei-8222ro-wallet-in-romania-portofelul-european-pentru-identitate-digitala8221-este-programata-pentru-14-ianuarie-2027-42620167"],
+    ["ID-wallet","NL Digital Government (Government of the Netherlands), modified 5 Nov 2026","https://www.nldigitalgovernment.nl/overview/identity/id-wallet/"],
+    ["Nowa aplikacja mObywatel Europa: pilotaż już wkrótce","Tabletowo, 31 Jul 2026","https://www.tabletowo.pl/nowa-aplikacja-mobywatel-europa-pilotaz-kiedy/"],
+    ["EUDI Wallet","Estonian Information System Authority (RIA), updated 22 Jul 2026","https://www.ria.ee/en/state-information-system/electronic-identity-eid-and-trust-services/eudi-wallet"],
+    ["How will the Government’s Digital Wallet work?","The Irish Times, 20 Jul 2026","https://www.irishtimes.com/technology/consumer-tech/2026/07/20/how-will-the-governments-digital-wallet-work/"],
+    ["Pröll: 6,3 Millionen ausgestellte ID Austria nach erfolgreicher ID Austria-Servicetour","Bundeskanzleramt Österreich, 8 Sep 2026","https://www.bundeskanzleramt.gv.at/bundeskanzleramt/nachrichten-der-bundesregierung/2026/09/proell-6-3-millionen-ausgestellte-id-austria-nach-erfolgreicher-id-austria-servicetour.html"],
+    ["Chave Móvel Digital ultrapassa os 5 milhões de utilizadores ativos","Observador (Lusa), 24 Jul 2026","https://observador.pt/2026/07/24/chave-movel-digital-ultrapassa-os-5-milhoes-de-utilizadores-ativos/"],
+    ["La UE ha puesto fecha límite para estrenar la cartera digital: 24 de diciembre","Xataka Móvil, 19 Nov 2026","https://www.xatakamovil.com/movil-y-sociedad/ue-ha-puesto-fecha-limite-para-estrenar-cartera-digital-dni-carnet-conducir-24-diciembre-hay-letra-pequena"],
+    ["The eID Wallet still doesn’t deserve your full trust","European Digital Rights (EDRi), 10 Mar 2026","https://edri.org/our-work/the-eid-wallet-still-doesnt-deserve-your-full-trust/"],
+    ["Open letter on the eIDAS implementing acts to Executive Vice-President Virkkunen","epicenter.works and nine other organisations, 10 Mar 2026","https://epicenter.works/fileadmin/medienspiegel/user_upload/eIDAS_IAs_OpenLetter_2026.pdf"],
+    ["Reply of DG CNECT to epicenter.works (Ares(2026)2594392)","European Commission, 22 May 2026","https://epicenter.works/fileadmin/medienspiegel/user_upload/Ares_2026_2594392_20260420_EPICENTER_reply.pdf"],
+    ["Statement on updates to the eIDAS 2.0 regulations","Association of German Banks (Bankenverband), 10 Mar 2026","https://bankenverband.de/en/digital-world/statement-updates-eidas-20-regulations"],
+    ["DIHK on the EUDI Wallet: digital identity needs a solid legal framework","DIHK, 11 Sep 2026","https://www.dihk.de/en/newsroom/dihk-on-the-eudi-wallet-digital-identity-needs-a-solid-legal-framework-192870"],
+    ["The EUDI Wallet: building trust, unlocking growth in Europe","Euronews (opinion), 6 Oct 2026","https://www.euronews.com/2026/10/06/the-eudi-wallet-building-trust-unlocking-growth-in-europe"],
+    ["Most French & Germans don’t know EU identity wallet","SecurityBrief UK, 20 Jul 2026","https://securitybrief.co.uk/story/most-french-germans-don-t-know-eu-identity-wallet"],
+    ["EUDI-Wallet stößt auf Kritik","Pharmazeutische Zeitung, 24 Jul 2026","https://www.pharmazeutische-zeitung.de/eudi-wallet-stoesst-auf-kritik-167046/"],
+    ["What banks need to know before the EUDI Wallet deadline","FinTech Global, 4 Sep 2026","https://fintech.global/2026/09/04/what-banks-need-to-know-before-the-eudi-wallet-deadline/"],
+    ["e-ID Act adopted at the ballot box","Swiss Federal Office of Information Technology (eid.admin.ch), 28 Sep 2025","https://www.eid.admin.ch/en/e-id-gesetz-an-der-urne-angenommen-e"],
+    ["Government highlights Digital India initiatives for strengthening digital infrastructure, cyber security and data protection","Press Information Bureau (MeitY), 5 Aug 2026","https://www.pib.gov.in/PressReleasePage.aspx?PRID=2294910"],
+    ["Ministry of Digital Transformation: over 24 million Ukrainians use the Diia app","Cabinet of Ministers of Ukraine, 25 May 2026","https://www.kmu.gov.ua/news/mintsyfry-zastosunkom-diia-korystuiutsia-ponad-24-miliony-ukraintsiv"],
+    ["EU Digital Identity Wallet to launch by end of 2026: Diia team tested documents","Cabinet of Ministers of Ukraine, 10 Feb 2025","https://www.kmu.gov.ua/news/eu-digital-identity-wallet-zapustiat-do-kintsia-2026-roku-komanda-dii-protestuvala-dokumenty"],
+    ["Making the government’s first digital wallet a reality","Government Digital Service blog (GOV.UK), 21 Jan 2026","https://gds.blog.gov.uk/2026/01/21/making-the-governments-first-digital-wallet-a-reality/"],
+    ["More than 15 million Australians choose simpler, safer Digital ID","Australian Minister for Finance, Dec 2025","https://ministers.finance.gov.au/financeminister/media-release/2025/12/04/more-15-million-australians-choose-simpler-safer-digital-id"],
+    ["Singpass Factsheet (Annex D)","Government of Singapore, 30 Jun 2026","https://isomer-user-content.by.gov.sg/85/16f1b7a4-1da4-4c51-aabe-5334d635ba45/Annex%20D%20-%20Singpass%20Factsheet%20(30%20June%202026).pdf"],
+    ["Reniec da un nuevo paso hacia la identidad digital: aprueba características del DNI digital y Perú Pass","El Peruano (official gazette), 18 Nov 2026","https://elperuano.pe/noticia/309217-reniec-da-un-nuevo-paso-hacia-la-identidad-digital-aprueba-caracteristicas-del-dni-digital-y-peru-pass"],
+    ["Kenya, EU pursue digital ID interoperability under new DPI collaboration","Biometric Update, 26 Nov 2026","https://www.biometricupdate.com/202611/kenya-eu-pursue-digital-id-interoperability-under-new-dpi-collaboration"],
+    ["Meno scartoffie, l’app Io si evolve","L’Espresso, 17 Nov 2026","https://lespresso.it/c/economia/2026/11/17/meno-scartoffie-app-io-si-evolve/65830"],
+    ["Digitale Identitäten (Textarchiv, KW 42)","Deutscher Bundestag, 15 Oct 2026","https://www.bundestag.de/dokumente/textarchiv/2026/kw42-de-digitale-identitaeten-1223586"],
+    ["Croatian digitalization head shares concerns about EUDI wallet certification","Biometric Update, 3 Oct 2025","https://www.biometricupdate.com/202510/croatian-digitalization-head-shares-concerns-about-eudi-wallet-certification"],
+    ["Το Gov.gr Wallet στον δρόμο προς το Ευρωπαϊκό Ψηφιακό Πορτοφόλι","Skai.gr (ANA-MPA), 14 Mar 2026","https://www.skai.gr/news/greece/to-govgr-wallet-ston-dromo-pros-to-eyropaiko-psifiako-portofoli"],
+    ["Kosovo launches national digital ID wallet, e-signatures ahead of EUDI alignment","Biometric Update, Nov 2026","https://www.biometricupdate.com/202611/kosovo-launches-national-digital-id-wallet-e-signatures-ahead-of-eudi-alignment"],
+    ["EU Digital Identity Wallets: July 2026 snapshot","eID Easy, 2 Jul 2026","https://www.eideasy.com/blog/eu-digital-identity-wallets-july-2026"],
+    ["European Digital Identity Wallet (factpage)","European Commission","https://digital-strategy.ec.europa.eu/en/factpages/european-digital-identity-wallet"],
+    ["Remarks by Executive Vice-President Virkkunen on the EU age verification app","European Commission Representation in Cyprus, 29 Apr 2026","https://cyprus.representation.ec.europa.eu/news/remarks-executive-vice-president-virkkunen-eu-age-verification-app-2026-04-29_en"]
+  ],
+  related:["n168","n159","n138","n107","n163","n160"]
+},
+{
   id:"a5",
   theme:"sec",
   sector:"Fintech & payments",
@@ -306,7 +584,7 @@ const ANALYSES = [
   related:["n98", "n69", "n97"]
 },
 {
-  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'19 Nov 2026', readMins:16,
+  id:'a1', theme:'dpi', sector:'Fintech & payments', region:'Asia-Pacific', country:'bangladesh', date:'2 Nov 2026', updated:'28 Nov 2026', readMins:16,
   kicker:'Payments · Bangladesh in global context',
   title:'One switch for every taka: can Bangladesh catch up on interoperable payments?',
   standfirst:'From today, eight West African countries route all mobile money transfers through one central bank switch. India and Brazil did this years ago. Bangladesh has tried several times since 2020; this year a compulsory Bangla QR finally took off, and the central bank aims for full interoperability by July 2027. What the laws, the money, the people and the comparisons show.',
@@ -331,7 +609,7 @@ const ANALYSES = [
   body:[
     {h:'The short version',p:[
       'Interoperability means a person can pay or send money from any bank, wallet or mobile money account to any other, instantly and cheaply. Countries that achieved it did so with a public switch run or backed by the central bank, a deadline that obliged every provider to join, and transfers that are free or nearly free for individuals.',
-      'Bangladesh has a large mobile money market: about 237 million registered MFS accounts at the end of 2024, of which 37.6% were active [23], and monthly MFS value that doubled between July 2023 and April 2026 [11]. Money still moves mostly inside closed networks, but 2026 changed the picture. Bangla QR became compulsory for every merchant on 1 July [16], its daily value rose about fivefold in three months [18], and on 1 November person-to-person payments by QR went live [19]. The central bank’s target is that every bank, MFS provider and other financial institution is on an interoperable system by July 2027 [9].'
+      'Bangladesh has a large mobile money market: about 237 million registered MFS accounts at the end of 2024, of which 37.6% were active [23], and monthly MFS value that doubled between July 2023 and April 2026 [11]. Money still moves mostly inside closed networks, but 2026 changed the picture. Bangla QR became compulsory for every merchant on 1 July [16], its daily value rose about fivefold in three months [18], and on 1 November person-to-person payments by QR went live [19]. Governor Md Mostaqur Rahman said in October that charges for interoperable Bangla QR transactions were waived regardless of amount, that average daily volume had risen from Tk 37 crore in the first week of June to about Tk 180 crore in the last week of September, and that about Tk 3,000 crore a day would signal more meaningful adoption [38]. The central bank’s target is that every bank, MFS provider and other financial institution is on an interoperable system by July 2027 [9].'
     ]},
     {h:'What the leaders did',p:[
       'India’s UPI processed 25.47 billion payments worth ₹31.53 lakh crore in October 2026, about 822 million a day [1]. Brazil’s Pix handled 7.89 billion payments worth R$3.81 trillion in September 2026, up 15% in a year [2], and accounted for 55.2% of all payment transactions in Brazil in the first half of 2026 [3]. Both are free for individuals: NPCI says bank-account UPI payments remain free for customers [13], and Brazil’s central bank made Pix free for individuals from launch [14].',
@@ -488,7 +766,8 @@ const ANALYSES = [
     ['Bangla QR made mandatory for retail business licences','The Business Standard, 8 Oct 2026','https://www.tbsnews.net/economy/banking/bangla-qr-made-mandatory-retail-business-licences-1566651'],
     ['ব্যবসাপ্রতিষ্ঠানের ট্রেড লাইসেন্সে বাধ্যতামূলক হচ্ছে ‘বাংলা কিউআর’ (Bangla QR becomes mandatory for business trade licences)','Prothom Alo, 9 Oct 2026','https://www.prothomalo.com/business/hz6xxd6ono'],
     ['Every trade licence will now require a cashless transaction option, ‘Bangla QR’','The Business Standard, 12 Oct 2025','https://www.tbsnews.net/economy/every-trade-licence-will-now-require-cashless-transaction-option-bangla-qr-1258381'],
-    ['Person-to-person payments coming via Bangla QR; BB orders all apps to be ready by 31 Oct','The Business Standard, 13 Aug 2026','https://www.tbsnews.net/economy/banking/person-person-payments-coming-bangla-qr-bb-orders-all-apps-be-ready-31-oct-1513811']
+    ['Person-to-person payments coming via Bangla QR; BB orders all apps to be ready by 31 Oct','The Business Standard, 13 Aug 2026','https://www.tbsnews.net/economy/banking/person-person-payments-coming-bangla-qr-bb-orders-all-apps-be-ready-31-oct-1513811'],
+    ['BB governor: P2P Bangla QR payments to launch in November','Dhaka Tribune, 10 Oct 2026','https://www.dhakatribune.com/business/421756/bb-governor-p2p-bangla-qr-payments-to-launch-in']
   ],
   related:['n25','n19']
 },
